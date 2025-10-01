@@ -1,4 +1,20 @@
 ---
-title: "meganhessel.github.io"
+title: "Megan Hessel"
+image: hessel_headshots.jpg
+about: 
+  template: solana
+  image-shape: rounded
+  image-width: 17em
+  links: 
+    - text: LinkedIn
+      href: https://www.linkedin.com/in/meganhessel/
+      target: _blank
+    - text: Github
+      href: https://github.com/meganhessel
+      target: _blank 
+    - text: Email
+      href: mailto:meganhessel@bren.ucsb.edu
 ---
-Hi this is Megan :) 
+
+Hi. I'm Megan Hessel. I'm awesome. Please hire me. 
+
