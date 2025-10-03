@@ -3,14 +3,15 @@ project:
   output-dir: docs
 
 website:
-  title: "Megan Hessel"
   navbar:
+    title: "Megan Hessel"
+    logo: "My_logo.png"
     right:
       - href: index.qmd
         text: Home
-    # - about.qmd
-    # - href: resources.qmd
-  # text: Resources 
+      - about.qmd
+      - href: resources.qmd
+        text: Resources 
         
 format:
   html:
