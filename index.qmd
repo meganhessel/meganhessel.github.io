@@ -17,6 +17,8 @@ about:
       href: mailto:meganhessel@bren.ucsb.edu
 ---
 
+## About me
+
 As an environmental data scientist, my mission is to harness the power of data to create solutions that balance human well-being with environmental health. By studying the interactions between people and the natural world, I aim to develop clear, impactful visualizations that empower communities to understand challenges, embrace opportunities, and take collective action. I strive to inspire positive change where both people and the planet can thrive together.
 
 ## Education
