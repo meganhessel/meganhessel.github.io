@@ -1,0 +1,65 @@
+/*-- scss:defaults --*/
+
+// Import google fonts: Lora and Zalando Sans SemiExpanded
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap');
+
+// Fonts 
+$lora:"Lora", serif;
+$zalando: "Zalando Sans SemiExpanded", sans-serif;
+
+// Colors 
+$dgreen:#488f30;
+$leafgreen: #a9bb5a; 
+$sunny: #ffe896;
+$orange: #ffad76;
+$pinky: #fc7082;
+$cream: #f7f7f7;
+$white: #ffffff;
+$skyblue: #88ABD2;
+
+// Define Quarto varaibles
+$body-bg: $cream; 
+$navbar-bg: $white;
+$navbar-fg: $dgreen; 
+$navbar-hl: $pinky;
+$link-color: $skyblue;
+
+/*-- scss:rules --*/
+
+h1 {
+  font-family: $zalando;
+  font-weight: 600;
+}
+
+h2, h3, h4, h5, h6 {
+  font-family: $zalando;
+  font-weight: 600;
+  color: $dgreen;
+  font-size: 25px;
+}
+
+
+.navbar-brand img {
+  max-height: 48px;
+  width:auto;
+}
+
+
+/*h1, h2, {
+  letter-spacing: 1.2px;
+  font-weight: 600;
+}
+
+.title {
+  color:$dgreen;
+}
+
+.center-text { 
+  text-align: center;
+}
+
+.orange-text {
+  color: orange;
+}
+*/ 
+
