@@ -3,22 +3,30 @@ project:
   output-dir: docs
 
 website:
+  title: "Megan Hessel"
+  favicon: images/My_logo_simplify2.png
   navbar:
-    title: "Megan Hessel"
-    logo: "My_logo.png"
+    title: false
+    logo: images/My_logo_simplify2.png
+    logo-alt: the name megan hessel with a blog
     right:
       - href: index.qmd
         text: Home
       - about.qmd
-      - href: resources.qmd
-        text: Resources 
+      # - href: resources.qmd
+      #  text: Resources 
+      - icon: github
+        href: https://github.com/meganhessel
+  page-footer: 
+    left: Copyright 2025, Megan Hessel
+    right: images/MY_logo.png
         
 format:
   html:
-    theme: cosmo 
-    css: styles.css
+    theme: styles.scss 
     toc: true
     page-layout: article
+    mainfont: Lora
 
 
 

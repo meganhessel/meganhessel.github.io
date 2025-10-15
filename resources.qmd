@@ -3,3 +3,26 @@ title: "Resources"
 format: html
 ---
 
+<h1>this is a h1 element</h1>
+
+<h1 class="title" >this is a h1 element with the title class</h1>
+
+<p class="orange-text">this paragraph text is orange </p>
+
+<p class="center-text">this paragraph text is centered </p>
+
+<p class="center-text orange-text">this paragraph text is centered and orange </p>
+
+--- 
+
+Here is where I am describing [something fun]{.orange-text} I enjoy doing 
+
+::: {.orange-text}
+Here's one line 
+
+Heres another line 
+::: 
+
+::: {.center-text}
+This is centered 
+::: 
