@@ -68,5 +68,26 @@
     "title": "Resources",
     "section": "",
     "text": "this is a h1 element\n\n\nthis is a h1 element with the title class\n\n\nthis paragraph text is orange\n\n\nthis paragraph text is centered\n\n\nthis paragraph text is centered and orange\n\n\nHere is where I am describing something fun I enjoy doing\n\nHere’s one line\nHeres another line\n\n\nThis is centered"
+  },
+  {
+    "objectID": "posts.html",
+    "href": "posts.html",
+    "title": "Blog",
+    "section": "",
+    "text": "My First Blog Post\n\n\n\nMEDS\n\nR\n\ndata-viz\n\n\n\nA short description of a blog post\n\n\n\nMegan Hessel\n\n\nNov 12, 2025\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "Posts/my_first_blog_post/index.html",
+    "href": "Posts/my_first_blog_post/index.html",
+    "title": "My First Blog Post",
+    "section": "",
+    "text": "This is where the body of my blog post begins! I’m going to add a footnote here1. Here’s an inline footnote2.\nLet’s site Sam(Shanny-Csik 2022)!"
+  },
+  {
+    "objectID": "Posts/my_first_blog_post/index.html#footnotes",
+    "href": "Posts/my_first_blog_post/index.html#footnotes",
+    "title": "My First Blog Post",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nHere is some additional context that might be helpful↩︎\nhere’s my inline note↩︎"
   }
 ]

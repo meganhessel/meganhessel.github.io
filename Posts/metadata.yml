@@ -1,0 +1,11 @@
+# Any opitions here will be added to all posts 
+
+author: 
+  - name: Megan Hessel  # Link to other people 
+    url: https//meganhessel.github.io/
+    affiliation: The Bren School of Environmental Science & Management
+    affiliation-url: https://bren.ucsb.edu/
+    
+title-block-banner: true
+
+freeze: auto # Only rerender code in website if changed 

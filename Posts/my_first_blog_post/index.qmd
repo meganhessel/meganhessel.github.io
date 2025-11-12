@@ -1,0 +1,27 @@
+---
+title: "My First Blog Post"
+description: "A short description of a blog post"
+author: 
+  - name: Megan Hessel  # Link to other people 
+    url: https//meganhessel.github.io/
+    affiliation: The Bren School of Environmental Science & Management
+    affiliation-url: https://bren.ucsb.edu/
+    # orchid: orchid number 
+date: 2025-11-12
+categories: [MEDS, R, data-viz] # Tags
+image: 115016.jpg
+citation: #true (if without link)
+  url: https//meganhessel.github.io/Posts/my_first_blog_post 
+draft-mode: linked # Hides Blog post on listing page - url still works tho
+bibliography: references.bib
+---
+
+------------------------------------------------------------------------
+
+This is where the body of my blog post begins! I'm going to add a footnote here[^1]. Here's an inline footnote[^2].
+
+[^1]: Here is some additional context that might be helpful
+
+[^2]: here's my inline note
+
+Let's site Sam[@shanny-csik2022]!
