@@ -12,6 +12,7 @@ categories: [MEDS, R, data-viz] # Tags
 image: 115016.jpg
 citation: #true (if without link)
   url: https//meganhessel.github.io/Posts/my_first_blog_post 
+draft: true
 draft-mode: linked # Hides Blog post on listing page - url still works tho
 bibliography: references.bib
 ---
