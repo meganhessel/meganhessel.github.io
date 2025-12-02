@@ -84,62 +84,6 @@
     "text": "Testing testing\n\n\n\nCitationBibTeX citation:@online{hessel2025,\n  author = {Hessel, Megan},\n  title = {Analyzing {Eaton} and {Palisades} {Fire} {Scars}},\n  date = {2025-12-05},\n  url = {https//meganhessel.github.io/Posts/my_first_blog_post},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nHessel, Megan. 2025. “Analyzing Eaton and Palisades Fire\nScars.” December 5, 2025. https//meganhessel.github.io/Posts/my_first_blog_post."
   },
   {
-    "objectID": "Posts/my_first_blog_post/index.html#learning-objectives",
-    "href": "Posts/my_first_blog_post/index.html#learning-objectives",
-    "title": "MY FIRST BLOG POST",
-    "section": "Learning Objectives",
-    "text": "Learning Objectives\n\nManipulating raster data with rasterio.\nManipulating vector data with geopandas.\nUse true color imagery to understand Los Angeles landscape.\nUse false color imagery to highlight the burn markings from the 2025 Palisades and Eaton wildfires."
-  },
-  {
-    "objectID": "Posts/my_first_blog_post/index.html#introductions",
-    "href": "Posts/my_first_blog_post/index.html#introductions",
-    "title": "MY FIRST BLOG POST",
-    "section": "Introductions",
-    "text": "Introductions\n\nData sets\n\nLandsat 8 satellite recorded a collection of bands (red, green, blue, near-infrared and shortwave infrared) from the Landsat Collection 2 Level-2 atmospherically corrected surface reflectance data. Data was obtained from [Microsoft Planetary Computer data catalogue](https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2).\nGeometries of the Eaton and Palisades fire perimeters from [County of Los Angele’s ArcGIS page](https://egis-lacounty.hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c/about)."
-  },
-  {
-    "objectID": "Posts/my_first_blog_post/index.html#inital-steps",
-    "href": "Posts/my_first_blog_post/index.html#inital-steps",
-    "title": "MY FIRST BLOG POST",
-    "section": "Inital Steps",
-    "text": "Inital Steps\nFirst thing we must do is load all necessary libraries!\nThe important libraries are the geopandas and xarrary. The geopandas package is useful when dealing with vector data. The fire perimeters are polygons (which is a type of vector data). Therefore, we will be using geopandas for the borders. Whereas, the xarrary package is useful when working with raster data, such as the landsat data set."
-  },
-  {
-    "objectID": "Posts/my_first_blog_post/index.html#data-exploration",
-    "href": "Posts/my_first_blog_post/index.html#data-exploration",
-    "title": "MY FIRST BLOG POST",
-    "section": "Data Exploration",
-    "text": "Data Exploration"
-  },
-  {
-    "objectID": "Posts/my_first_blog_post/index.html#restoring-geo-spatial-information",
-    "href": "Posts/my_first_blog_post/index.html#restoring-geo-spatial-information",
-    "title": "MY FIRST BLOG POST",
-    "section": "Restoring Geo spatial Information",
-    "text": "Restoring Geo spatial Information"
-  },
-  {
-    "objectID": "Posts/my_first_blog_post/index.html#true-color-imagery",
-    "href": "Posts/my_first_blog_post/index.html#true-color-imagery",
-    "title": "MY FIRST BLOG POST",
-    "section": "True Color Imagery",
-    "text": "True Color Imagery"
-  },
-  {
-    "objectID": "Posts/my_first_blog_post/index.html#false-color-imagery",
-    "href": "Posts/my_first_blog_post/index.html#false-color-imagery",
-    "title": "MY FIRST BLOG POST",
-    "section": "False Color Imagery",
-    "text": "False Color Imagery"
-  },
-  {
-    "objectID": "Posts/my_first_blog_post/index.html#footnotes",
-    "href": "Posts/my_first_blog_post/index.html#footnotes",
-    "title": "MY FIRST BLOG POST",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nHere is some additional context that might be helpful↩︎\nhere’s my inline note↩︎"
-  },
-  {
     "objectID": "Posts/analyzing_LA_fire_scars/index.html#learning-objectives",
     "href": "Posts/analyzing_LA_fire_scars/index.html#learning-objectives",
     "title": "Analyzing Eaton and Palisades Fire Scars",
@@ -158,7 +102,7 @@
     "href": "Posts/analyzing_LA_fire_scars/index.html#inital-steps",
     "title": "Analyzing Eaton and Palisades Fire Scars",
     "section": "Inital Steps",
-    "text": "Inital Steps\nFirst, we must load all necessary libraries!\n[IMPORT LIBARAIES HERE]\nThe important libraries are the geopandas and xarrary. The geopandas package is useful when dealing with vector data which is point, lines, and polygons. The fire perimeters are polygons; therefore, we will be using geopandas for the borders. Whereas, the xarrary package is useful when working with raster data, such as the landsat data.\nSecondly, we must load in the data by using the geopandas, xarrary, and os packages. [DOWNLOAD DATA HERE]"
+    "text": "Inital Steps\nFirst, we must load all necessary libraries!\n[IMPORT LIBARAIES HERE]\n\n# Helping import data easier\nimport os \n\n# Manipulating datasets \nimport xarray as xr # Deals with rasters \nimport geopandas as gpd # Deals with vector data \n\n# Making pretty maps \nimport matplotlib.pyplot as plt\nfrom matplotlib_scalebar.scalebar import ScaleBar\nimport matplotlib.patches as mpatches\n\nThe important libraries are the geopandas and xarrary. The geopandas package is useful when dealing with vector data which is point, lines, and polygons. The fire perimeters are polygons; therefore, we will be using geopandas for the borders. Whereas, the xarrary package is useful when working with raster data, such as the landsat data.\nSecondly, we must load in the data by using the geopandas, xarrary, and os packages. [DOWNLOAD DATA HERE]"
   },
   {
     "objectID": "Posts/analyzing_LA_fire_scars/index.html#data-exploration",

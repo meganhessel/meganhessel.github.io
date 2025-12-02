@@ -44,6 +44,23 @@ First, we must *load all necessary libraries*!
 
 **\[IMPORT LIBARAIES HERE\]**
 
+```{python}
+
+# Helping import data easier
+import os 
+
+# Manipulating datasets 
+import xarray as xr # Deals with rasters 
+import geopandas as gpd # Deals with vector data 
+
+# Making pretty maps 
+import matplotlib.pyplot as plt
+from matplotlib_scalebar.scalebar import ScaleBar
+import matplotlib.patches as mpatches
+
+```
+
+
 The important libraries are the `geopandas` and `xarrary`. The `geopandas` package is useful when dealing with vector data which is point, lines, and polygons. The fire perimeters are polygons; therefore, we will be using `geopandas` for the borders. Whereas, the `xarrary` package is useful when working with raster data, such as the landsat data.
 
 Secondly, we must *load in the data* by using the `geopandas`, `xarrary`, and `os` packages. **\[DOWNLOAD DATA HERE\]**
