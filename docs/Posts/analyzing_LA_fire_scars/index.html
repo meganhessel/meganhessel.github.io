@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Megan Hessel">
+<meta name="dcterms.date" content="2025-12-04">
+<meta name="description" content="Using Landsat Collection 2 Level-2 atmosperically corrected surface reflectance data to inspect the fire scaring from the 2025 Eaton and Palisades Fires in Los Angeles.">
 
-<title>Blog – Megan Hessel</title>
+<title>Analyzing Eaton and Palisades Fire Scars – Megan Hessel</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,27 +26,25 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./images/My_logo_simplify2.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8cb753723b0ba1ac7d4f076f1a2ec43f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/My_logo_simplify2.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-8cb753723b0ba1ac7d4f076f1a2ec43f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,65 +72,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -140,9 +83,9 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./images/My_logo_simplify2.png" alt="the name megan hessel with a blog" class="navbar-logo light-content">
-    <img src="./images/My_logo_simplify2.png" alt="the name megan hessel with a blog" class="navbar-logo dark-content">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/My_logo_simplify2.png" alt="the name megan hessel with a blog" class="navbar-logo light-content">
+    <img src="../../images/My_logo_simplify2.png" alt="the name megan hessel with a blog" class="navbar-logo dark-content">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -152,15 +95,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./posts.html" aria-current="page"> 
+    <a class="nav-link" href="../../posts.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item compact">
@@ -180,21 +123,65 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGF0YS12aXo=">data-viz <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TUVEUw==">MEDS <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHl0aG9u">Python <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
+  <li><a href="#introductions" id="toc-introductions" class="nav-link" data-scroll-target="#introductions">Introductions</a></li>
+  <li><a href="#inital-steps" id="toc-inital-steps" class="nav-link" data-scroll-target="#inital-steps">Inital Steps</a></li>
+  <li><a href="#data-exploration" id="toc-data-exploration" class="nav-link" data-scroll-target="#data-exploration">Data Exploration</a></li>
+  <li><a href="#restoring-geo-spatial-information" id="toc-restoring-geo-spatial-information" class="nav-link" data-scroll-target="#restoring-geo-spatial-information">Restoring Geo spatial Information</a></li>
+  <li><a href="#true-color-imagery" id="toc-true-color-imagery" class="nav-link" data-scroll-target="#true-color-imagery">True Color Imagery</a></li>
+  <li><a href="#false-color-imagery" id="toc-false-color-imagery" class="nav-link" data-scroll-target="#false-color-imagery">False Color Imagery</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
+<h1 class="title">Analyzing Eaton and Palisades Fire Scars</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">MEDS</div>
+    <div class="quarto-category">Python</div>
+    <div class="quarto-category">data-viz</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Using Landsat Collection 2 Level-2 atmosperically corrected surface reflectance data to inspect the fire scaring from the 2025 Eaton and Palisades Fires in Los Angeles.
+  </div>
 </div>
 
-
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author"><a href="https//meganhessel.github.io/">Megan Hessel</a> </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            <a href="https://bren.ucsb.edu/">
+            The Bren School of Environmental Science &amp; Management
+            </a>
+          </p>
+      </div>
+  </div>
 
 <div class="quarto-title-meta">
 
-    
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 4, 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -204,48 +191,84 @@ window.Quarto = {
 </header>
 
 
+<hr>
+<section id="learning-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+<ol type="1">
+<li><p>Manipulating raster data with <code>rasterio</code>.</p></li>
+<li><p>Manipulating vector data with <code>geopandas</code>.</p></li>
+<li><p>Use <code>true color imagery</code> to understand Los Angeles landscape.</p></li>
+<li><p>Use <code>false color imagery</code> to emphasize the burn markings from the 2025 Palisades and Eaton wildfires.</p></li>
+</ol>
+</section>
+<section id="introductions" class="level2">
+<h2 class="anchored" data-anchor-id="introductions">Introductions</h2>
+<p>words word words</p>
+<section id="data-sets" class="level4">
+<h4 class="anchored" data-anchor-id="data-sets">Data sets</h4>
+<ol type="1">
+<li><p>Landsat 8 satellite recorded a collection of bands (red, green, blue, near-infrared and shortwave infrared) from the Landsat Collection 2 Level-2 atmospherically corrected surface reflectance data. Data was obtained from [Microsoft Planetary Computer data catalogue](<a href="https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2" class="uri">https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2</a>).</p></li>
+<li><p>Geometries of the Eaton and Palisades fire perimeters from [County of Los Angele’s ArcGIS page](<a href="https://egis-lacounty.hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c/about" class="uri">https://egis-lacounty.hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c/about</a>).</p></li>
+</ol>
+</section>
+</section>
+<section id="inital-steps" class="level2">
+<h2 class="anchored" data-anchor-id="inital-steps">Inital Steps</h2>
+<p>First, we must <em>load all necessary libraries</em>!</p>
+<p><strong>[IMPORT LIBARAIES HERE]</strong></p>
+<p>The important libraries are the <code>geopandas</code> and <code>xarrary</code>. The <code>geopandas</code> package is useful when dealing with vector data which is point, lines, and polygons. The fire perimeters are polygons; therefore, we will be using <code>geopandas</code> for the borders. Whereas, the <code>xarrary</code> package is useful when working with raster data, such as the landsat data.</p>
+<p>Secondly, we must <em>load in the data</em> by using the <code>geopandas</code>, <code>xarrary</code>, and <code>os</code> packages. <strong>[DOWNLOAD DATA HERE]</strong></p>
+</section>
+<section id="data-exploration" class="level2">
+<h2 class="anchored" data-anchor-id="data-exploration">Data Exploration</h2>
+<p><code>.info</code> provides good information of the dataframes’ column names and data types. With this function, we notice there are 5 columns in the fire border data set, with the final column being the vector geometry. We can examine the geometry of each fire with <code>.plot</code>. Finally, it is <em>always</em> important to know the geospatial data’s <strong>coordinate reference systems</strong> (CRS). The CRS defines how the geospatial data is located and plotted. There are 2 CRS types: geographic (how the data is plotted on the 3D globe) and projected (how the data is plotted on a 2D map). It is important to use the correct CRS for your data and intended goal. Additionally, when merging or plotting geospatial data together, the datasets must be in the same CRS.</p>
+<p><strong>[fire perimetesr .info and .plot and crs]</strong></p>
+<p>Unlike the geopanda vector data, the raster datatype is a <code>xarray</code>. Xarrays have 3 components:</p>
+<ol type="1">
+<li><p><em>Variables:</em> The measurements</p></li>
+<li><p><em>Dimensions:</em> Describe the axes of the array (coordinates, time)</p></li>
+<li><p><em>Attributes:</em> The units and other describing factors (like sample ID)</p></li>
+</ol>
+<p>We can understand the Landsat’s variables, dimension, and CRS with <code>.var</code>, <code>.coord</code>, <code>dims</code>, <code>.rio.crs</code>.</p>
+<p><strong>[.VAR , .COORD, .DIM PRINT STATEMENTS]</strong></p>
+</section>
+<section id="restoring-geo-spatial-information" class="level2">
+<h2 class="anchored" data-anchor-id="restoring-geo-spatial-information">Restoring Geo spatial Information</h2>
+<p><em>PROBLEM!</em> Notice, how the Landsat’s CRS reads ‘none’!</p>
+<p>This is because the raster’s CRS is located in another attribute called ‘crs_wkt’. Therefore, we must retrieve the CRS by using <code>.spatial_ref</code> which refers to the Spatial Reference System. Then we will use <code>.write_crs</code> to recover the spatial properties of the geospatial data set.</p>
+<p><strong>[RECOVER CRS]</strong></p>
+</section>
+<section id="true-color-imagery" class="level2">
+<h2 class="anchored" data-anchor-id="true-color-imagery">True Color Imagery</h2>
+<p>True color imagery will be used to visualize the Los Angeles landscape!</p>
+<p>When mapping, there are 3 color channels: red, green, blue (RGB). If the red, green, and blue Landsat wavelengths are assigned to their proper channels, this is <strong>TRUE COLOR IMAGERY</strong>. True color imagery, in simple terms, is when the red wavelength is assigned to red channel, green wavelength is assigned to the green channel, and blue wavelength is assigned to the blue channel.</p>
+<p><strong>[INSERT RGB IMAGE AND TRUE COLOR IMAGERY PLOT]</strong></p>
+</section>
+<section id="false-color-imagery" class="level2">
+<h2 class="anchored" data-anchor-id="false-color-imagery">False Color Imagery</h2>
+<p>Conversely, <strong>FALSE COLOR IMAGERY</strong> is when the RGB channels are NOT assigned to the red, green, blue wavelengths. False color imagery uses the unique reflectance and absorbance properties of different wavelengths to enhance or isolate specific features that may be difficult to see in true color imagery.</p>
+<p>For instance, to examine the fire scares, we will assign the short-wave infrared wavelengths (swir22) to the red channel, near-infrared wavelengths (nir08) to the green channel, and red wavelength to the blue channel. Near infrared (NIR) wavelengths reflects healthy vegetation. Lower NIR measurements can show unhealthy plant-life conditions, such as drought stress or deforestation. Assigning the NIR to the green channel emphasizes the vegetation health. Short wave infrared (SWIR) wavelengths reflects fire and recently burned areas. By assigning SWIR to the red channel, the fire markings can be highlighted, especially in contrast to the NIR (green channel). Thus, false color imagery is used to emphasizes the burn damages from the fires in comparison to the neighboring healthy vegetation.</p>
+<p><strong>[FALSE COLOR IMAGERY MAP ]</strong></p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<p>County of Los Angeles. (January 21, 2025). <em>Palisades and Eaton Dissolved Fire Perimeters (2025)</em>. AcrGIS Online. https://egis-lacounty.hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c/about</p>
+<p>Microsoft. (2025). <em>Landsat Collection 2 Level-2</em> [Dataset]. Microsoft Planetary Computer. https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2#overview</p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="TUVEUyUyQ1B5dGhvbiUyQ2RhdGEtdml6" data-listing-date-sort="1764835200000" data-listing-file-modified-sort="1764660082428" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="704">
-<a href="./Posts/analyzing_LA_fire_scars/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./Posts/analyzing_LA_fire_scars/fire_picture.jpg" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Analyzing Eaton and Palisades Fire Scars
-</h5>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TUVEUw=='); return false;">MEDS</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHl0aG9u'); return false;">Python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YS12aXo='); return false;">data-viz</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>Using Landsat Collection 2 Level-2 atmosperically corrected surface reflectance data to inspect the fire scaring from the 2025 Eaton and Palisades Fires in Los Angeles.</p>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Megan Hessel
-</div>
-<div class="listing-date">
-Dec 4, 2025
-</div>
-</div>
-</div>
-</div></a>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{hessel2025,
+  author = {Hessel, Megan},
+  title = {Analyzing {Eaton} and {Palisades} {Fire} {Scars}},
+  date = {2025-12-04},
+  url = {https//meganhessel.github.io/Posts/analyzing_LA_fire_scars},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-hessel2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+Hessel, Megan. 2025. <span>“Analyzing Eaton and Palisades Fire
+Scars.”</span> December 4, 2025. <a href="https://https//meganhessel.github.io/Posts/analyzing_LA_fire_scars">https//meganhessel.github.io/Posts/analyzing_LA_fire_scars</a>.
+</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

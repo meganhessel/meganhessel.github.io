@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Megan Hessel">
-<meta name="dcterms.date" content="2025-11-12">
-<meta name="description" content="A short description of a blog post">
+<meta name="dcterms.date" content="2025-12-04">
+<meta name="description" content="Using Landsat Collection 2 Level-2 atmosperically corrected surface reflectance data to inspect the fire scaring from the 2025 Eaton and Palisades Fires in Los Angeles.">
 
-<title>My First Blog Post – Megan Hessel</title>
+<title>MY FIRST BLOG POST – Megan Hessel</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -92,7 +92,6 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
-<meta name="quarto:status" content="draft">
 
 
 </head>
@@ -100,7 +99,7 @@ div.csl-indent {
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div>
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -143,25 +142,41 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
+  <li><a href="#introductions" id="toc-introductions" class="nav-link" data-scroll-target="#introductions">Introductions</a>
+  <ul class="collapse">
+  <li><a href="#data-sets" id="toc-data-sets" class="nav-link" data-scroll-target="#data-sets">Data sets</a></li>
+  </ul></li>
+  <li><a href="#inital-steps" id="toc-inital-steps" class="nav-link" data-scroll-target="#inital-steps">Inital Steps</a></li>
+  <li><a href="#data-exploration" id="toc-data-exploration" class="nav-link" data-scroll-target="#data-exploration">Data Exploration</a></li>
+  <li><a href="#restoring-geo-spatial-information" id="toc-restoring-geo-spatial-information" class="nav-link" data-scroll-target="#restoring-geo-spatial-information">Restoring Geo spatial Information</a></li>
+  <li><a href="#true-color-imagery" id="toc-true-color-imagery" class="nav-link" data-scroll-target="#true-color-imagery">True Color Imagery</a></li>
+  <li><a href="#false-color-imagery" id="toc-false-color-imagery" class="nav-link" data-scroll-target="#false-color-imagery">False Color Imagery</a></li>
+  <li><a href="#stuff" id="toc-stuff" class="nav-link" data-scroll-target="#stuff">Stuff</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">My First Blog Post</h1>
+<h1 class="title">MY FIRST BLOG POST</h1>
   <div class="quarto-categories">
     <div class="quarto-category">MEDS</div>
-    <div class="quarto-category">R</div>
+    <div class="quarto-category">Python</div>
     <div class="quarto-category">data-viz</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    A short description of a blog post
+    Using Landsat Collection 2 Level-2 atmosperically corrected surface reflectance data to inspect the fire scaring from the 2025 Eaton and Palisades Fires in Los Angeles.
   </div>
 </div>
 
@@ -187,7 +202,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 12, 2025</p>
+      <p class="date">December 4, 2025</p>
     </div>
   </div>
   
@@ -200,11 +215,50 @@ div.csl-indent {
 
 
 <hr>
+<section id="learning-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+<ol type="1">
+<li><p>Manipulating raster data with <code>rasterio</code>.</p></li>
+<li><p>Manipulating vector data with <code>geopandas</code>.</p></li>
+<li><p>Use <code>true color imagery</code> to understand Los Angeles landscape.</p></li>
+<li><p>Use <code>false color imagery</code> to highlight the burn markings from the 2025 Palisades and Eaton wildfires.</p></li>
+</ol>
+</section>
+<section id="introductions" class="level2">
+<h2 class="anchored" data-anchor-id="introductions">Introductions</h2>
+<section id="data-sets" class="level3">
+<h3 class="anchored" data-anchor-id="data-sets">Data sets</h3>
+<ol type="1">
+<li><p>Landsat 8 satellite recorded a collection of bands (red, green, blue, near-infrared and shortwave infrared) from the Landsat Collection 2 Level-2 atmospherically corrected surface reflectance data. Data was obtained from [Microsoft Planetary Computer data catalogue](<a href="https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2" class="uri">https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2</a>).</p></li>
+<li><p>Geometries of the Eaton and Palisades fire perimeters from [County of Los Angele’s ArcGIS page](<a href="https://egis-lacounty.hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c/about" class="uri">https://egis-lacounty.hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c/about</a>).</p></li>
+</ol>
+</section>
+</section>
+<section id="inital-steps" class="level2">
+<h2 class="anchored" data-anchor-id="inital-steps">Inital Steps</h2>
+<p>First thing we must do is load all necessary libraries!</p>
+<p>The important libraries are the <code>geopandas</code> and <code>xarrary</code>. The <code>geopandas</code> package is useful when dealing with vector data. The fire perimeters are polygons (which is a type of vector data). Therefore, we will be using <code>geopandas</code> for the borders. Whereas, the <code>xarrary</code> package is useful when working with raster data, such as the landsat data set.</p>
+</section>
+<section id="data-exploration" class="level2">
+<h2 class="anchored" data-anchor-id="data-exploration">Data Exploration</h2>
+</section>
+<section id="restoring-geo-spatial-information" class="level2">
+<h2 class="anchored" data-anchor-id="restoring-geo-spatial-information">Restoring Geo spatial Information</h2>
+</section>
+<section id="true-color-imagery" class="level2">
+<h2 class="anchored" data-anchor-id="true-color-imagery">True Color Imagery</h2>
+</section>
+<section id="false-color-imagery" class="level2">
+<h2 class="anchored" data-anchor-id="false-color-imagery">False Color Imagery</h2>
+</section>
+<section id="stuff" class="level1">
+<h1>Stuff</h1>
 <p>This is where the body of my blog post begins! I’m going to add a footnote here<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Here’s an inline footnote<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <p>Let’s site Sam<span class="citation" data-cites="shanny-csik2022">(<a href="#ref-shanny-csik2022" role="doc-biblioref">Shanny-Csik 2022</a>)</span>!</p>
 
 
 
+</section>
 
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
@@ -219,13 +273,13 @@ Shanny-Csik, Samantha. 2022. <span>“Adding a Blog to Your Existing <span>Quart
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{hessel2025,
   author = {Hessel, Megan},
-  title = {My {First} {Blog} {Post}},
-  date = {2025-11-12},
+  title = {MY {FIRST} {BLOG} {POST}},
+  date = {2025-12-04},
   url = {https//meganhessel.github.io/Posts/my_first_blog_post},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-hessel2025" class="csl-entry quarto-appendix-citeas" role="listitem">
-Hessel, Megan. 2025. <span>“My First Blog Post.”</span> November 12,
+Hessel, Megan. 2025. <span>“MY FIRST BLOG POST.”</span> December 4,
 2025. <a href="https://https//meganhessel.github.io/Posts/my_first_blog_post">https//meganhessel.github.io/Posts/my_first_blog_post</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
