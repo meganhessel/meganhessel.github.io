@@ -298,12 +298,12 @@ plt.show()
 
 Natural disasters negatively impact everyone involved. However, uninsured communities are exteremely vulnerable as the catastrophes can causes severe financial loss and strain public resources. 
 
-To investigate the impact of the Eaton and Paslisades fire on unisured communities, we will use the California's Environmental Justice data's 'E_UNINSUR' variable. First, we must *join* the EJI dataset to the fire perimeters. Then, assess the uninsured community by *plotting* the census tract data for each fire.
+To investigate the impact of the Eaton and Paslisades fire on unisured communities, we will use the California's Environmental Justice data's 'E_UNINSUR' variable. First, we must *clip* the EJI dataset to the fire perimeters. Then, assess the uninsured community by *plotting* the census tract data for each fire.
 
 ```{python}
-# Join border data with EJI census tracks 
-eaton_join = gpd.sjoin(cali, eaton)
-pal_join = gpd.sjoin(cali, pal)
+# CLIP EJI census tracks with border data 
+eaton_join = gpd.clip(cali, eaton)
+pal_join = gpd.clip(cali, pal)
 
 ``` 
 
