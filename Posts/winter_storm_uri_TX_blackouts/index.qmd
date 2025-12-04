@@ -1,0 +1,416 @@
+---
+title: "Winter Storm Uri: Houston, TX Blackouts"
+description: "Exploring Winter Storm Uri's impacts on the Houston, TX power grid"
+author: 
+  - name: Megan Hessel  # Link to other people 
+    url: https//meganhessel.github.io/
+    affiliation: The Bren School of Environmental Science & Management
+    affiliation-url: https://bren.ucsb.edu/
+date: 2025-12-4
+categories: [MEDS, R, data-viz] #
+image: winter_storm_uri.jpg
+citation: #true (if without link)
+  url: https//meganhessel.github.io/Posts/analyzing_LA_fire_scars 
+#draft: true
+#draft-mode: linked # Hides Blog post on listing page - url still works tho
+#bibliography: references.bib
+---
+
+## Learning Objectives
+
+1.  
+
+## Introduction
+
+On February 11-20, 2021, Winter Storm Uri hit Texas (NOAA, 2023). Uri bright record-breaking cold and precipitation, leading to the longest stretch of freezing temperatures in Texas history (NOAA, 2023). As temperatures plummeted, power went out across the South, pipes burst, roads iced over, and countless accidents followed (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of people (more than 2 out of 3 people) were left in the dark and cold with no access to power or a heater (Watson P, 2021).
+
+This project aims to analyze the effects of the extreme weather associated with Winter Storm Uri on Houston’s power grid, and investigate the relationships of household median income as a possible co-variable to power outage distribution.
+
+## Datasets
+
+1.  The night light data is Visible Infrared Imaging Radiometer Suite (VIIRS) from [NASA's Level-1 and Atmospheric Archive & Distribution System Distributed Active Archive Center](https://ladsweb.modaps.eosdis.nasa.gov/) (LAADS DAAC). VIIRS collects both visible and infrared imagery on 10 by 10 tiles. Houston, Texas is located between two tiles (h08v05 and h08v06). Therefore, we will need to merge the tiles together. For this project, we will be looking at pre (Feb 7) and post (Feb 16) storm night light data.
+
+2.  The road and house data is from originally from [Open Street Map](https://planet.openstreetmap.org/) but taken from a [Geofabrik](https://download.geofabrik.de/) (a third party). Highways account for a large portion of the night lights. During Winter Storm Uri, there is most likely a reduction of traffic as roads iced over and shutdown. In order to not interpret the reduced traffic as blackouts, it is necessary we remove highways from our night light data.
+
+3.  Texas's socioeconomic data is from the U.S. [Census Bureau’s American Community Survey](https://www.census.gov/programs-surveys/acs) for census tracts in 2019.
+
+## Initial Steps
+
+Always, the first step is to download all necessary libraries! 
+```{r}
+#| message: false
+#| warning: false
+#| output: false
+#| code-fold: true
+
+# Import libraries 
+
+library(tidyverse)
+library(tmap) # for map making
+library(kableExtra) # for table formatting
+
+library(geodata) # for spatial vector data
+library(stars) # for spatial vector data
+
+library(raster) # for spatial raster data 
+library(terra) # for spatial raster data 
+```
+
+Then, download and load in all the datasets. 
+
+```{r}
+#| output: false
+#| code-fold: true
+
+# Night lights data ************************************************************
+# read in with read_stars()... which is used with sf functions
+light_1 <- read_stars(here::here("Posts","winter_storm_uri_TX_blackouts", "data", "VNP46A1", "VNP46A1.A2021038.h08v05.001.2021039064328.tif"))
+light_2 <- read_stars(here::here("Posts","winter_storm_uri_TX_blackouts","data", "VNP46A1", "VNP46A1.A2021038.h08v06.001.2021039064329.tif"))
+light_3 <- read_stars(here::here("Posts","winter_storm_uri_TX_blackouts","data", "VNP46A1", "VNP46A1.A2021047.h08v05.001.2021048091106.tif"))
+light_4 <- read_stars(here::here("Posts","winter_storm_uri_TX_blackouts","data", "VNP46A1", "VNP46A1.A2021047.h08v06.001.2021048091105.tif"))
+
+# Raster data could also be read in with rast()...which is used with terra functions
+#l1 <- rast("data/VNP46A1/VNP46A1.A2021038.h08v05.001.2021039064328.tif")
+#l2 <- rast("data/VNP46A1/VNP46A1.A2021038.h08v06.001.2021039064329.tif")
+#l3 <- rast("data/VNP46A1/VNP46A1.A2021047.h08v05.001.2021048091106.tif")
+#l4 <- rast("data/VNP46A1/VNP46A1.A2021047.h08v06.001.2021048091105.tif")
+
+
+# Road Data - Isolating for just 'moterways' ***********************************
+roads <- st_read(here::here("Posts","winter_storm_uri_TX_blackouts", "data", "gis_osm_roads_free_1.gpkg"), query = "SELECT * FROM gis_osm_roads_free_1 WHERE fclass='motorway'")
+
+# House data - Isolating for homes only ****************************************
+houses <- st_read(
+  here::here("Posts","winter_storm_uri_TX_blackouts","data", "gis_osm_buildings_a_free_1.gpkg"),
+  query = "
+    SELECT *
+    FROM gis_osm_buildings_a_free_1
+    WHERE (type IS NULL AND name IS NULL)
+       OR type IN ('residential', 'apartments', 'house', 'static_caravan', 'detached')
+  ")
+
+
+# Texas Socioeconomic Data *****************************************************
+
+# Looking at the various layeres 
+st_layers(here::here("Posts","winter_storm_uri_TX_blackouts", "data", "ACS_2019_5YR_TRACT_48_TEXAS.gdb"))
+
+# Pulling out the geometry and income layers 
+geom_texas <- st_read(here::here("Posts","winter_storm_uri_TX_blackouts", "data","ACS_2019_5YR_TRACT_48_TEXAS.gdb"), layer = "ACS_2019_5YR_TRACT_48_TEXAS")
+income_texas <- st_read(here::here("Posts","winter_storm_uri_TX_blackouts","data", "ACS_2019_5YR_TRACT_48_TEXAS.gdb"), layer = "X19_INCOME")
+
+
+```
+
+## Data Wrangling 
+
+### Coordinate Reference Systems (CRS)
+
+It is *always* important to know the geospatial datas' **coordinate reference systems** (CRS). The CRS defines how the geospatial data is located and plotted. There are 2 CRS types: geographic (how the data is plotted on the 3D globe) and projected (how the data is plotted on a 2D map). It is important to use the correct CRS for your data and intended goal. Additionally, when merging or plotting geospatial data together, the datasets must be in the same CRS. Matching CRSs ensures that all spatial data layers align correctly, calculations are meaningful, and analytical results are trustworthy.
+
+```{r}
+
+# Create print message function to check crs 
+crs_check <- function(crs1, crs2) {
+  if (st_crs(crs1) == st_crs(crs2)) {
+    print("its a match")
+    return(crs2)
+  } else {
+    warning("Updating CRS")
+    #crs1 <- st_transform(crs1, crs = 'EPSG:4326')
+    return(st_transform(crs2, crs = st_crs(crs1)))
+  }
+}
+
+
+# Check crs between roads, houses, and TX' geom
+houses <- crs_check(roads, houses)
+geom_texas <- crs_check(roads, geom_texas) # Changed these 
+geom_texas <- crs_check(houses, geom_texas) # Changed these
+
+# Check crs between all the light dfs 
+light_2 <- crs_check(light_1, light_2)
+light_3 <- crs_check(light_1, light_3)
+light_4 <- crs_check(light_1, light_4)
+light_3 <- crs_check(light_2, light_3)
+light_4 <- crs_check(light_2, light_4)
+light_4 <- crs_check(light_3, light_4)
+
+
+# Double check the CRS change worked 
+st_crs(roads) == st_crs(geom_texas)
+st_crs(houses) == st_crs(geom_texas)
+
+```
+All CRSs match! 
+
+## Creating a Blackout Mask 
+**PURPOSE:**
+
+### (a) Combine the Night light data 
+
+As stated before, the night light data is recorded on 10 by 10 tiles. Houston is split by two different tiles. Therefore, we have to merge the tiles together to create one picture of Houston, Texas.  
+
+```{r}
+#| code-fold: true
+# Combine light data based on y
+feb7sf <- st_mosaic(light_1, light_2)
+feb16sf <- st_mosaic(light_3, light_4)
+
+# Remove the light objects 
+rm(list = c('light_1', 'light_2', 'light_3', 'light_4'))
+```
+
+Now that we have combined the tiles to create a whole picture of Houston on Feb 7 and Feb 16, we need to make sure the extents of both days are the same. `Extents` refer to the geospatial range encompassed within the data. 
+
+```{r}
+# Check if extents match
+print(st_bbox(feb7sf))
+print(st_bbox(feb16sf))
+```
+The extents match, and we can move on! 
+
+### (b) Finding Blackouts 
+
+**Blackouts** are when the power difference (between pre and post night light data) is greater than 200 nW cm^-2^sr^-1^. We can find this by using mathematics operations between tiles and comparison symbols. 
+
+```{r}
+#| code-fold: true
+# Finding where there are blackouts 
+difference <- (feb7sf - feb16sf) > 200
+  # Creates a list of boolean operators - returns TRUES for more than 200; FALSE for less than 200 
+
+```
+
+### (c) Mask Blackout Data
+
+**Mask** means to convert and/or filter for specific data. In this case, we are making for *only* areas that experienced a blackout. Everywhere else that did not experience a blackout gets an NA value. 
+```{r}
+#| code-fold: true
+# Create raster mask of the same resolution and extent  
+diff_mask <- difference
+
+# Assign NA to all locations that experienced a drop of less than 200 nW cm-2sr-1 change ("FALSE")
+diff_mask[diff_mask == "FALSE" ] <- NA 
+
+# Remove the difference object 
+rm(difference)
+```
+
+### (d) Vectorize the Blackout Mask
+
+Convert the masked blackout data frame to a vector by using an `st_as_sf` function. Then check and change all the invalid geometries. 
+```{r}
+#| code-fold: true
+#| output: False 
+
+# Convert from a raster to a vector with st_as_sf
+diff_mask_vec <- st_as_sf(diff_mask)
+
+# Invalid geometries 
+which(!st_is_valid(diff_mask_vec)) # Tell us which specific ones are invalid 
+
+# Fixing invalid geometries  
+diff_mask_vec <- st_make_valid(diff_mask_vec)
+```
+
+### (e) Crop the blackout mask to the Houston area
+
+By applying Houston’s city limits to `st_bbox`, we generated a bounding box representing the city’s spatial extent, which was then used with `st_crop` to clip the blackout mask data accordingly.
+
+```{r}
+#| code-fold: true 
+#| warning: false
+
+# Create the Houston bounding box 
+bound_box <- st_bbox(c(xmin =-96.5, xmax = -94.5, ymax = 30.5, ymin = 29), crs = st_crs(diff_mask))
+
+# Crop difference vector with the bounding box 
+diff_crop <- st_crop(diff_mask_vec, bound_box)
+  # ANOTHER WAY: diff_crop <- difference_mask[bound_box, op = st_intersects]
+
+```
+
+
+### (f) Exclude highways from blackout area 
+
+Highway traffic is typically seen from space and accounts for a large portion of the night lights. During Winter Storm Uri, roads were iced over and shut down, reducing traffic. Therefore, in order to ensure the reduction in traffic is not misinterpreted at a blackout, we must exclude the highways from the blackout mask. 
+
+First, use `st_union` to unionize all the highways to make the data more manageable. 
+Secondly, use `st_buffer` to make a 200m buffer zone around all highways. 
+
+```{r}
+#| code-fold: true
+#| warning: false 
+
+# Unionize road data to make it more manageable - Aggregating road data 
+road_union <- st_union(roads) 
+
+# Buffer areas within 200 m of all highways 
+road_buffer <- st_buffer(road_union, dist = units::set_units(200, "m"))
+```
+
+`st_difference` 
+```{r}
+#| code-fold: true
+#| warning: false 
+
+# Locating all blackouts NOT within the 200m highway buffer 
+blackouts_200m_highway <- st_difference(diff_crop, road_buffer) 
+```
+
+### (f) Re-project the cropped blackout dataset to EPSG:3083
+
+**Re-projecting** means to change the CRS (the projection). We are changing the CRS with `st_transform` to EPSG:3083, which refers to the NAD83 / Texas Centric Albers Equal Area. This projection is better suited for the project's scope and goals. 
+
+```{r}
+#| code-fold: true
+# Changing the crs to NAD83 / Texas Centric Albers Equal Area
+blackouts_epsg_hw_buff <- st_transform(blackouts_200m_highway, crs = 'EPSG:3083')
+```
+
+### Plot! 
+
+```{r}
+#| code-fold: true
+#| warning: false 
+
+# Want to Map Houston's light difference data (with the road data for clarity)
+
+# Plot it! 
+tm_shape(blackouts_epsg_hw_buff) + 
+  tm_polygons(col = "firebrick") + 
+  tm_shape(road_union) + 
+  tm_lines() +
+  tm_basemap("CartoDB.PositronNoLabels") +
+  tm_title(text = "Blackouts caused by Winter Storm Uri\nin Houston, TX") + 
+  tm_compass(position = c("left", "bottom")) + 
+  tm_scalebar(position = c("left", "bottom")) + 
+  tm_credits("Figure 1", position = c("right", "bottom")) + 
+  tm_layout(text.fontfamily = "Times", text.fontface = "plain")
+
+# remove unnesscary objects 
+rm(list = c("blackouts_epsg_hw_buff", "blackouts_200m_highway", "road_buffer"))
+```
+
+
+## Before and After Plot 
+**PURPOSE:**
+
+*Crop* Feb 7 and Feb 16 night light data to Houston's extent (previously created bounding box)
+```{r}
+# Crop to Houston Texas bounding box 
+feb7sf_houston <- st_crop(feb7sf, bound_box)
+feb16sf_houston <- st_crop(feb16sf, bound_box)
+```
+
+Cloud cover can cause extremely light measurements. Therefore, to correctly plot the night light data, we need to *take out all the extreme*, outlier measurements by masking. 
+```{r}
+# Mask to get rid of extremes 
+feb7sf_houston[feb7sf_houston < 200 | feb7sf_houston > 1000] <- NA 
+feb16sf_houston[feb16sf_houston < 200 | feb16sf_houston > 1000] <- NA
+
+```
+
+*Plot* the light intensity between Feb 7 and Feb 16 to see the considerable amount of blackouts.
+```{r}
+#| code-fold: true
+
+# Map feb 7 and feb 16 
+feb7map <- tm_shape(feb7sf_houston) + 
+  tm_raster(col.scale = tm_scale(values = "inferno"),
+            col.legend = tm_legend(title = "Light Intensity (nW cm-2sr-1)")) +
+            #title = "Light Intensity (nW cm-2sr-1)") + 
+  tm_title(text = "Feb 7 Houston, TX Night Light") + 
+  tm_compass(position = c("left", "bottom")) + 
+  tm_basemap("CartoDB.PositronNoLabels")
+  
+
+feb16map <- tm_shape(feb16sf_houston) + 
+  tm_raster(col.scale = tm_scale(values = "inferno"),
+            col.legend = tm_legend(title = "Light Intensity (nW cm-2sr-1)"))+
+            #title = "Light Intensity (nW cm-2sr-1)" ) + 
+  tm_title(text = "Feb 16 Houston, TX Night Light") + 
+  tm_scalebar(position = c("left", "bottom")) + 
+  tm_credits("Figure 2") + 
+  tm_basemap("CartoDB.PositronNoLabels")
+
+tmap_arrange(feb7map, feb16map, outer.margins = 0.03)
+
+# Get rid of unneccary dfs 
+rm(list = c('feb7sf', 'feb16sf'))
+```
+
+## Homes Impacted by Blackouts
+
+First, check and transform CRSs to match. 
+Secondly, check and fix invalid geometries. 
+```{r}
+#| code-fold: true 
+if(st_crs(houses) == st_crs(diff_crop)){ # Check if match 
+  print("CRS match!")
+  } else {
+  warning("Updating CRS to match")
+  
+  # Transform to match 
+  diff_crop <- st_transform(diff_crop, st_crs(houses))
+  }
+
+# Invalid geometries 
+#which(!st_is_valid(houses))
+#which(!st_is_valid(diff_crop))
+
+# Fixing invalid geometries  
+houses <- st_make_valid(houses)
+diff_crop <- st_make_valid(diff_crop)
+
+```
+
+### Find homes that experienced a blackout 
+
+Now, we need to find the homes that experienced a blackout! 
+`st_filter` (with .predicate = st_intersects) will find all the houses that are within the blackout cropped mask. 
+```{r}
+# Homes that experienced  blackouts 
+home_blackout <- st_filter(houses, diff_crop, .predicate = st_intersects)
+```
+
+### Estimate of the number of homes in Houston that lost power
+
+Because the home_blackout dataframe contains 1 row for every building that experienced a blackout, we can just count the number of rows using `nrow` to estimate the number of homes without power.  
+```{r}
+# Number of observations in the home_blackout raster 
+est <- nrow(home_blackout)
+
+# Print statement 
+print(paste("About", est, "of Houston homes lost power"))
+
+# Remove estimate object 
+rm(est)
+```
+
+### Map 
+
+```{r}
+#| warning: false
+#| code-fold: true
+
+# Map it! 
+tm_shape(home_blackout) + 
+  tm_polygons(col = "chartreuse4") + 
+  tm_basemap("CartoDB.PositronNoLabels") +
+  tm_shape(road_union)+ 
+  tm_lines(col = "grey20", 
+           col_alpha = 0.3) +
+  tm_title(text = "Homes that Experienced Blackouts in Houston, TX\nDuring Winter Strom Uri") + 
+  tm_compass(position = c("left", "bottom")) + 
+  tm_scalebar(position = c("left", "bottom")) + 
+  tm_credits("Figure 3") + 
+  tm_add_legend(type = "polygons",
+                labels = "Experienced Blackouts",
+                fill = "chartreuse4", 
+                title = "Houston Homes"
+                ) 
+
+```
+
