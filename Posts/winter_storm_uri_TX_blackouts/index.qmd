@@ -16,15 +16,19 @@ citation: #true (if without link)
 #bibliography: references.bib
 ---
 
-## Learning Objectives
-
-1.  
-
 ## Introduction
 
 On February 11-20, 2021, Winter Storm Uri hit Texas (NOAA, 2023). Uri bright record-breaking cold and precipitation, leading to the longest stretch of freezing temperatures in Texas history (NOAA, 2023). As temperatures plummeted, power went out across the South, pipes burst, roads iced over, and countless accidents followed (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of people (more than 2 out of 3 people) were left in the dark and cold with no access to power or a heater (Watson P, 2021).
 
 This project aims to analyze the effects of the extreme weather associated with Winter Storm Uri on Houston’s power grid, and investigate the relationships of household median income as a possible co-variable to power outage distribution.
+
+```{r, out.width = "500px"}
+#| echo: false
+knitr::include_graphics(here::here("Posts","winter_storm_uri_TX_blackouts", "texas_snow.jpg"))
+```
+
+
+Credits to Joe Raedle/Getty. Image obtained from the [People](https://people.com/human-interest/winter-storm-texas-snow-photos/).
 
 ## Datasets
 
@@ -149,6 +153,8 @@ All CRSs match!
 ## Creating a Blackout Mask
 
 **PURPOSE:**
+Locate all areas that experienced blackouts in Houston, TX. 
+To do this, we will combine the night light tiles, find areas that experienced blackouts, and crop the dataframe to Houston's extents while excluding highway.
 
 ### (a) Combine the Night light data
 
@@ -160,6 +166,10 @@ As stated before, the night light data is recorded on 10 by 10 tiles. Houston is
 feb7sf <- st_mosaic(light_1, light_2)
 feb16sf <- st_mosaic(light_3, light_4)
 
+```
+
+```{r}
+#| echo: false
 # Remove the light objects 
 rm(list = c('light_1', 'light_2', 'light_3', 'light_4'))
 ```
@@ -198,6 +208,10 @@ diff_mask <- difference
 # Assign NA to all locations that experienced a drop of less than 200 nW cm-2sr-1 change ("FALSE")
 diff_mask[diff_mask == "FALSE" ] <- NA 
 
+```
+
+```{r}
+#| echo: false
 # Remove the difference object 
 rm(difference)
 ```
@@ -292,6 +306,11 @@ tm_shape(blackouts_epsg_hw_buff) +
   tm_credits("Figure 1", position = c("right", "bottom")) + 
   tm_layout(text.fontfamily = "Times", text.fontface = "plain")
 
+
+```
+
+```{r}
+#| echo: false
 # remove unnesscary objects 
 rm(list = c("blackouts_epsg_hw_buff", "blackouts_200m_highway", "road_buffer"))
 ```
@@ -299,6 +318,7 @@ rm(list = c("blackouts_epsg_hw_buff", "blackouts_200m_highway", "road_buffer"))
 ## Before and After Plot
 
 **PURPOSE:**
+Map Houston's night light pre and post the Winter Storm. 
 
 *Crop* Feb 7 and Feb 16 night light data to Houston's extent (previously created bounding box)
 
@@ -386,12 +406,17 @@ home_blackout <- st_filter(houses, diff_crop, .predicate = st_intersects)
 Because the 'home_blackout' dataframe contains 1 row for every building that experienced a blackout, we can just count the number of rows using `nrow` to estimate the number of homes without power.
 
 ```{r}
+#| code-fold: true
 # Number of observations in the home_blackout raster 
 est <- nrow(home_blackout)
 
 # Print statement 
 print(paste("About", est, "of Houston homes lost power"))
 
+```
+
+```{r}
+#| echo: false
 # Remove estimate object 
 rm(est)
 ```
@@ -423,11 +448,13 @@ tm_shape(home_blackout) +
 
 ## Comparision to Income Cenus Tracks
 
-### Join the Texas income and geometery datasets
+### Data Wrangling
 
-In the Texas's socioeconomic data, each row is a different census track. Whereas, the columns are different measurements for each census track. By look at the dimensions of the two layers, we can see that the rows numbers match perfectly. This makes sense because the income and geometry dataframes are just different layers of the same large dataset. Therefore, when merging the layers, we can use `cbind` to "stitch" the layers together, keeping all columns.
+#### (a) Join the Texas income and geometery datasets
 
-Before merging datasets, its helpful to look at the dimensions before and after the merge to ensure the merge worked properly.
+In the Texas's socioeconomic data, each row is a different census track. Whereas, the columns are different measurements for each census track. By looking at the dimensions of the two layers, we can see that the row numbers match perfectly. This makes sense because the income and geometry dataframes are just different layers of the same large dataset. Therefore, when merging the layers, we can use `cbind` to "stitch" the layers together, keeping all columns.
+
+When merging datasets, its helpful to look at the dimensions before and after the merge to ensure the \`cbind\` worked properly.
 
 ```{r}
 # Looking at dataframes 
@@ -441,14 +468,23 @@ texas_df <- cbind(geom_texas, income_texas)
 # Print new df's dimensions - see if the joined worked
 print(dim(texas_df))
 
+```
+
+```{r}
+#| echo: false 
 # Remove un-joined dfs 
 rm(list = c('geom_texas', 'income_texas'))
 ```
 
-### Filter and merge 
-Filtering for homes did vs did not experience a blackout and merging the home dataset to the Texas census track data. 
+#### (b) Filter and merge
 
-**GOAL:** (1) Make a datasets with homes that *DID* experienced a blackout and their income = "income_bo_homes" and (2) Make a datasets with homes that *did NOT* experienced a blackout and their income = "income_NO_bo_homes"
+Filtering for homes did vs did not experience a blackout and merging the home dataset to the Texas census track data.
+
+**GOAL:**
+
+\(1\) Make a datasets with homes that *DID* experienced a blackout and their income = "income_bo_homes"
+
+\(2\) Make a datasets with homes that *did NOT* experienced a blackout and their income = "income_NO_bo_homes"
 
 [First]{.underline}, need to ensure CRSs match!
 
@@ -486,8 +522,6 @@ idx_intersect <- st_intersects(texas_df, home_blackout, sparse = FALSE)
 #  Looking for areas NOT included in the intersection data 
 income_NO_bo_homes <- texas_df[!apply(idx_intersect, 1, any), ] %>% 
   mutate(blackout = "FALSE") # Adding a column pertaining to NOT experiencing a BO 
-  # Loops over all rows to see if there is a any "TRUE" or "FALSE" values in every row 
-  # ! keeps only rows with no intersection 
 
 ```
 
@@ -502,16 +536,30 @@ print(dim(home_blackout))
 print(dim(income_bo_homes))
 print(dim(income_NO_bo_homes))
 
+```
 
+```{r}
+#| echo: false
 # Remove intermediate 'idx_intersect' df 
 rm(idx_intersect)
 ```
 
-### Visualizing income and blackouts spatially 
+#### (c) Create dataset of all homes in Houston
 
-Mapping the household income distributions if they did vs did not experience a blackout. 
+Combine the information of homes that did lose power and homes that did not. Since the columns are the same, we can use `rbind` to stitches together the rows.
+
+```{r}
+# Merge mean income blackouts and no blackout dataframes 
+income_merge <- rbind(income_NO_bo_homes, income_bo_homes)
+```
+
+### Visualizing blackout experiences with income
+
+Mapping the household income distributions if they did vs did not experience a blackout.
+
 ```{r}
 #| warning: false
+#| code-fold: true
 
 # Create my color palette 
 my_palette = c('#488f30', '#a9bb5a', '#ffe896', '#ffad76', '#fc7082') 
@@ -525,7 +573,9 @@ no_blackout_income_map <- tm_shape(income_NO_bo_homes) +
                                     values = my_palette)) +
     tm_shape(diff_crop, is.main = TRUE) + 
   tm_title(text = "Medium Income Cenus Track for Homes with Power") +   
-  tm_compass(position = c('right', 'bottom')) + 
+  #tm_compass(position = c('right', 'bottom')) + 
+  tm_compass(position = c(0.45, -0.02)) + 
+  tm_scalebar(position = c(0.60, -0.05)) +
   tm_basemap("Esri.WorldTopoMap")
 
 
@@ -537,7 +587,7 @@ blackout_income_map <- tm_shape(income_bo_homes) +
                                      values = my_palette)) +
   tm_shape(diff_crop, is.main = TRUE) + 
   tm_title(text = "Medium Income Cenus Track for Homes without Power") + 
-  tm_scalebar(position = c('left', 'bottom')) + 
+  #tm_scalebar(position = c('left', 'bottom')) + 
   tm_credits(text = "Figure 5", position = c(0.7, -0.05)) + 
   tm_basemap("Esri.WorldTopoMap")
 
@@ -545,30 +595,157 @@ blackout_income_map <- tm_shape(income_bo_homes) +
 tmap_arrange(no_blackout_income_map, blackout_income_map)
 ```
 
-Map just the 'income_bo_homes' to get a better understanding of the communities that lost power. 
+To get a better understanding of the communities that lost power, map just the 'income_bo_homes' .
 
 ```{r}
 #| warning: false
+#| code-fold: true
 
 tm_shape(income_bo_homes) + 
   tm_polygons(fill = "B19013e1", 
               fill.legend = tm_legend(title = "Median Income that\nExperienced Blackouts"),
               fill.scale = tm_scale(values = my_palette, 
                                     breaks = c(0, 50000, 100000, 150000, 200000, 300000))) +
-  tm_compass(position = c(1.02, 0.25)) + 
-  tm_scalebar(position = c(1.14, 0.25)) + 
+  tm_compass(position = c(1.02, 0.40)) + 
+  tm_scalebar(position = c(1.14, 0.40)) + 
   tm_title(text = "Median Income Census Tracts in Houston, TX that\nExperienced a Blackout During Winter Storm Uri") + 
   tm_credits("Figure 6") + 
   tm_basemap("Esri.WorldTopoMap")
 
 ```
 
-### Create dataset of all homes in Houston 
+Figures 5 and 6 shows us that the downtown area experienced more blackouts. However, it is difficult to understand the income variable within the maps.
 
-Combine the dataset of income + home information 
+### Income Classes
+
+To better investigate if socioeconomic status (particularly income level) affected the likelihood of experiencing a blackout, I categorized the population into three income groups: low, middle, and upper class.
+
+To do this categorization, I created a new dataframe that specified the medium income level's *class*. The estimated class separation for Houston, Texas is:
+
+-   Lower class: \$40,000 and less
+
+-   Middle class: \$40,000 - \$125,000
+
+-   Upper class: \$125,000 and above
+
+These income class numbers are based on Fullerton, 2026. 
+
 ```{r}
-# Merge mean income blackouts and no blackout dataframes 
-income_merge <- rbind(income_NO_bo_homes, income_bo_homes)
+#| code-fold: true
+
+# Select only needs columns and drop geometry 
+income_class <- income_merge[, c('GEOID', 'B19013e1', 'blackout')] %>% 
+  st_drop_geometry() 
+
+
+# Add new column based on median income for INCOME CLASSES 
+income_class <- income_class %>% 
+  mutate(class = case_when(
+    is.na(B19013e1) ~ NA_character_, 
+    B19013e1 < 40000 ~ "lower_class", 
+    B19013e1 < 125000 ~ "middle_class",
+    TRUE ~ "upper_class" # All others are upper class 
+  ) )
+# Made these income classes based on Fullerton, 2026 
+
+# COUNTS of homes experiencing blackouts vs not per income class 
+income_class_sum <- income_class %>% 
+  group_by(class, blackout) %>% 
+  summarise(count = n()) 
+
 ```
 
+Plot Income Classes
+
+```{r}
+#| code-fold: true 
+#| wanring: false
+
+# Plot it 
+ggplot(income_class_sum, 
+       aes(x = class, 
+           y = count, 
+           fill = blackout)) + 
+  geom_col(position="fill",
+           #stat = "identity",
+           color = "black") + 
+  scale_fill_manual(labels = c("No Blackout", "Blackout"),
+                    values = c("#ffad76", "#488f30")) + 
+  scale_x_discrete(labels = c('Lower Class', 'Middle Class', 'Upper Class', 'NAs')) +
+  labs(title = "Proportion of Households that did and did not\nExperienced Blackouts in Various Income Classes ", 
+       x = "Income Classes", 
+       y = "Proportion", 
+       fill = "Experienced Blackout", 
+       caption = "Figure 8:\nLower income class is below $40,000.\nMiddle class is $40,000 to $125,000.\n Upper class is greater than $125,000.") +
+  theme_bw()
+
+```
+
+Find *Proportion* of Income Classes that Experienced a Blackout
+
+To find the percents of each income class that experiences a blackout, I found the population within each income bracket, filtered for the population that lost power in each class, then calculated the percent (count that experienced a blackout/total count of income bracket population). 
+```{r}
+#| code-fold: true 
+#| wanring: false
+
+# Total of homes per each income class 
+class_count_total <- income_class_sum %>% 
+  group_by(class) %>% 
+  summarise(total = sum(count))
+
+
+# Filters for home counts that experiences a blackout 
+class_count_blackout <- income_class_sum %>% 
+  filter(blackout == 'TRUE')
+
+# Combine dataframes 
+class_count <- left_join(class_count_blackout, class_count_total, by ='class')
+
+# Proportions of homes that experiences a blackout per Income Class 
+class_count <- class_count %>% 
+  group_by(class) %>% 
+  mutate(prop = 100*(count/total))
+
+# Creating a kable table 
+knitr::kable(class_count[, c('class', 'prop')], 
+                      col.names = c("Income Class", "Percentage"),
+                      digits = 2, 
+                      align = 'c',
+                      caption = "Percentage of Each Income Class that Experienced a Blackout")
+
+
+```
+
+```{r}
+#| echo: false 
+# Remove unnecessary dfs 
+rm(list = c('class_count_blackout', 'class_count_total'))
+```
+
+## Conclusion
+
+On February 11-20, 2021, Winter Storm Uri hit Texas (NOAA, 2023). Uri bright record-breaking cold and precipitation, leading to the longest stretch of freezing temperatures in Texas history (NOAA, 2023). As temperatures plummeted, power went out across the South, pipes burst, roads iced over, and countless accidents followed (NOAA, 2023 and Watson P, 2021). Millions of people (more than 2 out of 3 people) were left in the dark and cold with no access to power or a heater at some point (Watson P, 2021).
+
+In Houston, Texas, the power outage centered around the downtown area which is seen in Figures 1 - 5. Figures 6 - 8 investigate the power outages in comparison with income census blocks. The medium income distributions of people who experienced blackouts vs did not experience blackouts are very similar and consistent with the overall medium income distribution in Houston. As shown in Figure 7 and the table, the proportion of residents experiencing blackouts is relatively consistent across income classes, ranging from about 12% to 16%. Accordingly, there is insufficient evidence to suggest that the power outages during Winter Storm Uri were biased or unjustly distributed.
+
+Limitations to the study: The light data was from NASA's Level-1 and Atmosphere Archive and Distribution System Distributed Active Archive Center (LAADS DAAC) which uses Visible Infrared Imaging Radiometer Suite (VIIRS). When using satellite imagery, course spatial resolution and atmospheric interference can impact the study. Furthermore, the road and house data is acquired by Open Street Map which can have data completeness and accuracy issues.
+
+### Personal Statement
+
+I am originally from Houston, Texas, and I experienced Winter Storm Uri firsthand. The storm brought unprecedented freezing temperatures to the region, overwhelming the power grid and disrupting daily life across the state. During this time, my father and I were without electricity in our home while my mother, Dr. Hessel, remained on call at the hospital for several days. It was an exceptionally difficult week with prolonged power outages, pipes bursting, hazardous conditions keeping us indoors, and widespread school closures. The event shows the importance of resilient infrastructure and highlighted how essential preparedness and coordinated response systems are during extreme weather events. 
+# References
+
+National Aeronautics and Space Administration (NASA). (n.d.) Level-1 and Atmospheric Archive & Distribution System Distributed Active Archive Center (LAADS DAAC). Visible Infrared Imaging Radiometer Suite (VIIRS). <https://ladsweb.modaps.eosdis.nasa.gov/>
+
+OpenStreetMap. (n.d.) Planet OSM. OpenStreetMap. <https://planet.openstreetmap.org/>
+
+Geofabrik GmbH. (n.d.). OpenStreetMap Data Extracts. GEOFABRIK. <https://download.geofabrik.de/>
+
+United States Census Bureau. (2019). American Community Survey (ACS). United States Census Bureau. <https://www.census.gov/programs-surveys/acs>.
+
+Fullerton, A. (2025). You need to make this much to be considered middle-class in Houston. FOX26. <https://www.fox26houston.com/news/houston-middle-class-texas-2025>
+
+National Oceanic and Atmospheric Administration (NOAA). (2023, Feb 24). The Great Texas Freeze: February 11-20, 2021. National Centers for Environmental Information. <https://www.ncei.noaa.gov/news/great-texas-freeze-february-2021>
+
+Watson, K. P., Cross, R., Jones, M. P., Buttorff, G., Granato, J., Pinto, P., ... & Vallejo, A. (2021). The winter storm of 2021. Hobby School of Public Affairs, University of Houston. <https://www.uh.edu/hobby/winter2021/storm.pdf>
 
