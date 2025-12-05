@@ -158,7 +158,7 @@
     "href": "posts.html",
     "title": "Blog",
     "section": "",
-    "text": "Winter Storm Uri: Houston, TX Blackouts\n\n\n\nMEDS\n\nR\n\ndata-viz\n\n\n\nExploring Winter Storm Uri’s impacts on the Houston, TX power grid\n\n\n\nMegan Hessel\n\n\nDec 4, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nHurricane Ian Flooding in Florida\n\n\n\nMEDS\n\nR\n\nstats\n\n\n\nInvestigating sociodemiographic influences on flooding intensity during Hurricane Ian.\n\n\n\nMegan Hessel\n\n\nDec 4, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nAnalyzing Eaton and Palisades Fire Scars\n\n\n\nMEDS\n\nPython\n\ndata-viz\n\n\n\nUsing Landsat Collection 2 Level-2 atmosperically corrected surface reflectance data to inspect the fire scaring from the 2025 Eaton and Palisades Fires in Los Angeles.…\n\n\n\nMegan Hessel\n\n\nDec 4, 2025\n\n\n\n\n\n\nNo matching items"
+    "text": "Winter Storm Uri: Houston, TX Blackouts\n\n\n\nMEDS\n\nR\n\ndata-viz\n\n\n\nExploring Winter Storm Uri’s impacts on the Houston, TX power grid\n\n\n\nMegan Hessel\n\n\nDec 4, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nHurricane Ian Flooding in Florida\n\n\n\nMEDS\n\nR\n\nstats\n\n\n\nInvestigating sociodemiographic influences on flooding intensity during Hurricane Ian.\n\n\n\nMegan Hessel\n\n\nDec 4, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nAnalyzing Eaton and Palisades Fire Scars\n\n\n\nMEDS\n\nPython\n\ndata-viz\n\n\n\nUsing Landsat Collection 2 Level-2 atmosperically corrected surface reflectance data to inspect the fire scaring from the 2025 Eaton and Palisades Fires in Los Angeles.…\n\n\n\nMegan Hessel\n\n\nDec 4, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nMY FIRST BLOG POST\n\n\n\nMEDS\n\nPython\n\ndata-viz\n\n\n\nUsing Landsat Collection 2 Level-2 atmosperically corrected surface reflectance data to inspect the fire scaring from the 2025 Eaton and Palisades Fires in Los Angeles.\n\n\n\nMegan Hessel\n\n\nDec 4, 2025\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "Posts/winter_storm_uri_TX_blackouts/index.html#comparision-to-income-cenus-tracks",
@@ -256,7 +256,7 @@
     "href": "Posts/hur_ian_flooding/index.html#hypothesis",
     "title": "Hurricane Ian Flooding in Florida",
     "section": "Hypothesis",
-    "text": "Hypothesis\nAreas with higher concentrations of low-income and minority populations are more susceptible to severe flooding when located within the path of a hurricane.\nAlternative Hypothesis: There is no relationship between low-income, minority populations, flood intensity between communities within versus outside of the Hurricane’s path. \\[\n\\begin{align}\n\\beta_1 = 0 \\\\\n\\beta_2 = 0 \\\\\n\\beta_3 = 0) \\\\\n\\beta_4 = 0\n\\end{align}\n\\]"
+    "text": "Hypothesis\nAreas with higher concentrations of low-income and minority populations are more susceptible to severe flooding when located within the path of a hurricane.\nAlternative Hypothesis: There is no relationship between low-income, minority populations, flood intensity between communities within versus outside of the Hurricane’s path.\n\\[\n\\begin{align}\n\\beta_1 = 0 \\\\\n\\beta_2 = 0 \\\\\n\\beta_3 = 0 \\\\\n\\beta_4 = 0\n\\end{align}\n\\]"
   },
   {
     "objectID": "Posts/hur_ian_flooding/index.html#evaulating-coefficients-and-plots",
