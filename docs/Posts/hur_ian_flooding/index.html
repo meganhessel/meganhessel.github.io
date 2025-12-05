@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2025-12-04">
 <meta name="description" content="Investigating sociodemiographic influences on flooding intensity during Hurricane Ian.">
 
-<title>Hurricane Ian FLooding in Florida – Megan Hessel</title>
+<title>Hurricane Ian Flooding in Florida – Megan Hessel</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,6 +108,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -188,8 +217,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#making-predictions" id="toc-making-predictions" class="nav-link" data-scroll-target="#making-predictions">Making Predictions</a></li>
   <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals">Confidence Intervals</a></li>
   <li><a href="#plots" id="toc-plots" class="nav-link" data-scroll-target="#plots">Plots</a></li>
-  <li><a href="#evaulating-coefficients-and-plots" id="toc-evaulating-coefficients-and-plots" class="nav-link" data-scroll-target="#evaulating-coefficients-and-plots">Evaulating Coefficients and Plots</a></li>
   </ul></li>
+  <li><a href="#evaulating-coefficients-and-plots" id="toc-evaulating-coefficients-and-plots" class="nav-link" data-scroll-target="#evaulating-coefficients-and-plots">Evaulating Coefficients and Plots</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -198,7 +229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Hurricane Ian FLooding in Florida</h1>
+<h1 class="title">Hurricane Ian Flooding in Florida</h1>
   <div class="quarto-categories">
     <div class="quarto-category">MEDS</div>
     <div class="quarto-category">R</div>
@@ -248,13 +279,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In Fall of 2022, Hurricane Ian formed south of the Cayman Islands. Reaching Cuba, the storm grew into a Category 2 and 3 (britannica). In less then a week, Hurricane Ian traveled to Florida (FL), hitting its west coast (near Sarasota) as a Category 4 (britannica). It ended its treacherous path in the Carolinas. Ian was a deadly hurricane, bringing 250 km/hr winds, disastrous rainfall, and inundations of 6-14 feet of storm surge (FOX, britannica, NOAA). About 160 people died, mostly due to drowning in the insane storm surge (britannica, NOAA). In Florida, there is an estimated $109.5 billion of damges, and $112.9 billion of total damages in the US (NOAA). Furthermore, about 3.28 million people in FL lost power (NOAA). Hurricane Ian left disaster in its wake from Cuba all the way to the Carolinas.</p>
-<p>Dr, Chakraborty studied the injustice of Hurricane Harvey flooding in Houston, Texas. He found race, ethnicity, and socioeconomic status played a role in the spatial distribution of flooding. Black, Hispanic, and socioeconomically disadvantaged residents faced substantially more flooding compared to their counterparts. While rainfall happens everywhere equally, flooding intensity and duration is not equally distributed as community infrastructure, drainage, and food-control investments vary between neighborhoods.</p>
+<p>In Fall of 2022, Hurricane Ian formed south of the Cayman Islands. Reaching Cuba, the storm grew into a Category 2 and 3 (Rafferty, 2022). In less then a week, Hurricane Ian traveled to Florida (FL), hitting its west coast (near Sarasota) as a Category 4 (Rafferty, 2022). It ended its treacherous path in the Carolinas. Ian was a deadly hurricane, bringing 250 km/hr winds, disastrous rainfall, and inundations of 6-14 feet of storm surge (Walls, 2022; Rafferty, 2022; Bucci et al., 2023). About 160 people died, mostly due to drowning in the insane storm surge (Rafferty, 2022 &amp; Bucci et al., 2023). In Florida, there is an estimated $109.5 billion of damges, and $112.9 billion of total damages in the US (Bucci et al., 2023). Furthermore, about 3.28 million people in FL lost power (Bucci et al., 2023). Hurricane Ian left disaster in its wake from Cuba all the way to the Carolinas.</p>
+<p>Dr.&nbsp;Chakraborty studied the injustice of Hurricane Harvey flooding in Houston, Texas. They found race, ethnicity, and socioeconomic status played a role in the spatial distribution of flooding (Chakraborty, Collins, &amp; Grineski, 2019). Black, Hispanic, and socioeconomically disadvantaged residents faced substantially more flooding compared to their counterparts (Chakraborty, Collins, &amp; Grineski, 2019). While rainfall happens everywhere equally, flooding intensity and duration is not equally distributed as community infrastructure, drainage, and food-control investments vary between neighborhoods (Chakraborty, Collins, &amp; Grineski, 2019).</p>
 <p>Inspired by Dr.&nbsp;Chakraborty study, this project aims to investigate the socio-demographics impacts of flooding for Hurricane Ian in Florida. To accomplish this, we will merge flooding data (inches) and census track measurements for easy comparisons. Then, we will run a generalized linear mixed model (glmm). Glmm is a zero-inflated model which means it can manage the 0 values within the dataset. I choose this model because being in the hurricane’s path inherently means flooding. The glmm model will initially look at “does being in the hurricane’s path cause flooding” (a yes or no question) by running a logistic regression. Subsequently, the model will look at “<em>how much</em> impact does the predictors have on flooding” by running a linear regression.</p>
+<p>p_lowincpctp_peopcolorpct ## Statical Notation</p>
+<p>Statistical Notation for a generalized linear mixed modeling is</p>
+<p><span class="math display">\[
+\begin{align}
+\text{BinaryFloodingOutcome} &amp;\sim Binomial(1, p) \\
+logit(p) &amp;= \beta_0 + \beta_1 \text{(Hurricane Path)} \\
+\\
+Flooding &amp;\sim Normal(\mu, \sigma) \\
+\mu &amp;= \beta_0 + \beta_1 (LowIncomePct) + \beta_2 (PofColorPct) + \beta_3 (LowIncomePct * PofColorPct) + \beta_4 (HurricanePath)
+\end{align}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align}
+Flooding &amp;\sim Normal(\mu, \sigma) \\
+\mu &amp;= \beta_0 + \beta_1 * LowIncomePct + \beta_2 * PofColorPct + \beta_3 * (LowIncomePct)(PofColorPct) + \beta_4 * Binomal
+\end{align}
+\]</span></p>
 </section>
 <section id="hypothesis" class="level2">
 <h2 class="anchored" data-anchor-id="hypothesis">Hypothesis</h2>
 <p>Areas with higher concentrations of low-income and minority populations are more susceptible to severe flooding when located within the path of a hurricane.</p>
+<p><strong>Alternative Hypothesis:</strong></p>
 </section>
 <section id="directed-acyclic-gragh-dag" class="level2">
 <h2 class="anchored" data-anchor-id="directed-acyclic-gragh-dag">Directed Acyclic Gragh (DAG)</h2>
@@ -263,6 +312,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div>
 <figure class="figure">
 <p><img src="dag.jpeg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>While precipitation is based on natural occurrences and happen everywhere with no bias, flooding intensity can be reliant on other human built mechanisms. Places that lack green spaces and open soil, filling their neighborhoods with more impervious surface, increase there likelihood to flood because the water cannot soak into the ground. Roe, Aspinall, &amp; Ward Thompson find that poorer, minority communities lack open green spaces (2016), which might disproportionately cause lower income, minority communities to flood more. Flood migration infrastructure (such as levees, storm drains, retention ponds, and seawalls) are important tools that influence flood severity. Poor communities tend to have limited financial resources and lack political leverage to advocate for flood mitigation projects in their communities which could cause them to experiencing more intense flooding. Finally, minority communities can face structural inequities and redlining that cause infrastructure improvement to go ‘unnoticed,’ increasing their likelihood to flood. Thus, a population’s percentage of low income and people of color could impact their flooding intensity.</p>
+<p>The final predictor in this model indicates whether a location lies within the hurricane’s path. Closer to the center of the Hurricane, conditions intensify, causing stronger rainfall and wind-force. Hence, areas that intersect along the hurricane’s path will (most likely) experience more flooding.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="hurricane_intensity.jpg" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div>
 </div>
@@ -320,7 +380,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="hurricane-ians-path" class="level2">
 <h2 class="anchored" data-anchor-id="hurricane-ians-path">Hurricane Ian’s Path</h2>
-<p>Starting in the Atlantic, Hurricane Ian moved North to Cuba, across Florida, and into the Carolinas (britannica).</p>
+<p>Starting in the Atlantic, Hurricane Ian moved North to Cuba, across Florida, and into the Carolinas (Rafferty, 2022).</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -371,7 +431,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -467,12 +527,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>                )  <span class="sc">+</span> </span>
 <span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">text.fontfamily =</span> <span class="st">"serif"</span>, <span class="at">text.fontface =</span> <span class="st">"plain"</span>) <span class="sc">+</span></span>
 <span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_credits</span>(<span class="st">"Figure 2"</span>, </span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">c</span>(<span class="st">'right'</span>, <span class="st">'top'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -523,7 +583,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -557,7 +617,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -771,7 +831,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -799,7 +859,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-20-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-21-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -807,7 +867,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="flooding-in-minority-populations" class="level4">
 <h4 class="anchored" data-anchor-id="flooding-in-minority-populations">Flooding in Minority Populations</h4>
-<p><strong>I need help figuring out why my predictions are oscillating like this. I thing it has something to do with my expand grid having 3 not constant terms. But I want predictions to vary if inside vs outside the storm path. </strong></p>
+<p><strong>I need help figuring out why my predictions are oscillating like this. I think it has something to do with my expand grid having 3 not-constant terms. But I want predictions to vary if inside vs outside the storm path.</strong></p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -823,7 +883,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="cn">NA</span></span>
 <span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
 <span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"0"</span> <span class="ot">=</span> <span class="st">"#488f30"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"#fc7082"</span>),</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"0"</span> <span class="ot">=</span> <span class="st">"#488f30"</span>,<span class="st">"1"</span> <span class="ot">=</span> <span class="st">"#fc7082"</span>),</span>
 <span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Inside"</span>, <span class="st">"Outside"</span>),</span>
 <span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Hurricane Path"</span></span>
 <span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
@@ -838,7 +898,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -861,13 +921,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="cn">NA</span></span>
 <span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
 <span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"0"</span> <span class="ot">=</span> <span class="st">"#488f30"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"#fc7082"</span>),</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"0"</span> <span class="ot">=</span> <span class="st">"#488f30"</span>,<span class="st">"1"</span> <span class="ot">=</span> <span class="st">"#fc7082"</span>),</span>
 <span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Inside"</span>, <span class="st">"Outside"</span>),</span>
 <span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Hurricane Path"</span></span>
 <span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Flood Exposure in Low Income Communities in FL During Hurricane Ian"</span>, </span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"People of Color (%)"</span>, </span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Low Income (%)"</span>, </span>
 <span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Flood Predictions (in)"</span>, </span>
 <span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Figure 8"</span></span>
 <span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
@@ -876,31 +936,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="evaulating-coefficients-and-plots" class="level3">
-<h3 class="anchored" data-anchor-id="evaulating-coefficients-and-plots">Evaulating Coefficients and Plots</h3>
-<p><strong>Model coefficient explanations:</strong> The zero-inflated portion evaluates whether being inside versus outside the storm’s path affects the probability that a location experienced any flooding. In the model, “flooding” is any amount of rain &gt; 0 inches. The high P-value for ‘Hurricane Path’ in the zero-inflated model shows that weither inside or outside of the storm, the majority of communities experienced some type of <em>flooding</em>. Thus, the hurricane path did not influenced the likelihood of a location having any flooding.</p>
-<p>However, the second part of the glmm askes: <em>how much</em> influence did the predictors have on response. The interaction of percentages of low income and people of color communities have a very small P-value, indicating they play a significant role in determining how much a community will flood. This significant relationship is also seen in low income and people of color percentages individually having a low P-value that’s less than a set alpha of 0.05.</p>
-
-
 </section>
+<section id="evaulating-coefficients-and-plots" class="level2">
+<h2 class="anchored" data-anchor-id="evaulating-coefficients-and-plots">Evaulating Coefficients and Plots</h2>
+<p><strong>Model coefficient explanations:</strong> The zero-inflated portion evaluates whether being inside versus outside the storm’s path affects the probability that a location experienced any flooding. In the model, “flooding” is any amount of rain &gt; 0 inches. The high P-value for ‘Hurricane Path’ in the zero-inflated model shows that weither inside or outside of the storm, the majority of communities experienced some type of <em>flooding</em>. Thus, the hurricane path did not influenced the likelihood of a location having any flooding.</p>
+<p>However, the second part of the glmm askes: <em>how much</em> influence did the predictors have on response. The interaction of percentages of low income and people of color communities have a very small P-value, indicating they play a significant role in determining how much a community will flood. This significant relationship is also seen in low income and people of color percentages individually having low P-values that are less than a set alpha of 0.05. Illustrated in Figure 5, 6, and 7, minority populations have a direct relationship to flooding; as minority populations increase, flooding tends to increase. Interestingly, low income communities have an inverse relationship to flooding (seen in Figure 5, 6, and 8); as percentages of low income population increases, flooding decreases. Therefore, while there is a significant relationship between these predictors and the response, this relationship does not support the hypothesis.</p>
+<p>In the conditional portion of the model, hurricane path has a P-values greater than the critical threshold (0.05), meaning we found no statistical significance for flooding inside and outside the Hurricane’s path. The p-value itself suggests the difference in flooding between areas inside and outside the hurricane’s path is 10% due to random chance. Yet, in comparing Figures 5 and 6, there is a noticeable difference between flood predictions in communities located within or outside the Hurricane’s perimeters. Furthermore, Figures 7 and 8 show 2 distinct lines where sites that falls inside the hurricane’s trajectory have greater flood predictions.</p>
+</section>
+<section id="limitations" class="level1">
+<h1>Limitations</h1>
+<ul>
+<li><p>Want urbanization / impermeable surface data</p></li>
+<li><p>‘flooding’ in logistic regression was any rain at all - wish it could be data on <em>actual</em> flooding</p></li>
+<li><p>Considered inside vs outside the data was based on a single 120 mile buffer - hurricane Ian hit FL being huge and got smaller, but buffer doesn’t show the change in size.</p></li>
+</ul>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<p>Bucci, L., Alaka, L., Hagen, A., Delgado, S., &amp; Beven, J. (2023). <em>National hurricane center tropical cyclone report</em>. Hurricane Ian (AL092022), 1-72.</p>
+<p>Chakraborty, J., Collins, T.W., Grineski, SE. (2019). <em>Exploring the Environmental Justice Implications of Hurricane Harvey Flooding in Greater Houston, Texas.</em> Am J Public Health. Doi: 10.2105/AJPH.2018.304846.</p>
+<p>Rafferty, J.P. (2022). <em>Hurricane Ian</em>. Britannica. https://www.britannica.com/event/Hurricane-Ian-2022.</p>
+<p>Roe, J., Aspinall, P. A., &amp; Ward Thompson, C. (2016). Understanding relationships between health, ethnicity, place and the role of urban green space in deprived urban communities. International journal of environmental research and public health, 13(7), 681.</p>
+<p>Walls, K. (2022). <em>New data reveals peak of storm surge height during Ian.</em> Scripps https://www.fox4now.com/weather/new-data-reveals-peak-of-storm-surge-height-during-ian.</p>
+
+
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{hessel2025,
   author = {Hessel, Megan},
-  title = {Hurricane {Ian} {FLooding} in {Florida}},
+  title = {Hurricane {Ian} {Flooding} in {Florida}},
   date = {2025-12-04},
   url = {https//meganhessel.github.io/Posts/hur_ian_flooding},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-hessel2025" class="csl-entry quarto-appendix-citeas" role="listitem">
-Hessel, Megan. 2025. <span>“Hurricane Ian FLooding in Florida.”</span>
+Hessel, Megan. 2025. <span>“Hurricane Ian Flooding in Florida.”</span>
 December 4, 2025. <a href="https://https//meganhessel.github.io/Posts/hur_ian_flooding">https//meganhessel.github.io/Posts/hur_ian_flooding</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
