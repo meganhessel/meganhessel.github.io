@@ -192,6 +192,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#statical-notation" id="toc-statical-notation" class="nav-link" data-scroll-target="#statical-notation">Statical Notation</a></li>
   <li><a href="#hypothesis" id="toc-hypothesis" class="nav-link" data-scroll-target="#hypothesis">Hypothesis</a></li>
   <li><a href="#directed-acyclic-gragh-dag" id="toc-directed-acyclic-gragh-dag" class="nav-link" data-scroll-target="#directed-acyclic-gragh-dag">Directed Acyclic Gragh (DAG)</a></li>
   <li><a href="#datasets" id="toc-datasets" class="nav-link" data-scroll-target="#datasets">Datasets</a></li>
@@ -282,28 +283,34 @@ window.Quarto = {
 <p>In Fall of 2022, Hurricane Ian formed south of the Cayman Islands. Reaching Cuba, the storm grew into a Category 2 and 3 (Rafferty, 2022). In less then a week, Hurricane Ian traveled to Florida (FL), hitting its west coast (near Sarasota) as a Category 4 (Rafferty, 2022). It ended its treacherous path in the Carolinas. Ian was a deadly hurricane, bringing 250 km/hr winds, disastrous rainfall, and inundations of 6-14 feet of storm surge (Walls, 2022; Rafferty, 2022; Bucci et al., 2023). About 160 people died, mostly due to drowning in the insane storm surge (Rafferty, 2022 &amp; Bucci et al., 2023). In Florida, there is an estimated $109.5 billion of damges, and $112.9 billion of total damages in the US (Bucci et al., 2023). Furthermore, about 3.28 million people in FL lost power (Bucci et al., 2023). Hurricane Ian left disaster in its wake from Cuba all the way to the Carolinas.</p>
 <p>Dr.&nbsp;Chakraborty studied the injustice of Hurricane Harvey flooding in Houston, Texas. They found race, ethnicity, and socioeconomic status played a role in the spatial distribution of flooding (Chakraborty, Collins, &amp; Grineski, 2019). Black, Hispanic, and socioeconomically disadvantaged residents faced substantially more flooding compared to their counterparts (Chakraborty, Collins, &amp; Grineski, 2019). While rainfall happens everywhere equally, flooding intensity and duration is not equally distributed as community infrastructure, drainage, and food-control investments vary between neighborhoods (Chakraborty, Collins, &amp; Grineski, 2019).</p>
 <p>Inspired by Dr.&nbsp;Chakraborty study, this project aims to investigate the socio-demographics impacts of flooding for Hurricane Ian in Florida. To accomplish this, we will merge flooding data (inches) and census track measurements for easy comparisons. Then, we will run a generalized linear mixed model (glmm). Glmm is a zero-inflated model which means it can manage the 0 values within the dataset. I choose this model because being in the hurricane’s path inherently means flooding. The glmm model will initially look at “does being in the hurricane’s path cause flooding” (a yes or no question) by running a logistic regression. Subsequently, the model will look at “<em>how much</em> impact does the predictors have on flooding” by running a linear regression.</p>
-<p>p_lowincpctp_peopcolorpct ## Statical Notation</p>
+</section>
+<section id="statical-notation" class="level2">
+<h2 class="anchored" data-anchor-id="statical-notation">Statical Notation</h2>
 <p>Statistical Notation for a generalized linear mixed modeling is</p>
-<p><span class="math display">\[
-\begin{align}
+<p>$$ <span class="math display">\[\begin{align}
 \text{BinaryFloodingOutcome} &amp;\sim Binomial(1, p) \\
 logit(p) &amp;= \beta_0 + \beta_1 \text{(Hurricane Path)} \\
 \\
-Flooding &amp;\sim Normal(\mu, \sigma) \\
-\mu &amp;= \beta_0 + \beta_1 (LowIncomePct) + \beta_2 (PofColorPct) + \beta_3 (LowIncomePct * PofColorPct) + \beta_4 (HurricanePath)
-\end{align}
-\]</span></p>
-<p><span class="math display">\[
-\begin{align}
-Flooding &amp;\sim Normal(\mu, \sigma) \\
-\mu &amp;= \beta_0 + \beta_1 * LowIncomePct + \beta_2 * PofColorPct + \beta_3 * (LowIncomePct)(PofColorPct) + \beta_4 * Binomal
-\end{align}
-\]</span></p>
+
+\text{Flooding} &amp;\sim Normal(\mu, \sigma) \\
+\mu &amp;= \beta_0
+  + \beta_1 (\text{LowIncomePct})
+  + \beta_2 (\text{PofColorPct})
+  + \beta_3 (\text{LowIncomePct} \times \text{PofColorPct})
+  + \beta_4 (\text{HurricanePath})
+\end{align}\]</span> $$</p>
 </section>
 <section id="hypothesis" class="level2">
 <h2 class="anchored" data-anchor-id="hypothesis">Hypothesis</h2>
 <p>Areas with higher concentrations of low-income and minority populations are more susceptible to severe flooding when located within the path of a hurricane.</p>
-<p><strong>Alternative Hypothesis:</strong></p>
+<p><strong>Alternative Hypothesis:</strong> There is no relationship between low-income, minority populations, flood intensity between communities within versus outside of the Hurricane’s path. <span class="math display">\[
+\begin{align}
+\beta_1 = 0 \\
+\beta_2 = 0 \\
+\beta_3 = 0) \\
+\beta_4 = 0
+\end{align}
+\]</span></p>
 </section>
 <section id="directed-acyclic-gragh-dag" class="level2">
 <h2 class="anchored" data-anchor-id="directed-acyclic-gragh-dag">Directed Acyclic Gragh (DAG)</h2>
@@ -316,8 +323,8 @@ Flooding &amp;\sim Normal(\mu, \sigma) \\
 </div>
 </div>
 </div>
-<p>While precipitation is based on natural occurrences and happen everywhere with no bias, flooding intensity can be reliant on other human built mechanisms. Places that lack green spaces and open soil, filling their neighborhoods with more impervious surface, increase there likelihood to flood because the water cannot soak into the ground. Roe, Aspinall, &amp; Ward Thompson find that poorer, minority communities lack open green spaces (2016), which might disproportionately cause lower income, minority communities to flood more. Flood migration infrastructure (such as levees, storm drains, retention ponds, and seawalls) are important tools that influence flood severity. Poor communities tend to have limited financial resources and lack political leverage to advocate for flood mitigation projects in their communities which could cause them to experiencing more intense flooding. Finally, minority communities can face structural inequities and redlining that cause infrastructure improvement to go ‘unnoticed,’ increasing their likelihood to flood. Thus, a population’s percentage of low income and people of color could impact their flooding intensity.</p>
-<p>The final predictor in this model indicates whether a location lies within the hurricane’s path. Closer to the center of the Hurricane, conditions intensify, causing stronger rainfall and wind-force. Hence, areas that intersect along the hurricane’s path will (most likely) experience more flooding.</p>
+<p>While precipitation is based on natural occurrences and happen everywhere with no bias, flooding intensity can be reliant on other human built mechanisms. Places that lack green spaces and open soil, fill their neighborhoods with impervious surfaces, increase there likelihood to flood because the water cannot soak into the ground. Roe, Aspinall, &amp; Ward Thompson find that poorer, minority communities lack open green spaces (2016), which might disproportionately cause lower income, minority communities to flood more. Flood migration infrastructure (such as levees, storm drains, retention ponds, and seawalls) are important tools that influence flood severity. Poor communities tend to have limited financial resources and lack political leverage to advocate for flood mitigation projects in their communities which could result in more intense flooding. Finally, minority communities can face structural inequities and redlining that cause infrastructure improvement to go ‘unnoticed,’ increasing their likelihood to flood. Thus, a population’s percentage of low income and people of color could impact the flooding intensity.</p>
+<p>The final predictor in this model indicates whether a location lies within the hurricane’s path. Closer to the center of the hurricane, conditions intensify, causing stronger rainfall and wind-force. Hence, areas that intersect along the hurricane’s path will (most likely) experience more flooding.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -824,7 +831,7 @@ Flooding &amp;\sim Normal(\mu, \sigma) \\
 <span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Flood Predictions for Areas Inside the Storm’s Path"</span>, </span>
 <span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"People of Color (%)"</span>, </span>
 <span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Low Income (%)"</span>, </span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Flood Predictions (inches)"</span>, </span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Flood Predictions</span><span class="sc">\n</span><span class="st">(inches)"</span>, </span>
 <span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Figure 5"</span></span>
 <span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -852,7 +859,7 @@ Flooding &amp;\sim Normal(\mu, \sigma) \\
 <span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Flood Predictions for Areas Outside the Storm’s Path"</span>, </span>
 <span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"People of Color (%)"</span>, </span>
 <span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Low Income (%)"</span>, </span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Flood Predictions (inches)"</span>, </span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Flood Predictions</span><span class="sc">\n</span><span class="st">(inches)"</span>, </span>
 <span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Figure 6"</span></span>
 <span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>

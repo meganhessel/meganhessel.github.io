@@ -51,11 +51,12 @@ Areas with higher concentrations of low-income and minority populations are more
 
 **Alternative Hypothesis:**
 There is no relationship between low-income, minority populations, flood intensity between communities within versus outside of the Hurricane's path.
+
 $$
 \begin{align}
 \beta_1 = 0 \\
 \beta_2 = 0 \\
-\beta_3 = 0) \\
+\beta_3 = 0 \\
 \beta_4 = 0
 \end{align}
 $$
