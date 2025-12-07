@@ -733,6 +733,7 @@ Limitations to the study: The light data was from NASA's Level-1 and Atmosphere 
 ### Personal Statement
 
 I am originally from Houston, Texas, and I experienced Winter Storm Uri firsthand. The storm brought unprecedented freezing temperatures to the region, overwhelming the power grid and disrupting daily life across the state. During this time, my father and I were without electricity in our home while my mother, Dr. Hessel, remained on call at the hospital for several days. It was an exceptionally difficult week with prolonged power outages, pipes bursting, hazardous conditions keeping us indoors, and widespread school closures. The event shows the importance of resilient infrastructure and highlighted how essential preparedness and coordinated response systems are during extreme weather events. 
+
 # References
 
 National Aeronautics and Space Administration (NASA). (n.d.) Level-1 and Atmospheric Archive & Distribution System Distributed Active Archive Center (LAADS DAAC). Visible Infrared Imaging Radiometer Suite (VIIRS). <https://ladsweb.modaps.eosdis.nasa.gov/>
