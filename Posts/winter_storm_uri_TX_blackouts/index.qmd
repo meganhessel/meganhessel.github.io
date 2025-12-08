@@ -628,7 +628,7 @@ To do this categorization, I created a new dataframe that specified the medium i
 
 -   Upper class: \$125,000 and above
 
-These income class numbers are based on Fullerton, 2026. 
+These income class numbers are based on Fullerton, 2025. 
 
 ```{r}
 #| code-fold: true
