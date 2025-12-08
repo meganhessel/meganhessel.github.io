@@ -18,11 +18,12 @@ citation: #true (if without link)
 
 ## Introduction
 
-In Fall of 2022, Hurricane Ian formed south of the Cayman Islands. Reaching Cuba, the storm grew into a Category 2 and 3 (Rafferty, 2022). In less then a week, Hurricane Ian traveled to Florida (FL), hitting its west coast (near Sarasota) as a Category 4 (Rafferty, 2022). It ended its treacherous path in the Carolinas. Ian was a deadly hurricane, bringing 250 km/hr winds, disastrous rainfall, and inundations of 6-14 feet of storm surge (Walls, 2022; Rafferty, 2022; Bucci et al., 2023). About 160 people died, mostly due to drowning in the insane storm surge (Rafferty, 2022 & Bucci et al., 2023). In Florida, there is an estimated \$109.5 billion of damges, and \$112.9 billion of total damages in the US (Bucci et al., 2023). Furthermore, about 3.28 million people in FL lost power (Bucci et al., 2023). Hurricane Ian left disaster in its wake from Cuba all the way to the Carolinas.
+In Fall of 2022, Hurricane Ian formed south of the Cayman Islands. Reaching Cuba, the storm grew into a Category 2 and 3 (Rafferty, 2022). In less then a week, Hurricane Ian traveled to Florida (FL), hitting its west coast (near Sarasota) as a Category 4 (Rafferty, 2022). It ended its treacherous path in the Carolinas. Ian was a deadly hurricane, bringing 250 km/hr winds, disastrous rainfall, and inundations of 6-14 feet of storm surge (Walls, 2022; Rafferty, 2022; Bucci et al., 2023). About 160 people died, mostly due to drowning in the insane storm surge (Rafferty, 2022 & Bucci et al., 2023). In Florida, there is an estimated \$109.5 billion of damges, and \$112.9 billion of total damages in the US (Bucci et al., 2023). Furthermore, about 3.28 million people in FL lost power (Bucci et al., 2023). While Hurricane Ian's physical destruction was immense, disasters rarely impacts all communities equally. Beyond wind speeds, rainfall totals, and storm surge heights, social and economic factors often shape who is most exposed to flooding and who faces the greatest challenges in recovery.
 
-Dr. Chakraborty studied the injustice of Hurricane Harvey flooding in Houston, Texas. They found race, ethnicity, and socioeconomic status played a role in the spatial distribution of flooding (Chakraborty, Collins, & Grineski, 2019). Black, Hispanic, and socioeconomically disadvantaged residents faced substantially more flooding compared to their counterparts (Chakraborty, Collins, & Grineski, 2019). While rainfall happens everywhere equally, flooding intensity and duration is not equally distributed as community infrastructure, drainage, and food-control investments vary between neighborhoods (Chakraborty, Collins, & Grineski, 2019).
+Dr. Chakraborty studied the inequitable impacts of Hurricane Harvey flooding in Houston, Texas, and found race, ethnicity, and socioeconomic status played a significant role in the spatial distribution of flooding (Chakraborty, Collins, & Grineski, 2019). Black, Hispanic, and socioeconomically disadvantaged residents faced substantially more flooding compared to their counterparts (Chakraborty, Collins, & Grineski, 2019). While rainfall happens everywhere equally, flooding intensity and duration is not equally distributed as community infrastructure, drainage, and food-control investments vary between neighborhoods (Chakraborty, Collins, & Grineski, 2019).
 
-Inspired by Dr. Chakraborty study, this project aims to investigate the socio-demographics impacts of flooding for Hurricane Ian in Florida. To accomplish this, we will merge flooding data (inches) and census track measurements for easy comparisons. Then, we will run a generalized linear mixed model (glmm). Glmm is a zero-inflated model which means it can manage the 0 values within the dataset. I choose this model because being in the hurricane's path inherently means flooding. The glmm model will initially look at "does being in the hurricane's path cause flooding" (a yes or no question) by running a logistic regression. Subsequently, the model will look at "*how much* impact does the predictors have on flooding" by running a linear regression.
+Inspired by Dr. Chakraborty study, this project aims to investigate the socio-demographics impacts of flooding for Hurricane Ian in Florida. To accomplish this, we will merge flooding data (inches) and census track measurements for easy comparisons. Then, we will run a generalized linear mixed model (glmm). Initially, glmms runs a zero-inflated logistic regression model, which explores if being in the hurricane's path causes flooding (a yes or no question). Then the glmm runs a possion regression model to investigate *how much* impact does the predictors have on flooding exposure. 
+
 
 
 ## Statical Notation 
@@ -32,16 +33,15 @@ Statistical Notation for a generalized linear mixed modeling is
 
 $$
 \begin{align}
-\text{BinaryFloodingOutcome} &\sim Binomial(1, p) \\
-logit(p) &= \beta_0 + \beta_1 \text{(Hurricane Path)} \\
+\text{BinaryFloodingOutcome} &\sim \text{Binomial}(1, p) \\
+\text{logit}(p) &= \beta_0 + \beta_1\,\text{HurricanePath} \\
 \\
-
-\text{Flooding} &\sim Normal(\mu, \sigma) \\ 
-\mu &= \beta_0 
-  + \beta_1 (\text{LowIncomePct}) 
-  + \beta_2 (\text{PofColorPct})
-  + \beta_3 (\text{LowIncomePct} \times \text{PofColorPct}) 
-  + \beta_4 (\text{HurricanePath}) 
+\text{Flooding} &\sim \text{Normal}(\mu, \sigma) \\ 
+\mu &= \beta_0 \\
+    &\quad + \beta_1\,\text{LowIncomePct} \\
+    &\quad + \beta_2\,\text{PofColorPct} \\
+    &\quad + \beta_3\,(\text{LowIncomePct} \times \text{PofColorPct}) \\
+    &\quad + \beta_4\,\text{HurricanePath}
 \end{align}
 $$
 
@@ -49,8 +49,8 @@ $$
 ## Hypothesis
 Areas with higher concentrations of low-income and minority populations are more susceptible to severe flooding when located within the path of a hurricane.
 
-**Alternative Hypothesis:**
-There is no relationship between low-income, minority populations, flood intensity between communities within versus outside of the Hurricane's path.
+**Null Hypothesis:**
+There is no relationship between low-income, minority populations, and flood intensity in communities within or outside of the Hurricane's path.
 
 $$
 \begin{align}
@@ -66,10 +66,10 @@ $$
 ```{r, out.width = "500px"}
 #| echo: false
 
-knitr::include_graphics(here::here("Posts","hur_ian_flooding", "dag.jpeg"))
+knitr::include_graphics(here::here("Posts","hur_ian_flooding", "DAG2.jpeg"))
 ```
 
-While precipitation is based on natural occurrences and happen everywhere with no bias, flooding intensity can be reliant on other human built mechanisms. Places that lack green spaces and open soil, fill their neighborhoods with impervious surfaces, increase there likelihood to flood because the water cannot soak into the ground. Roe, Aspinall, & Ward Thompson find that poorer, minority communities lack open green spaces (2016), which might disproportionately cause lower income, minority communities to flood more. Flood migration infrastructure (such as levees, storm drains, retention ponds, and seawalls) are important tools that influence flood severity. Poor communities tend to have limited financial resources and lack political leverage to advocate for flood mitigation projects in their communities which could result in more intense flooding. Finally, minority communities can face structural inequities and redlining that cause infrastructure improvement to go 'unnoticed,' increasing their likelihood to flood. Thus, a population's percentage of low income and people of color could impact the flooding intensity.
+While precipitation is based on natural occurrences and happen everywhere with no bias, flooding intensity can be reliant on other human built mechanisms. Places that lack green spaces and open soil, fill their neighborhoods with impervious surfaces, increase there likelihood to flood because the water cannot soak into the ground. Roe, Aspinall, & Ward Thompson find that poorer, minority communities lack open green spaces (2016), which might disproportionately cause lower income, minority communities to flood more. Flood mitigation infrastructure (such as levees, storm drains, retention ponds, and seawalls) are important tools that influence flood severity. Poor communities tend to have limited financial resources and lack political leverage to advocate for flood mitigation projects in their communities which could result in more intense flooding. Finally, minority communities can face structural inequities and redlining that cause infrastructure improvement to go 'unnoticed,' increasing their likelihood to flood. Thus, a population's percentage of low income and people of color could impact the flooding intensity.
 
 The final predictor in this model indicates whether a location lies within the hurricane’s path. Closer to the center of the hurricane, conditions intensify, causing stronger rainfall and wind-force. Hence, areas that intersect along the hurricane's path will (most likely) experience more flooding.
 
@@ -104,6 +104,7 @@ library(tmap)
 library(janitor)
 library(glmmTMB)
 library(patchwork)
+library(geosphere)
 ```
 
 Second, download and load in all datasets. Use `read_sf` to load in geospatial vector data (such as gdp and shp files), and use `read_csv` for csv files. After loading in the data, piping in filters and selections for specific attributes and columns as well as cleaning up column names with `clean_names()` will make your code more efficient.
@@ -148,8 +149,6 @@ Hurricane Ian's wind-force had a 240-mile diameter when it hit Florida. Therefor
 # Create 120 mile buffer 
 hurr_union <- st_union(hurr_ian) # Unionize hurricane lines 
 ian_buffer <- st_buffer(hurr_union, dist = units::set_units(120, "miles")) # Buffer 
-
-rm(hurr_union)
 
 ```
 
@@ -201,10 +200,13 @@ Therefore, we need to check and change CRS using `st_transforms` to ensure all C
 ```{r}
 # Change the flooding df CRS 
 flooding_FL_sf <- st_transform(flooding_FL_sf, st_crs(fl_sociodem))
+hurr_union <- st_transform(hurr_union, st_crs(flooding_FL_sf))
+
 
 # Check if CRS match 
 st_crs(flooding_FL_sf) == st_crs(ian_buffer) 
 st_crs(flooding_FL_sf) == st_crs(fl_sociodem)
+st_crs(flooding_FL_sf) == st_crs(hurr_union)
 st_crs(ian_buffer) == st_crs(fl_sociodem)
 
 ```
@@ -233,6 +235,57 @@ flooding_FL_sf$hur_path <- as.numeric(flooding_FL_sf$hur_path)
 rm(list = c('intersect', 'len'))
 
 ```
+
+### Add Column: Distance (m) from Flooding Point to Hurricane Line 
+
+Use `dist2Line` to find the distance (m) from each flooding point to the path of the hurricane. 
+
+```{r}
+#| warning: false 
+#| code-fold: true
+
+# For 'dist2Line' CRS need to be in EPSG:4326 
+flooding_FL_espg <- st_transform(flooding_FL_sf, 4326)
+hurr_union_espg <- st_transform(hurr_union, 4326)
+
+# Make Points and line coordinates 
+point_coord <- st_coordinates(flooding_FL_espg)
+line_coord <- st_coordinates(hurr_union_espg) [, c("X", "Y")]
+
+# Find distance from flooding point to hurricane path 
+dist_hur <- dist2Line(point_coord, line_coord) 
+
+# Add distance (m) measurements to dataframe 
+flooding_FL_sf$dist_hur <- dist_hur[, "distance"]
+
+# Remove unnecessary objects 
+rm(list = c("flooding_FL_espg", "hurr_union_espg", "point_coord", "line_coord"))
+
+```
+
+```{r}
+#| code-fold: true 
+
+tm_shape(flooding_FL_sf) + 
+  tm_dots(fill = 'dist_hur',
+          fill_alpha = 0.7,
+          fill.scale = tm_scale(values = c("firebrick", 'red','orange','gold',"grey35",'grey50',"lightgrey")),
+          fill.legend = tm_legend(title = "Distance from Hurricane\nIan's Path")
+          ) + 
+  tm_shape(hurr_ian) + 
+  tm_lines(lwd = 1.5) +
+  tm_add_legend(labels = "Path", 
+                type= "lines", 
+                title = "Hurricane Ian"
+                )  + 
+  tm_layout(text.fontfamily = "serif", text.fontface = "plain") +
+  tm_compass(position = c('left', 'bottom')) +
+  tm_scalebar(position = c('left', 'bottom')) + 
+  tm_credits("Figure 2", 
+               position = c('left', 'bottom')) +
+  tm_basemap("Esri.OceanBasemap") 
+```
+
 
 ### Join Flood Data and Socioeconomic Data
 
@@ -346,6 +399,15 @@ tm_scalebar(position = c('right', 'top')) +
 
 ## The Stats
 
+```{r}
+
+
+```
+
+
+
+
+# ------------------------ 
 ### Fit model
 
 The response variable (what we are predicting) is the amount of flooding (inches). The predictors are the people of color percentage, low income percentages, and if location is in the hurricane's path.
@@ -557,7 +619,7 @@ ggplot(prediction_grid,
 
 **Model coefficient explanations:** The zero-inflated portion evaluates whether being inside versus outside the storm’s path affects the probability that a location experienced any flooding. In the model, "flooding" is any amount of rain \> 0 inches. The high P-value for 'Hurricane Path' in the zero-inflated model shows that weither inside or outside of the storm, the majority of communities experienced some type of *flooding*. Thus, the hurricane path did not influenced the likelihood of a location having any flooding.
 
-However, the second part of the glmm askes: *how much* influence did the predictors have on response. The interaction of percentages of low income and people of color communities have a very small P-value, indicating they play a significant role in determining how much a community will flood. This significant relationship is also seen in low income and people of color percentages individually having low P-values that are less than a set alpha of 0.05. Illustrated in Figure 5, 6, and 7, minority populations have a direct relationship to flooding; as minority populations increase, flooding tends to increase. Interestingly, low income communities have an inverse relationship to flooding (seen in Figure 5, 6, and 8); as percentages of low income population increases, flooding decreases. Therefore, while there is a significant relationship between these predictors and the response, this relationship does not support the hypothesis.
+However, the second part of the glmm askes: *how much* influence did the predictors have on response. The interaction of percentages of low income and people of color communities have a very small P-value, indicating they play a significant role in determining how much a community will flood. This significant relationship is also seen in low income and people of color predictors individually having low P-values (that are less than a set alpha of 0.05). Illustrated in Figure 5, 6, and 7, minority populations have a direct relationship to flooding; as minority populations increase, flooding tends to increase. Interestingly, low income communities have an inverse relationship to flooding during Hurricane Ian (seen in Figure 5, 6, and 8); as percentages of low income population increases, flooding decreases. This is most likely due to Florida coastline facing the brunt of the storm. Beach front properties, which tend to be wealthy, faced Ian head-on as a Category 4 Hurricane causing more damage and flooding in wealthier communities. Therefore, while there is a significant relationship between these predictors and the response, this relationship does not support the hypothesis.
 
 In the conditional portion of the model, hurricane path has a P-values greater than the critical threshold (0.05), meaning we found no statistical significance for flooding inside and outside the Hurricane's path. The p-value itself suggests the difference in flooding between areas inside and outside the hurricane’s path is 10% due to random chance. Yet, in comparing Figures 5 and 6, there is a noticeable difference between flood predictions in communities located within or outside the Hurricane's perimeters. Furthermore, Figures 7 and 8 show 2 distinct lines where sites that falls inside the hurricane’s trajectory have greater flood predictions.
 
