@@ -22,14 +22,11 @@ In Fall of 2022, Hurricane Ian formed south of the Cayman Islands. Reaching Cuba
 
 Dr. Chakraborty studied the inequitable impacts of Hurricane Harvey flooding in Houston, Texas, and found race, ethnicity, and socioeconomic status played a significant role in the spatial distribution of flooding (Chakraborty, Collins, & Grineski, 2019). Black, Hispanic, and socioeconomically disadvantaged residents faced substantially more flooding compared to their counterparts (Chakraborty, Collins, & Grineski, 2019). While rainfall happens everywhere equally, flooding intensity and duration is not equally distributed as community infrastructure, drainage, and food-control investments vary between neighborhoods (Chakraborty, Collins, & Grineski, 2019).
 
-Inspired by Dr. Chakraborty study, this project aims to investigate the socio-demographics impacts of flooding for Hurricane Ian in Florida. To accomplish this, we will merge flooding data (inches) and census track measurements for easy comparisons. Then, we will run a generalized linear mixed model (glmm). Initially, glmms runs a zero-inflated logistic regression model, which explores if being in the hurricane's path causes flooding (a yes or no question). Then the glmm runs a possion regression model to investigate *how much* impact does the predictors have on flooding exposure. 
+Inspired by Dr. Chakraborty study, this project aims to investigate the socio-demographics impacts of flooding for Hurricane Ian in Florida. To accomplish this, we will merge flooding data (inches) and census track measurements for easy comparisons. Then, we will run a generalized linear mixed model (glmm). Initially, glmms runs a zero-inflated logistic regression model, which explores if being in the hurricane's path causes flooding (a yes or no question). Then the glmm runs a possion regression model to investigate *how much* impact does the predictors have on flooding exposure.
 
+## Statical Notation
 
-
-## Statical Notation 
-
-Statistical Notation for a generalized linear mixed modeling is 
-
+Statistical Notation for a generalized linear mixed modeling is
 
 $$
 \begin{align}
@@ -45,12 +42,11 @@ $$
 \end{align}
 $$
 
-
 ## Hypothesis
+
 Areas with higher concentrations of low-income and minority populations are more susceptible to severe flooding when located within the path of a hurricane.
 
-**Null Hypothesis:**
-There is no relationship between low-income, minority populations, and flood intensity in communities within or outside of the Hurricane's path.
+**Null Hypothesis:** There is no relationship between low-income, minority populations, and flood intensity in communities within or outside of the Hurricane's path.
 
 $$
 \begin{align}
@@ -78,7 +74,6 @@ The final predictor in this model indicates whether a location lies within the h
 knitr::include_graphics(here::here("Posts","hur_ian_flooding", "hurricane_intensity.jpg"))
 ```
 
-
 ## Datasets
 
 1.  Hurricane Ian flooding data from ...
@@ -105,6 +100,7 @@ library(janitor)
 library(glmmTMB)
 library(patchwork)
 library(geosphere)
+library(mgcv)
 ```
 
 Second, download and load in all datasets. Use `read_sf` to load in geospatial vector data (such as gdp and shp files), and use `read_csv` for csv files. After loading in the data, piping in filters and selections for specific attributes and columns as well as cleaning up column names with `clean_names()` will make your code more efficient.
@@ -236,9 +232,9 @@ rm(list = c('intersect', 'len'))
 
 ```
 
-### Add Column: Distance (m) from Flooding Point to Hurricane Line 
+### Add Column: Distance (m) from Flooding Point to Hurricane Line
 
-Use `dist2Line` to find the distance (m) from each flooding point to the path of the hurricane. 
+Use `dist2Line` to find the distance (m) from each flooding point to the path of the hurricane.
 
 ```{r}
 #| warning: false 
@@ -257,6 +253,8 @@ dist_hur <- dist2Line(point_coord, line_coord)
 
 # Add distance (m) measurements to dataframe 
 flooding_FL_sf$dist_hur <- dist_hur[, "distance"]
+flooding_FL_sf$dist_hur <- flooding_FL_sf$dist_hur / 1000 # Covert to km 
+
 
 # Remove unnecessary objects 
 rm(list = c("flooding_FL_espg", "hurr_union_espg", "point_coord", "line_coord"))
@@ -270,7 +268,7 @@ tm_shape(flooding_FL_sf) +
   tm_dots(fill = 'dist_hur',
           fill_alpha = 0.7,
           fill.scale = tm_scale(values = c("firebrick", 'red','orange','gold',"grey35",'grey50',"lightgrey")),
-          fill.legend = tm_legend(title = "Distance from Hurricane\nIan's Path")
+          fill.legend = tm_legend(title = "Distance from Hurricane\nIan's Path (km)")
           ) + 
   tm_shape(hurr_ian) + 
   tm_lines(lwd = 1.5) +
@@ -285,7 +283,6 @@ tm_shape(flooding_FL_sf) +
                position = c('left', 'bottom')) +
   tm_basemap("Esri.OceanBasemap") 
 ```
-
 
 ### Join Flood Data and Socioeconomic Data
 
@@ -399,93 +396,139 @@ tm_scalebar(position = c('right', 'top')) +
 
 ## The Stats
 
-```{r}
+### Model Investigation
 
-
-```
-
-
-
-
-# ------------------------ 
-### Fit model
-
-The response variable (what we are predicting) is the amount of flooding (inches). The predictors are the people of color percentage, low income percentages, and if location is in the hurricane's path.
+First thing, we need to understand what our data looks like - does it assume normality? To do this, we will create a simple linear regression model then graph the residuals and produce a histogram of Y (flooding).
 
 ```{r}
-model <- glmmTMB(totals_inches ~ p_peopcolorpct * p_lowincpct + hur_path, 
+invest_model <- lm(totals_inches ~ p_peopcolorpct * p_lowincpct + dist_hur, 
         data = join_df, 
-        ziformula = ~ hur_path
         )
+```
 
-mod_summary <- summary(model)
+```{r}
+#| code-fold: true
+plot(invest_model, which = 1)
+plot(invest_model, which = 2)
+
+
+ggplot(join_df, 
+       aes(totals_inches)) + 
+  geom_histogram()
+
+
+print(paste("Number of flood measurements less than 0:", sum(join_df$totals_inches < 0))) # No negatives 
+print(paste("Number of flood measurements that = 0:", sum(join_df$totals_inches == 0))) # zeros 
+```
+
+These figures show the data has strong positive (right) skew, violating the normality assumption of linear regression. Because there was no rainfall in some parts of Florida, there are 138 recorded zeros, making up 9% of the data. Therefore, the data is zero-inflated, skewed, and continuous positive.
+
+The zero-inflated nature of this dataset, pulls Gamma regression off the table. The more appropriate model is a tweedie model. **Tweedie model** is the standard distributions for rainfall modeling as it preserves the zeroes. The model is a special Generalized Linear Model (GLM) that acts similar to a continuous gamma distribution but can also handle the positive mass at zero.
+
+### Fit Model: Tweedie Model
+
+```{r}
+tweedie_model  <- gam(totals_inches ~ p_peopcolorpct * p_lowincpct + dist_hur, 
+        data = join_df,
+        family = tw(link = "log"))
+
+mod_summary <- summary(tweedie_model)
 
 ```
+
+Tweedie's power paramter is the ***p***, that corresponds to the distribution family. Rainfall usually has 1 \< p \< 2 which is interpreted as a compound Poisson–Gamma.
+
+[It's important to note, you can run the Tweedie model various ways!]{.underline}
+
+Options:
+
+-   `gam(Y ~ predictors, family = tw(link = "log")))` \# library(mgcv)
+
+    -   Do not need to specify the p; the model chooses the best-fitting p for us
+
+-   `glm(Y ~ predictors, family = tweedie(var.power = #, link.power = #))` \# library(statmod)
+
+    -   Must supply the model parameters manually
+
+        -   var.power: defines the Tweedie p parameter
+
+        -   link.power = 0: log link
+
+-   `glmmTMB(Y ~ predictors,  family = tweedie(link = 'log'))`
+
+    -   Kept defaulting the p = 1, which is a Poisson distribution (not typical for rainfall predictions)
+
+*To learn more about the [tweedie model](https://library.virginia.edu/data/articles/getting-started-tweedie-models-0).*
 
 ### Model coefficients
 
-Putting the coefficient estimates, standard error, and p-values into there own dataframe, and making the column and row names pretty. The glmm is split into 2 parts: (1) Zero inflated model and (2) conditional model. Thus, we need to make two different dataframes and tables for each portion of the glmm.
+Pulling out all the important information from the model and making a pretty kable table.
 
 ```{r}
 #| code-fold: true
-# Data frame of coefficients from CONDITIONAL models  
-mod_summary_cond_table <- data.frame(
-  'Esimates' = mod_summary$coefficients$cond[ ,1], 
-  'StdError' = mod_summary$coefficients$cond[,2], 
-  'P-Value' = mod_summary$coefficients$cond[,4], 
-  row.names = c("Intercept",
+print(mod_summary$family)
+```
+
+```{r}
+#| code-fold: true
+# Data frame of coefficients 
+mod_summary_cond_table <- data.frame(mod_summary$p.table, row.names = c("Intercept",
   "People of Color (%)",
   "Low Income (%)",
-  "PoC × Low Income Interaction",
-  "Hurricane Path"))
+  "Distance from Hurricane Path",
+  "PoC × Low Income Interaction"))
 
-```
-
-```{r}
-#| code-fold: true
-# Data frame of coefficients from ZERO INFLATED models  
-mod_summary_zi_table <- data.frame(
-    'Esimates' = mod_summary$coefficients$zi[ ,1], 
-  'StdError' = mod_summary$coefficients$zi[,2], 
-  'P-Value' = mod_summary$coefficients$zi[,4], 
-  row.names = c("Intercept", "Hurricane Path"))
-
-```
-
-```{r}
-#| code-fold: true
-# Kabel Table 
-
-kableExtra::kable(mod_summary_zi_table, 
-                  digits = 4, 
-                  align = 'c',
-                  caption = "Generalized Linear Mixed Model Zero-Inflated Coeffients")
-
+# Kable table 
 kableExtra::kable(mod_summary_cond_table, 
                   digits = 4, 
                   align = 'c',
+                  col.names = c("Estimates", "Std.Error", "T.value", "P.value"),
                   caption = "Generalized Linear Mixed Model Conditional Coeffients")
+
+
 ```
 
-### Create an Expand Grid
+**Model Coefficient Explanations**
+
+The Tweedies model's estimated p parameter is 1.446. A p between (1,2) corresponds to a compound Poisson–Gamma. This p estimate is good as it matches rainfall physics and is similar estimate to other rainfall Tweedie models.
+
+Percent of People of Color, low income, and distance from the Hurricane have a significant relationship to flooding exposure. However, the interaction of communities with low income and People of Color does *not* have a significant relationship to flooding.
+
+The percent of People of Color has a positive, significant relationship where communities with higher percentages of People of Color have slightly higher flooding.
+
+The percent of low income and distance from the hurricane's path have a negative, significant relationship. Communities with a higher percentage of low-income, have slightly lower rainfall. This is most likely due to Florida coastline facing the brunt of the storm. Beach front properties, which tend to be wealthy, faced Ian head-on as a Category 4 Hurricane causing more damage and flooding in wealthier communities. Additionally, the hurricane path results show a *strong,* negative relationship where rainfall rapidly decreases with distance from hurricane.
+
+### Create Expand Grid
+
+I made two expanded grids because I wanted to see the food predictions when distance from the hurricane was constant vs not constant in order to display the interactions of People of Color percentages vs low income percentages (without distance from Hurricane impact) as well as the interplay of distance from hurricane on flooding.
 
 ```{r}
-#| code-fold: true
-grid <- expand_grid(p_peopcolorpct = seq(min(join_df$p_peopcolorpct), max(join_df$p_peopcolorpct)), 
+grid_dist_constant <- expand_grid(p_peopcolorpct = seq(min(join_df$p_peopcolorpct), max(join_df$p_peopcolorpct)), 
             p_lowincpct = seq(min(join_df$p_lowincpct), max(join_df$p_lowincpct)), 
-            hur_path = 0:1) 
+            dist_hur = mean(join_df$dist_hur)) 
 ```
 
-### Making Predictions
+```{r}
+grid <- expand_grid(p_peopcolorpct = seq(min(join_df$p_peopcolorpct), max(join_df$p_peopcolorpct), length.out = 50), 
+            p_lowincpct = seq(min(join_df$p_lowincpct), max(join_df$p_lowincpct), length.out = 50), 
+            dist_hur = seq(min(join_df$dist_hur), max(join_df$dist_hur), length.out = 50))
+```
+
+### Make Predictions
+
+Using the `tweedie_model`, make flooding predictions for the expand grids.
 
 ```{r}
-#| code-fold: true
+prediction_grid_dist_constant <- grid_dist_constant %>% 
+  mutate(flood_predictions = predict(object = tweedie_model, 
+                                     newdata = grid_dist_constant, 
+                                     type = 'response'))
+
+
 prediction_grid <- grid %>% 
-  mutate(
-    flood_prediction = predict(object = model, 
-                               newdata = grid,
-                               type = 'response')
-  )
+  mutate(flood_predictions = predict(object = tweedie_model, 
+                                     newdata = grid, 
+                                     type = 'response'))
 
 ```
 
@@ -493,127 +536,139 @@ prediction_grid <- grid %>%
 
 ```{r}
 #| code-fold: true
-prediction_grid_se <- predict(object = model, 
-                              newdata = prediction_grid, 
-                              type = 'response', 
+# Find standard Error 
+prediction_grid_se <- predict(object = tweedie_model, 
+                              newdata = prediction_grid_dist_constant, 
+                              type = 'link', 
                               se.fit = TRUE)
 
-prediction_grid <- prediction_grid %>% 
-  mutate(
-    prediction_se = prediction_grid_se$se.fit,
-    ci_lower = qnorm(0.025, mean = flood_prediction, sd = prediction_se),
-    ci_upper = qnorm(0.975, mean = flood_prediction, sd = prediction_se)
-  )
+# Find inverse link function 
+linkinv <- family(tweedie_model)$linkinv
 
+# 
+prediction_grid_dist_constant <- prediction_grid_dist_constant %>% 
+  mutate(
+    # P in link space 
+    link_p = prediction_grid_se$fit, 
+    # CI in link space 
+    link_p_se = prediction_grid_se$se.fit,
+    link_p_lwr = qnorm(0.025, mean = flood_predictions, sd = link_p_se),
+    link_p_upr = qnorm(0.975, mean = flood_predictions, sd = link_p_se),
+    
+    # CI in response space 
+    prediction_se = linkinv(link_p),
+    ci_lower = linkinv(link_p_lwr),
+    ci_upper = linkinv(link_p_upr)
+  )
 ```
 
 ### Plots
 
-#### The Interaction between Low Income and Minority Communities Influences on Flooding
+#### Distance from Hurricane = constant
 
 ```{r}
 #| code-fold: true
-
-prediction_grid %>% 
-  filter(hur_path == 1) %>% 
-  ggplot(aes(x = p_peopcolorpct, y = p_lowincpct, fill = flood_prediction)) + 
-  geom_raster() +
+prediction_grid_dist_constant %>% 
+  ggplot(aes(x = p_peopcolorpct, y = p_lowincpct, fill = flood_predictions)) + 
+  geom_raster() + 
   scale_fill_steps2(low = "#ffad76",        #- THIS CREATES COLOR BINS 
                      mid = "#ffe896",
                      high = "#488f30", 
-                     midpoint = median(prediction_grid$flood_prediction), 
-                     n.breaks = 8, 
-                     limits = c(0, 8)) +
+                     midpoint = median(prediction_grid$flood_predictions)) +
   #scale_fill_gradient(low = "#466DA7", high = "#D9252A") + # Produces the continuous color scale 
   theme_classic() + 
-  labs(title = "Flood Predictions for Areas Inside the Storm’s Path", 
+  labs(title = "Flood Predictions in Minority and Low Income Communities", 
        x = "People of Color (%)", 
        y = "Low Income (%)", 
        fill = "Flood Predictions\n(inches)", 
        caption = "Figure 5"
        )
+```
+Selecting low income levels at the 10%, 50%, 90% percentiles 
+```{r}
+# Pick 3 representative low income levels at the 10%, 50%, 90% percentile 
+selected_levels <- quantile(join_df$p_lowincpct, probs = c(0.1, 0.5, 0.9))
 
+selected_levels
+```
+
+Creating a plot at those 3 quantiles 
+```{r}
+#| code-fold: true
+
+# Filter for all the values within the p_lowincpct specified percentiles 
+plot_data <- prediction_grid_dist_constant %>%
+  filter(p_lowincpct %in% selected_levels)
+
+
+
+# Change labels of quantiles 
+plot_data <- plot_data %>%
+  mutate(lowinc_label = factor(p_lowincpct, 
+                               levels = selected_levels, 
+                               labels = c("10%", "50%", "90%")))
+
+
+# Plot the reduced dataframe 
+ggplot(plot_data, 
+       aes(x = p_peopcolorpct, 
+           y = flood_predictions, 
+           color = factor(lowinc_label),   # Different colors for each low-income level
+           group = factor(lowinc_label))  # Separate lines
+       ) + 
+  geom_line(size = 1) + # Predicted line 
+  geom_ribbon(aes(ymin = ci_lower, # Confidence intervals 
+                  ymax = ci_upper, 
+                  fill = factor(lowinc_label)), # Per each income percentile 
+              alpha = 0.2) +
+  labs(x = "% People of Color", 
+       y = "Predicted Flooding", 
+       color = "Low Income (%)\nQuartiles", 
+       fill = "Low Income (%)\nQuartiles") +
+  theme_minimal()
+
+```
+The problem we ran into while plotting: From the expand grid, we could not plot all 50×50 points as lines; ggplot's line was zigzaged and oscillating through the various combinations. To eliminate this crazy oscillation, we fixed low-income percentages at a 3 representative levels (10th, 50th, 90th percentile), and filtered the data for those fixed percentages. Now the `plot_data`  has fewer rows (only the combinations of p_peopcolorpct and the 3 fixed low-income levels). 
+
+
+#### Community make up in comparison to their distance from the Hurricane
+
+```{r}
+#| code-fold: true 
 
 prediction_grid %>% 
-  filter(hur_path == 0) %>% 
-  ggplot(aes(x = p_peopcolorpct, y = p_lowincpct, fill = flood_prediction)) + 
-  geom_raster() +
+  ggplot(aes(x = dist_hur, y = p_lowincpct, fill = flood_predictions)) + 
+  geom_raster() + 
   scale_fill_steps2(low = "#ffad76",        #- THIS CREATES COLOR BINS 
                      mid = "#ffe896",
                      high = "#488f30", 
-                     midpoint = median(prediction_grid$flood_prediction), 
-                     n.breaks = 8, 
-                    limits = c(0, 8)) +
-  #scale_fill_gradient(low = "#466DA7", high = "#D9252A") + # Produces the continuous color scale 
-  theme_classic() +
-   labs(title = "Flood Predictions for Areas Outside the Storm’s Path", 
-       x = "People of Color (%)", 
+                     midpoint = median(prediction_grid$flood_predictions)) + 
+  theme_classic() + 
+  labs(title = "Flood Predictions for Low Income Communities", 
+       x = "Distance from the Hurricane (km)", 
        y = "Low Income (%)", 
        fill = "Flood Predictions\n(inches)", 
        caption = "Figure 6"
        )
+  
+prediction_grid %>% 
+  ggplot(aes(x = dist_hur, y = p_peopcolorpct, fill = flood_predictions)) + 
+  geom_raster() + 
+  scale_fill_steps2(low = "#ffad76",        #- THIS CREATES COLOR BINS 
+                     mid = "#ffe896",
+                     high = "#488f30", 
+                     midpoint = median(prediction_grid$flood_predictions)) + 
+  theme_classic() + 
+  labs(title = "Flood Predictions for Minority Communities", 
+       x = "Distance from the Hurricane (km)", 
+       y = "People of Color (%)", 
+       fill = "Flood Predictions\n(inches)", 
+       caption = "Figure 7"
+       )
 
 ```
 
-#### Flooding in Minority Populations
-
-**I need help figuring out why my predictions are oscillating like this. I think it has something to do with my expand grid having 3 not-constant terms. But I want predictions to vary if inside vs outside the storm path.**
-
-```{r}
-#| code-fold: true
-ggplot(prediction_grid, 
-       aes(x = p_peopcolorpct, 
-           y = flood_prediction, 
-           group = hur_path)) + 
-  geom_line(aes(color = factor(hur_path))) + 
-  geom_ribbon(
-    aes(ymin = ci_lower, ymax = ci_upper),
-    fill = "#ffad76",
-    alpha = 0.5,
-    color = NA
-  ) + 
-  scale_color_manual(
-    values = c("0" = "#488f30","1" = "#fc7082"),
-    labels = c("Inside", "Outside"),
-    name = "Hurricane Path"
-  ) +
-  labs(
-    title = "Flood Exposure in Communities of Color in FL During Hurricane Ian", 
-    x = "People of Color (%)", 
-    y = "Flood Predictions (in)", 
-    caption = "Figure 7"
-  ) + 
-  theme_bw()
-```
-
-#### Flooding in Low Income Populations
-
-```{r}
-#| code-fold: true
-ggplot(prediction_grid, 
-       aes(x = p_lowincpct, 
-           y = flood_prediction, 
-           group = hur_path)) + 
-  geom_line(aes(color = factor(hur_path))) + 
-  geom_ribbon(
-    aes(ymin = ci_lower, ymax = ci_upper),
-    fill = "#ffad76",
-    alpha = 0.5,
-    color = NA
-  ) + 
-  scale_color_manual(
-    values = c("0" = "#488f30","1" = "#fc7082"),
-    labels = c("Inside", "Outside"),
-    name = "Hurricane Path"
-  ) +
-  labs(
-    title = "Flood Exposure in Low Income Communities in FL During Hurricane Ian", 
-    x = "Low Income (%)", 
-    y = "Flood Predictions (in)", 
-    caption = "Figure 8"
-  ) + 
-  theme_bw()
-```
+# ------------------------
 
 ## Evaulating Coefficients and Plots
 
