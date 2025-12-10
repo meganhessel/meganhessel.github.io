@@ -18,7 +18,7 @@ citation: #true (if without link)
 
 ## Introduction
 
-On February 11-20, 2021, Winter Storm Uri hit Texas (NOAA, 2023). Uri bright record-breaking cold and precipitation, leading to the longest stretch of freezing temperatures in Texas history (NOAA, 2023). As temperatures plummeted, power went out across the South, pipes burst, roads iced over, and countless accidents followed (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of people (more than 2 out of 3 people) were left in the dark and cold with no access to power or a heater (Watson P, 2021).
+Between February 11 and 20, 2021, Winter Storm Uri swept across Texas, bring record-breaking cold tempertures and heavy precipitation (NOAA, 2023). The storm produced the longest stretch of freezing temperatures in the state's history, triggering widespread power outages, burst pipes, dangerous road conditions, and numerous accidents (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of people (more than 2 out of 3 people) were left with no electricity or heat during the subfreezing conditions (Watson P, 2021).
 
 This project aims to analyze the effects of the extreme weather associated with Winter Storm Uri on Houston’s power grid, and investigate the relationships of household median income as a possible co-variable to power outage distribution.
 
@@ -110,9 +110,10 @@ income_texas <- st_read(here::here("Posts","winter_storm_uri_TX_blackouts","data
 
 ### Coordinate Reference Systems (CRS)
 
-It is *always* important to know the geospatial datas' **coordinate reference systems** (CRS). The CRS defines how the geospatial data is located and plotted. There are 2 CRS types: geographic (how the data is plotted on the 3D globe) and projected (how the data is plotted on a 2D map). It is important to use the correct CRS for your data and intended goal. Additionally, when merging or plotting geospatial data together, the datasets must be in the same CRS. Matching CRSs ensures that all spatial data layers align correctly, calculations are meaningful, and analytical results are trustworthy.
+It is *always* important to know the geospatial datas' **coordinate reference systems** (CRS). The CRS defines how the geospatial data is located and plotted. There are 2 CRS types: geographic (how the data is plotted on the 3D globe) and projected (how the data is plotted on a 2D map). It is important to use the correct CRS for your data and intended goal. Additionally, when merging or plotting geospatial data together, the datasets must be in the same CRS. Matching CRSs ensures that all spatial data layers align correctly, calculations are meaningful, and analytic results are trustworthy.
 
 ```{r}
+#| code-fold: true
 
 # Create print message function to check crs 
 crs_check <- function(crs1, crs2) {
@@ -151,7 +152,7 @@ All CRSs match!
 
 ## Creating a Blackout Mask
 
-**PURPOSE:** Locate all areas that experienced blackouts in Houston, TX. To do this, we will combine the night light tiles, find areas that experienced blackouts, and crop the dataframe to Houston's extents while excluding highway.
+**PURPOSE:** Identify all areas in Houston, TX that experienced power outages. To accomplish this, we will merge the night light raster tiles, find areas that experienced blackouts, and crop the dataframe to Houston's extents while excluding major highways.
 
 ### (a) Combine the Night light data
 
@@ -250,7 +251,7 @@ diff_crop <- st_crop(diff_mask_vec, bound_box)
 
 ### (f) Exclude highways from blackout area
 
-Highway traffic is typically seen from space and accounts for a large portion of the night lights. During Winter Storm Uri, roads were iced over and shut down, reducing traffic. Therefore, in order to ensure the reduction in traffic is not misinterpreted at a blackout, we must exclude the highways from the blackout mask.
+Highway traffic is typically seen from space and accounts for a large portion of the night lights. During Winter Storm Uri, roads were iced over and shut down, reducing traffic. Therefore, in order to ensure the reduction in traffic is not misinterpreted as a blackout, we must exclude the highways from the blackout mask.
 
 First, use `st_union` to unionize all the highways to make the data more manageable. Secondly, use `st_buffer` to make a 200m buffer zone around all highways.
 
@@ -301,7 +302,12 @@ tm_shape(blackouts_epsg_hw_buff) +
   tm_compass(position = c("left", "bottom")) + 
   tm_scalebar(position = c("left", "bottom")) + 
   tm_credits("Figure 1", position = c("right", "bottom")) + 
-  tm_layout(text.fontfamily = "Times", text.fontface = "plain")
+  tm_layout(text.fontfamily = "Times", text.fontface = "plain") + 
+  tm_add_legend(type = "polygons",
+                labels = "Experienced Blackouts",
+                fill = "firebrick", 
+                title = "Houston Areas"
+                ) 
 
 
 ```
@@ -309,24 +315,26 @@ tm_shape(blackouts_epsg_hw_buff) +
 ```{r}
 #| echo: false
 # remove unnesscary objects 
-rm(list = c("blackouts_epsg_hw_buff", "blackouts_200m_highway", "road_buffer"))
+#rm(list = c("blackouts_epsg_hw_buff", "blackouts_200m_highway", "road_buffer"))
 ```
 
 ## Before and After Plot
 
 **PURPOSE:** Map Houston's night light pre and post the Winter Storm.
 
-*Crop* Feb 7 and Feb 16 night light data to Houston's extent (previously created bounding box)
+*Crop* Feb 7 and Feb 16 night light raster data to Houston's extent (previously created bounding box).
 
 ```{r}
+#| code-fold: true
 # Crop to Houston Texas bounding box 
 feb7sf_houston <- st_crop(feb7sf, bound_box)
 feb16sf_houston <- st_crop(feb16sf, bound_box)
 ```
 
-Cloud cover can cause extremely light measurements. Therefore, to correctly plot the night light data, we need to *take out all the extreme*, outlier measurements by masking.
+Cloud cover can cause extremely light measurements. Therefore, to correctly plot the night light data, we need to *take out all the extreme*, outliar measurements by masking.
 
 ```{r}
+#| code-fold: true
 # Mask to get rid of extremes 
 feb7sf_houston[feb7sf_houston < 200 | feb7sf_houston > 1000] <- NA 
 feb16sf_houston[feb16sf_houston < 200 | feb16sf_houston > 1000] <- NA
@@ -401,7 +409,7 @@ home_blackout <- st_filter(houses, diff_crop, .predicate = st_intersects)
 
 ### Estimate of the Number of Homes in Houston that Lost Power
 
-Because the 'home_blackout' dataframe contains 1 row for every building that experienced a blackout, we can just count the number of rows using `nrow` to estimate the number of homes without power.
+Because the `home_blackout` dataframe contains 1 row for every building that experienced a blackout, we can just count the number of rows using `nrow` to estimate the number of homes without power.
 
 ```{r}
 #| code-fold: true
@@ -446,25 +454,32 @@ tm_shape(home_blackout) +
 
 ## Blackouts Compared to Income
 
+To assess whether power outages during Winter Storm Uri disproportionately affected certain socioeconomic groups, we integrated census-based median household income data with the blackout data. Initially, we investigated income levels between areas that experience vs did not experience a blackout to determine if income distribution differed across the two groups. This allowed us to evaluate whether lower-income communities experienced higher rates or greater severity of power loss compared to more affluent areas.
+
 ### Data Wrangling
 
-#### (a) Join the Texas income and geometery datasets
+#### (a) Join the Texas Income and Geometery Datasets
 
 In the Texas's socioeconomic data, each row is a different census track. Whereas, the columns are different measurements for each census track. By looking at the dimensions of the two layers, we can see that the row numbers match perfectly. This makes sense because the income and geometry dataframes are just different layers of the same large dataset. Therefore, when merging the layers, we can use `cbind` to "stitch" the layers together, keeping all columns.
 
-When merging datasets, its helpful to look at the dimensions before and after the merge to ensure the \`cbind\` worked properly.
+When merging datasets, its helpful to look at the dimensions before and after the merge to ensure the `cbind` worked properly.
 
 ```{r}
+#| code-fold: true 
+
 # Looking at dataframes 
-print(dim(geom_texas))
-print(dim(income_texas))
+print(paste("Dimensions of the `geom_texas` df:", nrow(geom_texas), ncol(geom_texas)))
+print(paste("Dimensions of the `income_texas` df:",  nrow(income_texas), ncol(income_texas)))
+# ANOTHER METHOD: dim(df) also prints the df's dimensions (made the print statement look funky) 
+
 
 # Join Texas geom and incomes 
 texas_df <- cbind(geom_texas, income_texas) 
-# ANOTHER WAY: LEFT JOIN: texas_df <- left_join(geom_texas, income_texas)
+# ANOTHER METHOD: LEFT JOIN: texas_df <- left_join(geom_texas, income_texas)
+
 
 # Print new df's dimensions - see if the joined worked
-print(dim(texas_df))
+print(paste("Dimensions of the joined df:",  nrow(texas_df), ncol(texas_df)))
 
 ```
 
@@ -474,19 +489,12 @@ print(dim(texas_df))
 rm(list = c('geom_texas', 'income_texas'))
 ```
 
-#### (b) Filter and Merge
+#### (b) Coordinate Reference Systems
 
-Filtering for homes did vs did not experience a blackout and merging the home dataset to the Texas census track data.
-
-**GOAL:**
-
-1.  Make a datasets with homes that *DID* experienced a blackout and their income = "income_bo_homes"
-
-2.  Make a datasets with homes that *did NOT* experienced a blackout and their income = "income_NO_bo_homes"
-
-[First]{.underline}, need to ensure CRSs match!
+Need to always ensure CRSs match!
 
 ```{r}
+#| code-fold: true 
 # Checking crs 
 if(st_crs(texas_df) == st_crs(home_blackout)){ # Check if match 
   print("CRS match!")
@@ -497,42 +505,50 @@ if(st_crs(texas_df) == st_crs(home_blackout)){ # Check if match
   }
 ```
 
-[Secondly]{.underline}, filter for homes that...
+#### (c) Filter and Merge
 
-**(a)** DID experience blackouts
+Filtering for homes did vs did not experience a blackout and merging the home dataset to the Texas census track data.
 
-Use `st_filter` (with '.predicate = st_intersects') to find the intersection of homes that experienced blackouts and the census track data.
+**GOAL:**
+
+1.  Make a datasets with homes that *DID* experienced a blackout and their income = "income_bo_homes"
+
+2.  Make a datasets with homes that *did NOT* experienced a blackout and their income = "income_NO_bo_homes"
+
+\(1\) Use `st_filter` (with '.predicate = st_intersects') to find the intersection of homes that **experienced blackouts** and the census track data.
 
 ```{r}
+#| code-fold: true 
 # (1) st_filter for homes experiencing BOs
 income_bo_homes <- st_filter(texas_df, home_blackout, .predicate = st_intersects) %>% 
   mutate(blackout = "TRUE") # Adding a column pertaining to experiencing a BO 
 ```
 
-**(b)** Did NOT experience blackouts
-
-`st_intersetcions` (with 'sparse = FALSE') builds a logical matrix of Boolean operators (TRUE and FALSES) that explains which geometries between x and y intersect. The returning dataframe is filled with TRUEs (where homes and census track data intersect) and FALSEs (where homes and census track do not intersect). Because we are interested in locations with NO blackouts, we care about the FALSEs. We used `apply` to loop over all rows to see if there are any "TRUE" vs "FALSE" values. The `!` means the function only keeps rows with "FALSE"s (no intersections).
+\(2\) Using the function `st_intersetcions` (with 'sparse = FALSE'), we find locations where homes and census tracks do (TRUE) and do not (FALSE) intersect. Then we filter for only the locations with no blackouts (the areas that do not intersect - the FALSEs).
 
 ```{r}
-# Look for areas of intersections 
-idx_intersect <- st_intersects(texas_df, home_blackout, sparse = FALSE)
+#| code-fold: true 
+# Look for areas of intersections - Boolean Operators of TRUES (intersect) & FALSES (no intersection)
+idx_intersect <- st_intersects(texas_df, home_blackout, sparse = FALSE) 
 
 #  Looking for areas NOT included in the intersection data 
-income_NO_bo_homes <- texas_df[!apply(idx_intersect, 1, any), ] %>% 
+income_NO_bo_homes <- texas_df[!apply(idx_intersect, 1, any), ] %>% # Filter for all "FALSE"
   mutate(blackout = "FALSE") # Adding a column pertaining to NOT experiencing a BO 
 
 ```
 
-In both codes, the `mutate` function creates a new 'blackout' column that states if the data does ('TRUE') or does not (FALSE) contain homes experiencing a blackout.
+In both codes, the `mutate` function creates a new `blackout` column that states if the data does ('TRUE') or does not (FALSE) contain homes experiencing a power outages.
 
-To make sure the filtering worked, check the dimensions of each dataframe. The number of rows in 'texas_df' should be the number of rows in 'income_bo_homes' and 'income_NO_bo_homes' combined.
+To make sure the filtering worked, check the dimensions of each dataframe.
 
 ```{r}
+#| code-fold: true
 # Look at shapes - See if filtering worked... it did! 
-print(dim(texas_df))
-print(dim(home_blackout))
-print(dim(income_bo_homes))
-print(dim(income_NO_bo_homes))
+print(paste("Dimensions of the texas_df:", nrow(texas_df), ncol(texas_df)))
+print(paste("Dimensions of the home_blackout:", nrow(home_blackout), ncol(home_blackout)))
+print(paste("Dimensions of the income_bo_homes:", nrow(income_bo_homes), ncol(income_bo_homes)))
+print(paste("Dimensions of the income_NO_bo_homes:", nrow(income_NO_bo_homes), ncol(income_NO_bo_homes)))
+
 
 ```
 
@@ -566,26 +582,33 @@ my_palette = c('#488f30', '#a9bb5a', '#ffe896', '#ffad76', '#fc7082')
 # Map of mean (of median) income with no blackouts 
 no_blackout_income_map <- tm_shape(income_NO_bo_homes) + 
   tm_polygons(fill = "B19013e1", 
-              fill.legend = tm_legend(title = "Median Income"), 
-              fill.scale = tm_scale(breaks = c(0, 50000, 100000, 150000, 200000, 300000), 
-                                    values = my_palette)) +
+              fill.legend = tm_legend(title = "Median Income ($)", 
+                                      orientation = 'landscape'),
+              fill.scale = tm_scale_continuous(values = my_palette)
+              #fill.scale = tm_scale(breaks = c(0, 50000, 100000, 150000, 200000, 300000), 
+                                    #values = my_palette)
+              ) +
     tm_shape(diff_crop, is.main = TRUE) + 
   tm_title(text = "Medium Income Cenus Track for Homes with Power") +   
   #tm_compass(position = c('right', 'bottom')) + 
-  tm_compass(position = c(0.45, -0.02)) + 
-  tm_scalebar(position = c(0.60, -0.05)) +
+  #tm_compass(position = c(0.45, -0.02)) + 
+  #tm_scalebar(position = c(0.60, -0.05)) +
   tm_basemap("Esri.WorldTopoMap")
 
 
 # Map of mean (of median) incomes of home that experienced blackouts 
 blackout_income_map <- tm_shape(income_bo_homes) + 
   tm_polygons(fill = "B19013e1", 
-              fill.legend = tm_legend(title = "Median Income"), 
-              fill.scale = tm_scale(breaks = c(0, 50000, 100000, 150000, 200000, 300000), 
-                                     values = my_palette)) +
+              fill.legend = tm_legend(title = "Median Income ($)", 
+                                      orientation = 'landscape'), 
+              fill.scale = tm_scale_continuous(values = my_palette)
+              #fill.scale = tm_scale(breaks = c(0, 50000, 100000, 150000, 200000, 300000), 
+                                     #values = my_palette)
+  ) +
   tm_shape(diff_crop, is.main = TRUE) + 
   tm_title(text = "Medium Income Cenus Track for Homes without Power") + 
-  #tm_scalebar(position = c('left', 'bottom')) + 
+  tm_scalebar(position = c('left', 'top')) + 
+  tm_compass(position = c('left', 'bottom')) + 
   tm_credits(text = "Figure 5", position = c(0.7, -0.05)) + 
   tm_basemap("Esri.WorldTopoMap")
 
@@ -601,11 +624,17 @@ To get a better understanding of the communities that lost power, map just the '
 
 tm_shape(income_bo_homes) + 
   tm_polygons(fill = "B19013e1", 
-              fill.legend = tm_legend(title = "Median Income that\nExperienced Blackouts"),
-              fill.scale = tm_scale(values = my_palette, 
-                                    breaks = c(0, 50000, 100000, 150000, 200000, 300000))) +
-  tm_compass(position = c(1.02, 0.40)) + 
-  tm_scalebar(position = c(1.14, 0.40)) + 
+              fill.legend = tm_legend(title = "Median Income that\nExperienced Blackouts ($)", 
+                                      orientation = 'landscape', 
+                                      position = tm_pos_out('center', 'bottom')), 
+              fill.scale = tm_scale_continuous(values = my_palette)
+              #fill.scale = tm_scale(values = my_palette, 
+                                    #breaks = c(0, 50000, 100000, 150000, 200000, 300000))
+              ) +
+  #tm_compass(position = c(1.02, 0.40)) + 
+  #tm_scalebar(position = c(1.14, 0.40)) + 
+  tm_scalebar(position = tm_pos_in('left', 'top')) +
+  tm_compass(position = tm_pos_in('left', 'top')) +
   tm_title(text = "Median Income Census Tracts in Houston, TX that\nExperienced a Blackout During Winter Storm Uri") + 
   tm_credits("Figure 6") + 
   tm_basemap("Esri.WorldTopoMap")
@@ -630,6 +659,7 @@ These income class numbers are based on Fullerton, 2025.
 
 ```{r}
 #| code-fold: true
+#| message: false
 
 # Select only needs columns and drop geometry 
 income_class <- income_merge[, c('GEOID', 'B19013e1', 'blackout')] %>% 
@@ -722,8 +752,6 @@ rm(list = c('class_count_blackout', 'class_count_total'))
 ```
 
 ## Conclusion
-
-On February 11-20, 2021, Winter Storm Uri hit Texas (NOAA, 2023). Uri bright record-breaking cold and precipitation, leading to the longest stretch of freezing temperatures in Texas history (NOAA, 2023). As temperatures plummeted, power went out across the South, pipes burst, roads iced over, and countless accidents followed (NOAA, 2023 and Watson P, 2021). Millions of people (more than 2 out of 3 people) were left in the dark and cold with no access to power or a heater at some point (Watson P, 2021).
 
 In Houston, Texas, the power outage centered around the downtown area which is seen in Figures 1 - 5. Figures 6 - 8 investigate the power outages in comparison with income census blocks. The medium income distributions of people who experienced blackouts vs did not experience blackouts are very similar and consistent with the overall medium income distribution in Houston. As shown in Figure 7 and the table, the proportion of residents experiencing blackouts is relatively consistent across income classes, ranging from about 12% to 16%. Accordingly, there is insufficient evidence to suggest that the power outages during Winter Storm Uri were biased or unjustly distributed.
 
