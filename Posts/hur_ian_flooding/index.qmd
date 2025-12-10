@@ -414,7 +414,12 @@ plot(invest_model, which = 2)
 
 ggplot(join_df, 
        aes(totals_inches)) + 
-  geom_histogram()
+  geom_histogram() + 
+  labs(x = "Flooding (inches)", 
+       y = "Count", 
+       title = "Histogram of Flooding (inches)", 
+       caption = "Figure 5") + 
+  theme_bw()
 
 
 print(paste("Number of flood measurements less than 0:", sum(join_df$totals_inches < 0))) # No negatives 
@@ -564,7 +569,7 @@ prediction_grid_dist_constant <- prediction_grid_dist_constant %>%
 
 ### Plots
 
-#### Distance from Hurricane = constant
+#### Distance from Hurricane = Constant
 
 ```{r}
 #| code-fold: true
@@ -581,7 +586,7 @@ prediction_grid_dist_constant %>%
        x = "People of Color (%)", 
        y = "Low Income (%)", 
        fill = "Flood Predictions\n(inches)", 
-       caption = "Figure 5"
+       caption = "Figure 6"
        )
 ```
 Selecting low income levels at the 10%, 50%, 90% percentiles 
@@ -624,14 +629,15 @@ ggplot(plot_data,
   labs(x = "% People of Color", 
        y = "Predicted Flooding", 
        color = "Low Income (%)\nQuartiles", 
-       fill = "Low Income (%)\nQuartiles") +
+       fill = "Low Income (%)\nQuartiles", 
+       caption = "Figure 7") +
   theme_minimal()
 
 ```
 The problem we ran into while plotting: From the expand grid, we could not plot all 50×50 points as lines; ggplot's line was zigzaged and oscillating through the various combinations. To eliminate this crazy oscillation, we fixed low-income percentages at a 3 representative levels (10th, 50th, 90th percentile), and filtered the data for those fixed percentages. Now the `plot_data`  has fewer rows (only the combinations of p_peopcolorpct and the 3 fixed low-income levels). 
 
 
-#### Community make up in comparison to their distance from the Hurricane
+#### Community Make-up in Comparison to their Distance from the Hurricane
 
 ```{r}
 #| code-fold: true 
@@ -648,7 +654,7 @@ prediction_grid %>%
        x = "Distance from the Hurricane (km)", 
        y = "Low Income (%)", 
        fill = "Flood Predictions\n(inches)", 
-       caption = "Figure 6"
+       caption = "Figure 8"
        )
   
 prediction_grid %>% 
@@ -663,10 +669,12 @@ prediction_grid %>%
        x = "Distance from the Hurricane (km)", 
        y = "People of Color (%)", 
        fill = "Flood Predictions\n(inches)", 
-       caption = "Figure 7"
+       caption = "Figure 9"
        )
 
 ```
+
+
 
 # ------------------------
 
