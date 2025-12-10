@@ -9,5 +9,6 @@
 
 **/*.quarto_ipynb
 /Posts/analyzing_LA_fire_scars/data/
+/Posts/analyzing_LA_fire_scars/.DS_Store
 /Posts/winter_storm_uri_TX_blackouts/data/
 /Posts/hur_ian_flooding/data/
