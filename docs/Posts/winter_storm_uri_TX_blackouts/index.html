@@ -171,12 +171,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#creating-a-blackout-mask" id="toc-creating-a-blackout-mask" class="nav-link" data-scroll-target="#creating-a-blackout-mask">Creating a Blackout Mask</a>
   <ul class="collapse">
-  <li><a href="#a-combine-the-night-light-data" id="toc-a-combine-the-night-light-data" class="nav-link" data-scroll-target="#a-combine-the-night-light-data">(a) Combine the Night light data</a></li>
+  <li><a href="#a-combine-the-night-light-data" id="toc-a-combine-the-night-light-data" class="nav-link" data-scroll-target="#a-combine-the-night-light-data">(a) Combine the Night light Data</a></li>
   <li><a href="#b-finding-blackouts" id="toc-b-finding-blackouts" class="nav-link" data-scroll-target="#b-finding-blackouts">(b) Finding Blackouts</a></li>
   <li><a href="#c-mask-blackout-data" id="toc-c-mask-blackout-data" class="nav-link" data-scroll-target="#c-mask-blackout-data">(c) Mask Blackout Data</a></li>
   <li><a href="#d-vectorize-the-blackout-mask" id="toc-d-vectorize-the-blackout-mask" class="nav-link" data-scroll-target="#d-vectorize-the-blackout-mask">(d) Vectorize the Blackout Mask</a></li>
-  <li><a href="#e-crop-the-blackout-mask-to-the-houston-area" id="toc-e-crop-the-blackout-mask-to-the-houston-area" class="nav-link" data-scroll-target="#e-crop-the-blackout-mask-to-the-houston-area">(e) Crop the blackout mask to the Houston area</a></li>
-  <li><a href="#f-exclude-highways-from-blackout-area" id="toc-f-exclude-highways-from-blackout-area" class="nav-link" data-scroll-target="#f-exclude-highways-from-blackout-area">(f) Exclude highways from blackout area</a></li>
+  <li><a href="#e-crop-the-blackout-mask-to-the-houston-area" id="toc-e-crop-the-blackout-mask-to-the-houston-area" class="nav-link" data-scroll-target="#e-crop-the-blackout-mask-to-the-houston-area">(e) Crop the Blackout Mask to the Houston Area</a></li>
+  <li><a href="#f-exclude-highways-from-blackout-area" id="toc-f-exclude-highways-from-blackout-area" class="nav-link" data-scroll-target="#f-exclude-highways-from-blackout-area">(f) Exclude Highways from Blackout Area</a></li>
   <li><a href="#f-re-project-the-cropped-blackout-dataset-to-epsg3083" id="toc-f-re-project-the-cropped-blackout-dataset-to-epsg3083" class="nav-link" data-scroll-target="#f-re-project-the-cropped-blackout-dataset-to-epsg3083">(f) Re-project the Cropped Blackout Dataset to EPSG:3083</a></li>
   <li><a href="#plot" id="toc-plot" class="nav-link" data-scroll-target="#plot">Plot!</a></li>
   </ul></li>
@@ -446,7 +446,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="creating-a-blackout-mask">Creating a Blackout Mask</h2>
 <p><strong>PURPOSE:</strong> Identify all areas in Houston, TX that experienced power outages. To accomplish this, we will merge the night light raster tiles, find areas that experienced blackouts, and crop the dataframe to Houston’s extents while excluding major highways.</p>
 <section id="a-combine-the-night-light-data" class="level3">
-<h3 class="anchored" data-anchor-id="a-combine-the-night-light-data">(a) Combine the Night light data</h3>
+<h3 class="anchored" data-anchor-id="a-combine-the-night-light-data">(a) Combine the Night light Data</h3>
 <p>As stated before, the night light data is recorded on 10 by 10 tiles. Houston is split by two different tiles. Therefore, we have to merge the tiles together to create one picture of Houston, Texas.</p>
 <div class="cell">
 <details class="code-fold">
@@ -516,7 +516,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="e-crop-the-blackout-mask-to-the-houston-area" class="level3">
-<h3 class="anchored" data-anchor-id="e-crop-the-blackout-mask-to-the-houston-area">(e) Crop the blackout mask to the Houston area</h3>
+<h3 class="anchored" data-anchor-id="e-crop-the-blackout-mask-to-the-houston-area">(e) Crop the Blackout Mask to the Houston Area</h3>
 <p>By applying Houston’s city limits to <code>st_bbox</code>, we generated a bounding box representing the city’s spatial extent, which was then used with <code>st_crop</code> to clip the blackout mask data accordingly.</p>
 <div class="cell">
 <details class="code-fold">
@@ -531,7 +531,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="f-exclude-highways-from-blackout-area" class="level3">
-<h3 class="anchored" data-anchor-id="f-exclude-highways-from-blackout-area">(f) Exclude highways from blackout area</h3>
+<h3 class="anchored" data-anchor-id="f-exclude-highways-from-blackout-area">(f) Exclude Highways from Blackout Area</h3>
 <p>Highway traffic is typically seen from space and accounts for a large portion of the night lights. During Winter Storm Uri, roads were iced over and shut down, reducing traffic. Therefore, in order to ensure the reduction in traffic is not misinterpreted as a blackout, we must exclude the highways from the blackout mask.</p>
 <p>First, use <code>st_union</code> to unionize all the highways to make the data more manageable. Secondly, use <code>st_buffer</code> to make a 200m buffer zone around all highways.</p>
 <div class="cell">
@@ -809,10 +809,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="c-filter-and-merge" class="level4">
 <h4 class="anchored" data-anchor-id="c-filter-and-merge">(c) Filter and Merge</h4>
 <p>Filtering for homes did vs did not experience a blackout and merging the home dataset to the Texas census track data.</p>
-<p><strong>GOAL:</strong></p>
+<p><strong>GOALS:</strong></p>
 <ol type="1">
-<li><p>Make a datasets with homes that <em>DID</em> experienced a blackout and their income = “income_bo_homes”</p></li>
-<li><p>Make a datasets with homes that <em>did NOT</em> experienced a blackout and their income = “income_NO_bo_homes”</p></li>
+<li><p>Make a datasets with homes that <em>DID</em> experience a blackout and their income = <code>income_bo_homes</code></p></li>
+<li><p>Make a datasets with homes that <em>did NOT</em> experience a blackout and their income = <code>income_NO_bo_homes</code></p></li>
 </ol>
 <p>(1) Use <code>st_filter</code> (with ‘.predicate = st_intersects’) to find the intersection of homes that <strong>experienced blackouts</strong> and the census track data.</p>
 <div class="cell">
@@ -932,7 +932,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>To get a better understanding of the communities that lost power, map just the ‘income_bo_homes’ .</p>
+<p>To get a better understanding of the communities that lost power, map just the <code>income_bo_homes</code>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -949,7 +949,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#tm_scalebar(position = c(1.14, 0.40)) + </span></span>
 <span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
 <span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
-<span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Median Income Census Tracts in Houston, TX that</span><span class="sc">\n</span><span class="st">Experienced a Blackout During Winter Storm Uri"</span>) <span class="sc">+</span> </span>
+<span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Median Income Census Tracts in Houston, TX that Experienced a Blackout During Winter Storm Uri"</span>) <span class="sc">+</span> </span>
 <span id="cb69-15"><a href="#cb69-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="st">"Figure 6"</span>) <span class="sc">+</span> </span>
 <span id="cb69-16"><a href="#cb69-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -1027,7 +1027,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Find <em>Proportion</em> of Income Classes that Experienced a Blackout</p>
+<p>Find <em>Precentages</em> of Income Classes that Experienced a Blackout</p>
 <p>To find the percents of each income class that experiences a blackout, I found the population within each income bracket, filtered for the population that lost power in each class, then calculated the percent (count that experienced a blackout/total count of income bracket population).</p>
 <div class="cell" data-wanring="false">
 <details class="code-fold">
@@ -1049,7 +1049,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb72-15"><a href="#cb72-15" aria-hidden="true" tabindex="-1"></a>class_count <span class="ot">&lt;-</span> class_count <span class="sc">%&gt;%</span> </span>
 <span id="cb72-16"><a href="#cb72-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span> </span>
 <span id="cb72-17"><a href="#cb72-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> <span class="dv">100</span><span class="sc">*</span>(count<span class="sc">/</span>total)) <span class="sc">%&gt;%</span> </span>
-<span id="cb72-18"><a href="#cb72-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">recode</span>(class, </span>
+<span id="cb72-18"><a href="#cb72-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">recode</span>(class, <span class="co"># Change row names </span></span>
 <span id="cb72-19"><a href="#cb72-19" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"lower_class"</span> <span class="ot">=</span> <span class="st">"Lower Class"</span>, </span>
 <span id="cb72-20"><a href="#cb72-20" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"middle_class"</span> <span class="ot">=</span> <span class="st">"Middle Class"</span>, </span>
 <span id="cb72-21"><a href="#cb72-21" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"upper_class"</span> <span class="ot">=</span> <span class="st">"Upper Class"</span>, </span>
@@ -1201,7 +1201,7 @@ Blackouts.”</span> December 4, 2025. <a href="https://https//meganhessel.githu
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/meganhessel\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
