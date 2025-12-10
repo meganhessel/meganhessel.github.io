@@ -154,7 +154,7 @@ All CRSs match!
 
 **PURPOSE:** Identify all areas in Houston, TX that experienced power outages. To accomplish this, we will merge the night light raster tiles, find areas that experienced blackouts, and crop the dataframe to Houston's extents while excluding major highways.
 
-### (a) Combine the Night light data
+### (a) Combine the Night light Data
 
 As stated before, the night light data is recorded on 10 by 10 tiles. Houston is split by two different tiles. Therefore, we have to merge the tiles together to create one picture of Houston, Texas.
 
@@ -232,7 +232,7 @@ which(!st_is_valid(diff_mask_vec)) # Tell us which specific ones are invalid
 diff_mask_vec <- st_make_valid(diff_mask_vec)
 ```
 
-### (e) Crop the blackout mask to the Houston area
+### (e) Crop the Blackout Mask to the Houston Area
 
 By applying Houston’s city limits to `st_bbox`, we generated a bounding box representing the city’s spatial extent, which was then used with `st_crop` to clip the blackout mask data accordingly.
 
@@ -249,7 +249,7 @@ diff_crop <- st_crop(diff_mask_vec, bound_box)
 
 ```
 
-### (f) Exclude highways from blackout area
+### (f) Exclude Highways from Blackout Area
 
 Highway traffic is typically seen from space and accounts for a large portion of the night lights. During Winter Storm Uri, roads were iced over and shut down, reducing traffic. Therefore, in order to ensure the reduction in traffic is not misinterpreted as a blackout, we must exclude the highways from the blackout mask.
 
@@ -509,11 +509,11 @@ if(st_crs(texas_df) == st_crs(home_blackout)){ # Check if match
 
 Filtering for homes did vs did not experience a blackout and merging the home dataset to the Texas census track data.
 
-**GOAL:**
+**GOALS:**
 
-1.  Make a datasets with homes that *DID* experienced a blackout and their income = "income_bo_homes"
+1.  Make a datasets with homes that *DID* experience a blackout and their income = `income_bo_homes`
 
-2.  Make a datasets with homes that *did NOT* experienced a blackout and their income = "income_NO_bo_homes"
+2.  Make a datasets with homes that *did NOT* experience a blackout and their income = `income_NO_bo_homes`
 
 \(1\) Use `st_filter` (with '.predicate = st_intersects') to find the intersection of homes that **experienced blackouts** and the census track data.
 
@@ -524,7 +524,7 @@ income_bo_homes <- st_filter(texas_df, home_blackout, .predicate = st_intersects
   mutate(blackout = "TRUE") # Adding a column pertaining to experiencing a BO 
 ```
 
-\(2\) Using the function `st_intersetcions` (with 'sparse = FALSE'), we find locations where homes and census tracks do (TRUE) and do not (FALSE) intersect. Then we filter for only the locations with no blackouts (the areas that do not intersect - the FALSEs).
+\(2\) Using the function `st_intersetcions` (with 'sparse = FALSE'), we find locations where homes and census tracks do (TRUE) and do not (FALSE) intersect. Then we filter for only the locations with **no blackouts** (the areas that do not intersect - the FALSEs).
 
 ```{r}
 #| code-fold: true 
@@ -616,11 +616,13 @@ blackout_income_map <- tm_shape(income_bo_homes) +
 tmap_arrange(no_blackout_income_map, blackout_income_map)
 ```
 
-To get a better understanding of the communities that lost power, map just the 'income_bo_homes' .
+To get a better understanding of the communities that lost power, map just the `income_bo_homes`.
 
 ```{r}
 #| warning: false
 #| code-fold: true
+#| fig-width: 8
+#| fig-height: 10
 
 tm_shape(income_bo_homes) + 
   tm_polygons(fill = "B19013e1", 
@@ -633,9 +635,9 @@ tm_shape(income_bo_homes) +
               ) +
   #tm_compass(position = c(1.02, 0.40)) + 
   #tm_scalebar(position = c(1.14, 0.40)) + 
-  tm_scalebar(position = tm_pos_in('left', 'top')) +
-  tm_compass(position = tm_pos_in('left', 'top')) +
-  tm_title(text = "Median Income Census Tracts in Houston, TX that\nExperienced a Blackout During Winter Storm Uri") + 
+  tm_compass(position = tm_pos_in('left', 'bottom')) +
+  tm_scalebar(position = tm_pos_in('left', 'bottom')) +
+  tm_title(text = "Median Income Census Tracts in Houston, TX that Experienced a Blackout During Winter Storm Uri") + 
   tm_credits("Figure 6") + 
   tm_basemap("Esri.WorldTopoMap")
 
@@ -709,7 +711,7 @@ ggplot(income_class_sum,
 
 ```
 
-Find *Proportion* of Income Classes that Experienced a Blackout
+Find *Precentages* of Income Classes that Experienced a Blackout
 
 To find the percents of each income class that experiences a blackout, I found the population within each income bracket, filtered for the population that lost power in each class, then calculated the percent (count that experienced a blackout/total count of income bracket population).
 
@@ -733,7 +735,13 @@ class_count <- left_join(class_count_blackout, class_count_total, by ='class')
 # Proportions of homes that experiences a blackout per Income Class 
 class_count <- class_count %>% 
   group_by(class) %>% 
-  mutate(prop = 100*(count/total))
+  mutate(prop = 100*(count/total)) %>% 
+  mutate(class = recode(class, # Change row names 
+                        "lower_class" = "Lower Class", 
+                        "middle_class" = "Middle Class", 
+                        "upper_class" = "Upper Class", 
+                        "NA" = "NA"))
+  
 
 # Creating a kable table 
 knitr::kable(class_count[, c('class', 'prop')], 
@@ -753,9 +761,9 @@ rm(list = c('class_count_blackout', 'class_count_total'))
 
 ## Conclusion
 
-In Houston, Texas, the power outage centered around the downtown area which is seen in Figures 1 - 5. Figures 6 - 8 investigate the power outages in comparison with income census blocks. The medium income distributions of people who experienced blackouts vs did not experience blackouts are very similar and consistent with the overall medium income distribution in Houston. As shown in Figure 7 and the table, the proportion of residents experiencing blackouts is relatively consistent across income classes, ranging from about 12% to 16%. Accordingly, there is insufficient evidence to suggest that the power outages during Winter Storm Uri were biased or unjustly distributed.
+In Houston, Texas, the power outage centered around the downtown area which is seen in Figures 1 - 5. Figures 6 - 8 investigate the power outages in comparison with income census blocks. The medium income distributions of people who experienced blackouts vs did not experience blackouts are very similar and consistent with the overall medium income distribution in Houston. As shown in Figure 7 and the table, the proportion of residents experiencing blackouts is relatively consistent across income classes, ranging from about 11% to 16%. Accordingly, there is insufficient evidence to suggest that the power outages during Winter Storm Uri were biased or unjustly distributed.
 
-Limitations to the study: The light data was from NASA's Level-1 and Atmosphere Archive and Distribution System Distributed Active Archive Center (LAADS DAAC) which uses Visible Infrared Imaging Radiometer Suite (VIIRS). When using satellite imagery, course spatial resolution and atmospheric interference can impact the study. Furthermore, the road and house data is acquired by Open Street Map which can have data completeness and accuracy issues.
+**Limitations**: The light data was from NASA's Level-1 and Atmosphere Archive and Distribution System Distributed Active Archive Center (LAADS DAAC) which uses Visible Infrared Imaging Radiometer Suite (VIIRS). When using satellite imagery, course spatial resolution and atmospheric interference can impact the study. Furthermore, the road and house data is acquired by Open Street Map which can have data completeness and accuracy issues.
 
 ### Personal Statement
 

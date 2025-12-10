@@ -823,7 +823,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">blackout =</span> <span class="st">"TRUE"</span>) <span class="co"># Adding a column pertaining to experiencing a BO </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>(2) Using the function <code>st_intersetcions</code> (with ‘sparse = FALSE’), we find locations where homes and census tracks do (TRUE) and do not (FALSE) intersect. Then we filter for only the locations with no blackouts (the areas that do not intersect - the FALSEs).</p>
+<p>(2) Using the function <code>st_intersetcions</code> (with ‘sparse = FALSE’), we find locations where homes and census tracks do (TRUE) and do not (FALSE) intersect. Then we filter for only the locations with <strong>no blackouts</strong> (the areas that do not intersect - the FALSEs).</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -947,8 +947,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a>              ) <span class="sc">+</span></span>
 <span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#tm_compass(position = c(1.02, 0.40)) + </span></span>
 <span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#tm_scalebar(position = c(1.14, 0.40)) + </span></span>
-<span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">'left'</span>, <span class="st">'top'</span>)) <span class="sc">+</span></span>
-<span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">'left'</span>, <span class="st">'top'</span>)) <span class="sc">+</span></span>
+<span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
+<span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
 <span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Median Income Census Tracts in Houston, TX that</span><span class="sc">\n</span><span class="st">Experienced a Blackout During Winter Storm Uri"</span>) <span class="sc">+</span> </span>
 <span id="cb69-15"><a href="#cb69-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="st">"Figure 6"</span>) <span class="sc">+</span> </span>
 <span id="cb69-16"><a href="#cb69-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -956,7 +956,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -1048,14 +1048,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb72-14"><a href="#cb72-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Proportions of homes that experiences a blackout per Income Class </span></span>
 <span id="cb72-15"><a href="#cb72-15" aria-hidden="true" tabindex="-1"></a>class_count <span class="ot">&lt;-</span> class_count <span class="sc">%&gt;%</span> </span>
 <span id="cb72-16"><a href="#cb72-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span> </span>
-<span id="cb72-17"><a href="#cb72-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> <span class="dv">100</span><span class="sc">*</span>(count<span class="sc">/</span>total))</span>
-<span id="cb72-18"><a href="#cb72-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-19"><a href="#cb72-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a kable table </span></span>
-<span id="cb72-20"><a href="#cb72-20" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(class_count[, <span class="fu">c</span>(<span class="st">'class'</span>, <span class="st">'prop'</span>)], </span>
-<span id="cb72-21"><a href="#cb72-21" aria-hidden="true" tabindex="-1"></a>                      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Income Class"</span>, <span class="st">"Percentage"</span>),</span>
-<span id="cb72-22"><a href="#cb72-22" aria-hidden="true" tabindex="-1"></a>                      <span class="at">digits =</span> <span class="dv">2</span>, </span>
-<span id="cb72-23"><a href="#cb72-23" aria-hidden="true" tabindex="-1"></a>                      <span class="at">align =</span> <span class="st">'c'</span>,</span>
-<span id="cb72-24"><a href="#cb72-24" aria-hidden="true" tabindex="-1"></a>                      <span class="at">caption =</span> <span class="st">"Percentage of Each Income Class that Experienced a Blackout"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb72-17"><a href="#cb72-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> <span class="dv">100</span><span class="sc">*</span>(count<span class="sc">/</span>total)) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-18"><a href="#cb72-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">recode</span>(class, </span>
+<span id="cb72-19"><a href="#cb72-19" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"lower_class"</span> <span class="ot">=</span> <span class="st">"Lower Class"</span>, </span>
+<span id="cb72-20"><a href="#cb72-20" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"middle_class"</span> <span class="ot">=</span> <span class="st">"Middle Class"</span>, </span>
+<span id="cb72-21"><a href="#cb72-21" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"upper_class"</span> <span class="ot">=</span> <span class="st">"Upper Class"</span>, </span>
+<span id="cb72-22"><a href="#cb72-22" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"NA"</span> <span class="ot">=</span> <span class="st">"NA"</span>))</span>
+<span id="cb72-23"><a href="#cb72-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb72-24"><a href="#cb72-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-25"><a href="#cb72-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a kable table </span></span>
+<span id="cb72-26"><a href="#cb72-26" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(class_count[, <span class="fu">c</span>(<span class="st">'class'</span>, <span class="st">'prop'</span>)], </span>
+<span id="cb72-27"><a href="#cb72-27" aria-hidden="true" tabindex="-1"></a>                      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Income Class"</span>, <span class="st">"Percentage"</span>),</span>
+<span id="cb72-28"><a href="#cb72-28" aria-hidden="true" tabindex="-1"></a>                      <span class="at">digits =</span> <span class="dv">2</span>, </span>
+<span id="cb72-29"><a href="#cb72-29" aria-hidden="true" tabindex="-1"></a>                      <span class="at">align =</span> <span class="st">'c'</span>,</span>
+<span id="cb72-30"><a href="#cb72-30" aria-hidden="true" tabindex="-1"></a>                      <span class="at">caption =</span> <span class="st">"Percentage of Each Income Class that Experienced a Blackout"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1068,15 +1074,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">lower_class</td>
+<td style="text-align: center;">Lower Class</td>
 <td style="text-align: center;">13.84</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">middle_class</td>
+<td style="text-align: center;">Middle Class</td>
 <td style="text-align: center;">15.25</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">upper_class</td>
+<td style="text-align: center;">Upper Class</td>
 <td style="text-align: center;">10.53</td>
 </tr>
 <tr class="even">
@@ -1091,8 +1097,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>In Houston, Texas, the power outage centered around the downtown area which is seen in Figures 1 - 5. Figures 6 - 8 investigate the power outages in comparison with income census blocks. The medium income distributions of people who experienced blackouts vs did not experience blackouts are very similar and consistent with the overall medium income distribution in Houston. As shown in Figure 7 and the table, the proportion of residents experiencing blackouts is relatively consistent across income classes, ranging from about 12% to 16%. Accordingly, there is insufficient evidence to suggest that the power outages during Winter Storm Uri were biased or unjustly distributed.</p>
-<p>Limitations to the study: The light data was from NASA’s Level-1 and Atmosphere Archive and Distribution System Distributed Active Archive Center (LAADS DAAC) which uses Visible Infrared Imaging Radiometer Suite (VIIRS). When using satellite imagery, course spatial resolution and atmospheric interference can impact the study. Furthermore, the road and house data is acquired by Open Street Map which can have data completeness and accuracy issues.</p>
+<p>In Houston, Texas, the power outage centered around the downtown area which is seen in Figures 1 - 5. Figures 6 - 8 investigate the power outages in comparison with income census blocks. The medium income distributions of people who experienced blackouts vs did not experience blackouts are very similar and consistent with the overall medium income distribution in Houston. As shown in Figure 7 and the table, the proportion of residents experiencing blackouts is relatively consistent across income classes, ranging from about 11% to 16%. Accordingly, there is insufficient evidence to suggest that the power outages during Winter Storm Uri were biased or unjustly distributed.</p>
+<p><strong>Limitations</strong>: The light data was from NASA’s Level-1 and Atmosphere Archive and Distribution System Distributed Active Archive Center (LAADS DAAC) which uses Visible Infrared Imaging Radiometer Suite (VIIRS). When using satellite imagery, course spatial resolution and atmospheric interference can impact the study. Furthermore, the road and house data is acquired by Open Street Map which can have data completeness and accuracy issues.</p>
 <section id="personal-statement" class="level3">
 <h3 class="anchored" data-anchor-id="personal-statement">Personal Statement</h3>
 <p>I am originally from Houston, Texas, and I experienced Winter Storm Uri firsthand. The storm brought unprecedented freezing temperatures to the region, overwhelming the power grid and disrupting daily life across the state. During this time, my father and I were without electricity in our home while my mother, Dr.&nbsp;Hessel, remained on call at the hospital for several days. It was an exceptionally difficult week with prolonged power outages, pipes bursting, hazardous conditions keeping us indoors, and widespread school closures. The event shows the importance of resilient infrastructure and highlighted how essential preparedness and coordinated response systems are during extreme weather events.</p>
