@@ -8,7 +8,7 @@
 
 <meta name="author" content="Megan Hessel">
 <meta name="dcterms.date" content="2025-12-04">
-<meta name="description" content="Exploring Winter Storm Uri’s impacts on the Houston, TX power grid">
+<meta name="description" content="Exploring Winter Storm Uri’s impacts on the Houston, TX power grid.">
 
 <title>Winter Storm Uri: Houston, TX Blackouts – Megan Hessel</title>
 <style>
@@ -178,12 +178,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#e-crop-the-blackout-mask-to-the-houston-area" id="toc-e-crop-the-blackout-mask-to-the-houston-area" class="nav-link" data-scroll-target="#e-crop-the-blackout-mask-to-the-houston-area">(e) Crop the Blackout Mask to the Houston Area</a></li>
   <li><a href="#f-exclude-highways-from-blackout-area" id="toc-f-exclude-highways-from-blackout-area" class="nav-link" data-scroll-target="#f-exclude-highways-from-blackout-area">(f) Exclude Highways from Blackout Area</a></li>
   <li><a href="#f-re-project-the-cropped-blackout-dataset-to-epsg3083" id="toc-f-re-project-the-cropped-blackout-dataset-to-epsg3083" class="nav-link" data-scroll-target="#f-re-project-the-cropped-blackout-dataset-to-epsg3083">(f) Re-project the Cropped Blackout Dataset to EPSG:3083</a></li>
-  <li><a href="#plot" id="toc-plot" class="nav-link" data-scroll-target="#plot">Plot!</a></li>
+  <li><a href="#plot-blackout-areas" id="toc-plot-blackout-areas" class="nav-link" data-scroll-target="#plot-blackout-areas">Plot Blackout Areas</a></li>
   </ul></li>
   <li><a href="#before-and-after-plot" id="toc-before-and-after-plot" class="nav-link" data-scroll-target="#before-and-after-plot">Before and After Plot</a></li>
   <li><a href="#homes-impacted-by-blackouts" id="toc-homes-impacted-by-blackouts" class="nav-link" data-scroll-target="#homes-impacted-by-blackouts">Homes Impacted by Blackouts</a>
   <ul class="collapse">
-  <li><a href="#find-homes-that-experienced-a-blackout" id="toc-find-homes-that-experienced-a-blackout" class="nav-link" data-scroll-target="#find-homes-that-experienced-a-blackout">Find homes that Experienced a Blackout</a></li>
+  <li><a href="#find-homes-that-experienced-a-blackout" id="toc-find-homes-that-experienced-a-blackout" class="nav-link" data-scroll-target="#find-homes-that-experienced-a-blackout">Find Homes that Experienced a Blackout</a></li>
   <li><a href="#estimate-of-the-number-of-homes-in-houston-that-lost-power" id="toc-estimate-of-the-number-of-homes-in-houston-that-lost-power" class="nav-link" data-scroll-target="#estimate-of-the-number-of-homes-in-houston-that-lost-power">Estimate of the Number of Homes in Houston that Lost Power</a></li>
   <li><a href="#map-the-homes-experiencing-blackouts" id="toc-map-the-homes-experiencing-blackouts" class="nav-link" data-scroll-target="#map-the-homes-experiencing-blackouts">Map the Homes Experiencing Blackouts</a></li>
   </ul></li>
@@ -216,7 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    Exploring Winter Storm Uri’s impacts on the Houston, TX power grid
+    Exploring Winter Storm Uri’s impacts on the Houston, TX power grid.
   </div>
 </div>
 
@@ -256,8 +256,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Between February 11 and 20, 2021, Winter Storm Uri swept across Texas, bring record-breaking cold tempertures and heavy precipitation (NOAA, 2023). The storm produced the longest stretch of freezing temperatures in the state’s history, triggering widespread power outages, burst pipes, dangerous road conditions, and numerous accidents (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of people (more than 2 out of 3 people) were left with no electricity or heat during the subfreezing conditions (Watson P, 2021).</p>
-<p>This project aims to analyze the effects of the extreme weather associated with Winter Storm Uri on Houston’s power grid, and investigate the relationships of household median income as a possible co-variable to power outage distribution.</p>
+<p>Between February 11 and 20, 2021, Winter Storm Uri swept across Texas, bringing record-breaking cold tempertures and heavy precipitation (NOAA, 2023). The storm produced the longest stretch of freezing temperatures in the state’s history, triggering widespread power outages, burst pipes, dangerous road conditions, and numerous accidents (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of civilians (more than 2 out of 3 people) were left with no electricity or heat during the subfreezing conditions (Watson P, 2021).</p>
+<p>This project aims to analyze the effects of the extreme weather associated with Winter Storm Uri on Houston’s power grid, and investigate the relationship of household median income as a possible co-variable to the power outage distribution.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -272,14 +272,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="datasets" class="level2">
 <h2 class="anchored" data-anchor-id="datasets">Datasets</h2>
 <ol type="1">
-<li><p>The night light data is Visible Infrared Imaging Radiometer Suite (VIIRS) from <a href="https://ladsweb.modaps.eosdis.nasa.gov/">NASA’s Level-1 and Atmospheric Archive &amp; Distribution System Distributed Active Archive Center</a> (LAADS DAAC). VIIRS collects both visible and infrared imagery on 10 by 10 tiles. Houston, Texas is located between two tiles (h08v05 and h08v06). Therefore, we will need to merge the tiles together. For this project, we will be looking at pre (Feb 7) and post (Feb 16) storm night light data.</p></li>
-<li><p>The road and house data is from originally from <a href="https://planet.openstreetmap.org/">Open Street Map</a> but taken from a <a href="https://download.geofabrik.de/">Geofabrik</a> (a third party). Highways account for a large portion of the night lights. During Winter Storm Uri, there is most likely a reduction of traffic as roads iced over and shutdown. In order to not interpret the reduced traffic as blackouts, it is necessary we remove highways from our night light data.</p></li>
-<li><p>Texas’s socioeconomic data is from the U.S. <a href="https://www.census.gov/programs-surveys/acs">Census Bureau’s American Community Survey</a> for census tracts in 2019.</p></li>
+<li><p>The night light raster data is Visible Infrared Imaging Radiometer Suite (VIIRS) from <a href="https://ladsweb.modaps.eosdis.nasa.gov/">NASA’s Level-1 and Atmospheric Archive &amp; Distribution System Distributed Active Archive Center</a> (LAADS DAAC). VIIRS collects both visible and infrared imagery on 10 by 10 tiles. Houston, Texas is located between two tiles (h08v05 and h08v06). Therefore, we will need to merge the tiles together. For this project, we will be looking at night light pre (Feb 7) and post (Feb 16) the storm.</p></li>
+<li><p>The road and house data is originally from <a href="https://planet.openstreetmap.org/">Open Street Map</a> but taken from a <a href="https://download.geofabrik.de/">Geofabrik</a> (a third party). Highways account for a large portion of the night lights. During Winter Storm Uri, there was most likely a reduction of traffic as roads iced over and were shutdown. To ensure highways are not classified as blackouts, we must remove highways from our night light data.</p></li>
+<li><p>Texas’s socioeconomic data is the 2019 census track information from the <a href="https://www.census.gov/programs-surveys/acs">U.S. Census Bureau’s American Community Survey</a>.</p></li>
 </ol>
 </section>
 <section id="initial-steps" class="level2">
 <h2 class="anchored" data-anchor-id="initial-steps">Initial Steps</h2>
-<p>Always, the first step is to download all necessary libraries!</p>
+<p>Always, the first step is to load all necessary libraries!</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -296,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra) <span class="co"># for spatial raster data </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Then, download and load in all the datasets.</p>
+<p>Then, load in all the datasets.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -444,7 +444,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="creating-a-blackout-mask" class="level2">
 <h2 class="anchored" data-anchor-id="creating-a-blackout-mask">Creating a Blackout Mask</h2>
-<p><strong>PURPOSE:</strong> Identify all areas in Houston, TX that experienced power outages. To accomplish this, we will merge the night light raster tiles, find areas that experienced blackouts, and crop the dataframe to Houston’s extents while excluding major highways.</p>
+<p><strong>GOAL:</strong> Identify all areas in Houston, TX that experienced power outages. To accomplish this, we will merge the night light raster tiles, find areas that experienced blackouts, and crop the dataframe to Houston’s extents while excluding major highways.</p>
 <section id="a-combine-the-night-light-data" class="level3">
 <h3 class="anchored" data-anchor-id="a-combine-the-night-light-data">(a) Combine the Night light Data</h3>
 <p>As stated before, the night light data is recorded on 10 by 10 tiles. Houston is split by two different tiles. Therefore, we have to merge the tiles together to create one picture of Houston, Texas.</p>
@@ -456,7 +456,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>feb16sf <span class="ot">&lt;-</span> <span class="fu">st_mosaic</span>(light_3, light_4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Now that we have combined the tiles to create a whole picture of Houston on Feb 7 and Feb 16, we need to make sure the extents of both days are the same. <code>Extents</code> refer to the geospatial range encompassed within the data.</p>
+<p>After creating a complete night light image of Feb 7 and 16, we need to make sure the extents of both days are the same. <code>Extents</code> refer to the geospatial range encompassed within the data.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if extents match</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">st_bbox</span>(feb7sf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -474,7 +474,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="b-finding-blackouts" class="level3">
 <h3 class="anchored" data-anchor-id="b-finding-blackouts">(b) Finding Blackouts</h3>
-<p><strong>Blackouts</strong> are when the power difference (between pre and post night light data) is greater than 200 nW cm<sup>-2</sup>sr<sup>-1</sup>. We can find this by using mathematics operations between tiles and comparison symbols.</p>
+<p><strong>Blackouts</strong> are when the power difference (between pre and post night light data) is greater than 200 nW cm<sup>-2</sup>sr<sup>-1</sup>. We can find this by using mathematics operations between tiles and logicals.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -486,7 +486,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="c-mask-blackout-data" class="level3">
 <h3 class="anchored" data-anchor-id="c-mask-blackout-data">(c) Mask Blackout Data</h3>
-<p><strong>Mask</strong> means to convert and/or filter for specific data. In this case, we are masking for <em>only</em> areas that experienced a blackout. Everywhere else that did not experience a blackout gets an NA value.</p>
+<p><strong>Mask</strong> means to convert and/or filter for specific data. In this case, we are masking for <em>only</em> areas that experienced a blackout. Anywhere that did not experience a blackout gets an NA value.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -500,7 +500,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="d-vectorize-the-blackout-mask" class="level3">
 <h3 class="anchored" data-anchor-id="d-vectorize-the-blackout-mask">(d) Vectorize the Blackout Mask</h3>
-<p>Convert the masked blackout data frame to a vector by using an <code>st_as_sf</code> function. Then check and change all the invalid geometries.</p>
+<p>Convert the masked blackout dataframe to a vector by using an <code>st_as_sf</code> function. Then, check and change all the invalid geometries.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -517,7 +517,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="e-crop-the-blackout-mask-to-the-houston-area" class="level3">
 <h3 class="anchored" data-anchor-id="e-crop-the-blackout-mask-to-the-houston-area">(e) Crop the Blackout Mask to the Houston Area</h3>
-<p>By applying Houston’s city limits to <code>st_bbox</code>, we generated a bounding box representing the city’s spatial extent, which was then used with <code>st_crop</code> to clip the blackout mask data accordingly.</p>
+<p>By applying Houston’s city limits to <code>st_bbox</code>, we generated a bounding box representing the city’s spatial extent, which is then used, with <code>st_crop</code>, to clip the blackout mask data.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -532,8 +532,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="f-exclude-highways-from-blackout-area" class="level3">
 <h3 class="anchored" data-anchor-id="f-exclude-highways-from-blackout-area">(f) Exclude Highways from Blackout Area</h3>
-<p>Highway traffic is typically seen from space and accounts for a large portion of the night lights. During Winter Storm Uri, roads were iced over and shut down, reducing traffic. Therefore, in order to ensure the reduction in traffic is not misinterpreted as a blackout, we must exclude the highways from the blackout mask.</p>
-<p>First, use <code>st_union</code> to unionize all the highways to make the data more manageable. Secondly, use <code>st_buffer</code> to make a 200m buffer zone around all highways.</p>
+<p>As previously dicussed, highway traffic is typically seen from space and accounts for a large portion of the night lights. During Winter Storm Uri, roads were iced over and shut down, reducing traffic. Therefore, in order to ensure the reduction in traffic is not misinterpreted as a blackout, we must exclude the highways from the blackout mask.</p>
+<p>First, use <code>st_union</code> to unionize all the highways to make the data more manageable. Secondly, make a 200m buffer zone around all highways with <code>st_buffer</code> .</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -564,8 +564,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="plot" class="level3">
-<h3 class="anchored" data-anchor-id="plot">Plot!</h3>
+<section id="plot-blackout-areas" class="level3">
+<h3 class="anchored" data-anchor-id="plot-blackout-areas">Plot Blackout Areas</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -598,8 +598,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="before-and-after-plot" class="level2">
 <h2 class="anchored" data-anchor-id="before-and-after-plot">Before and After Plot</h2>
-<p><strong>PURPOSE:</strong> Map Houston’s night light pre and post the Winter Storm.</p>
-<p><em>Crop</em> Feb 7 and Feb 16 night light raster data to Houston’s extent (previously created bounding box).</p>
+<p><strong>GOAL:</strong> Map Houston’s night light pre and post the Winter Storm.</p>
+<p><u>Crop</u> Feb 7 and Feb 16 night light raster data to Houston’s extent (previously created bounding box).</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -608,7 +608,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>feb16sf_houston <span class="ot">&lt;-</span> <span class="fu">st_crop</span>(feb16sf, bound_box)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Cloud cover can cause extremely light measurements. Therefore, to correctly plot the night light data, we need to <em>take out all the extreme</em>, outliar measurements by masking.</p>
+<p>Cloud cover can cause extreme light measurements. Therefore, to correctly plot the night light data, we need to <u>remove all the outlier</u> measurements by masking.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -617,7 +617,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>feb16sf_houston[feb16sf_houston <span class="sc">&lt;</span> <span class="dv">200</span> <span class="sc">|</span> feb16sf_houston <span class="sc">&gt;</span> <span class="dv">1000</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p><em>Plot</em> the light intensity between Feb 7 and Feb 16 to see the considerable amount of blackouts from the storm.</p>
+<p><u>Plot</u> the light intensity between Feb 7 and Feb 16 to see the considerable amount of blackouts from the storm.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -658,7 +658,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="homes-impacted-by-blackouts" class="level2">
 <h2 class="anchored" data-anchor-id="homes-impacted-by-blackouts">Homes Impacted by Blackouts</h2>
-<p><strong>Goal:</strong> Display only <em>homes</em> without power during Winter Storm Uri.</p>
+<p><strong>GOAL:</strong> Display only <em>homes</em> without power during Winter Storm Uri.</p>
 <p>First, check and transform CRSs to match. Secondly, check and fix invalid geometries.</p>
 <div class="cell">
 <details class="code-fold">
@@ -687,8 +687,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <section id="find-homes-that-experienced-a-blackout" class="level3">
-<h3 class="anchored" data-anchor-id="find-homes-that-experienced-a-blackout">Find homes that Experienced a Blackout</h3>
-<p>Now, we need to find the homes that experienced a blackout! <code>st_filter</code> (with .predicate = st_intersects) will find all the houses that are within the blackout cropped mask.</p>
+<h3 class="anchored" data-anchor-id="find-homes-that-experienced-a-blackout">Find Homes that Experienced a Blackout</h3>
+<p>Now, we need to find the homes that experienced a blackout! The function <code>st_filter</code> (with .predicate = st_intersects) will find all the houses that are within the blackout cropped mask.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Homes that experienced  blackouts </span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>home_blackout <span class="ot">&lt;-</span> <span class="fu">st_filter</span>(houses, diff_crop, <span class="at">.predicate =</span> st_intersects)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -696,7 +696,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="estimate-of-the-number-of-homes-in-houston-that-lost-power" class="level3">
 <h3 class="anchored" data-anchor-id="estimate-of-the-number-of-homes-in-houston-that-lost-power">Estimate of the Number of Homes in Houston that Lost Power</h3>
-<p>Because the <code>home_blackout</code> dataframe contains 1 row for every building that experienced a blackout, we can just count the number of rows using <code>nrow</code> to estimate the number of homes without power.</p>
+<p>Because the <code>home_blackout</code> dataframe contains 1 row for every building that experienced a blackout, we can estimate the amount of homes without power by counting the number of rows with <code>nrow</code>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -745,12 +745,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="blackouts-compared-to-income" class="level2">
 <h2 class="anchored" data-anchor-id="blackouts-compared-to-income">Blackouts Compared to Income</h2>
-<p>To assess whether power outages during Winter Storm Uri disproportionately affected certain socioeconomic groups, we integrated census-based median household income data with the blackout data. Initially, we investigated income levels between areas that experience vs did not experience a blackout to determine if income distribution differed across the two groups. This allowed us to evaluate whether lower-income communities experienced higher rates or greater severity of power loss compared to more affluent areas.</p>
+<p>To assess whether power outages disproportionately affected certain socioeconomic groups, we integrated census-based median household income data with the blackout data. Initially, we investigated income levels between areas that experience vs did not experience a blackout to determine if income distribution differed across the two groups. This allowed us to evaluate whether lower-income communities experienced higher rates of power loss compared to more affluent areas.</p>
 <section id="data-wrangling-1" class="level3">
 <h3 class="anchored" data-anchor-id="data-wrangling-1">Data Wrangling</h3>
 <section id="a-join-the-texas-income-and-geometery-datasets" class="level4">
 <h4 class="anchored" data-anchor-id="a-join-the-texas-income-and-geometery-datasets">(a) Join the Texas Income and Geometery Datasets</h4>
-<p>In the Texas’s socioeconomic data, each row is a different census track. Whereas, the columns are different measurements for each census track. By looking at the dimensions of the two layers, we can see that the row numbers match perfectly. This makes sense because the income and geometry dataframes are just different layers of the same large dataset. Therefore, when merging the layers, we can use <code>cbind</code> to “stitch” the layers together, keeping all columns.</p>
+<p>In Texas’s socioeconomic data, each row is a different census track. Whereas, the columns are different measurements for each census track. By looking at the dimensions of the two layers, we can see that the row numbers match perfectly. This makes sense because the income and geometry dataframes are just different layers of the same large dataset. Therefore, when merging the layers, we can use <code>cbind</code> to “stitch” the layers together, keeping all columns.</p>
 <p>When merging datasets, its helpful to look at the dimensions before and after the merge to ensure the <code>cbind</code> worked properly.</p>
 <div class="cell">
 <details class="code-fold">
@@ -808,13 +808,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="c-filter-and-merge" class="level4">
 <h4 class="anchored" data-anchor-id="c-filter-and-merge">(c) Filter and Merge</h4>
-<p>Filtering for homes did vs did not experience a blackout and merging the home dataset to the Texas census track data.</p>
+<p>Filtering for homes that did vs did not experience a blackout and merging the home dataset to the Texas census track data.</p>
 <p><strong>GOALS:</strong></p>
 <ol type="1">
-<li><p>Make a datasets with homes that <em>DID</em> experience a blackout and their income = <code>income_bo_homes</code></p></li>
-<li><p>Make a datasets with homes that <em>did NOT</em> experience a blackout and their income = <code>income_NO_bo_homes</code></p></li>
+<li><p>Make a datasets with homes that <em>DID</em> experience a blackout and their median household income = <code>income_bo_homes</code></p></li>
+<li><p>Make a datasets with homes that <em>did NOT</em> experience a blackout and their median household income = <code>income_NO_bo_homes</code></p></li>
 </ol>
-<p>(1) Use <code>st_filter</code> (with ‘.predicate = st_intersects’) to find the intersection of homes that <strong>experienced blackouts</strong> and the census track data.</p>
+<p>(1) Find the intersection of homes that <strong>experienced blackouts</strong> and the census track data with <code>st_filter</code> (and <code>.predicate = st_intersects</code>).</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -823,7 +823,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">blackout =</span> <span class="st">"TRUE"</span>) <span class="co"># Adding a column pertaining to experiencing a BO </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>(2) Using the function <code>st_intersetcions</code> (with ‘sparse = FALSE’), we find locations where homes and census tracks do (TRUE) and do not (FALSE) intersect. Then we filter for only the locations with <strong>no blackouts</strong> (the areas that do not intersect - the FALSEs).</p>
+<p>(2) Using the function <code>st_intersections</code> (with ‘sparse = FALSE’), find the locations where homes and census tracks do (TRUE) and do not (FALSE) intersect. Then, we filter for the locations with <strong>no blackouts</strong> (the areas that do not intersect - the FALSEs).</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -835,7 +835,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">blackout =</span> <span class="st">"FALSE"</span>) <span class="co"># Adding a column pertaining to NOT experiencing a BO </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>In both codes, the <code>mutate</code> function creates a new <code>blackout</code> column that states if the data does (‘TRUE’) or does not (FALSE) contain homes experiencing a power outages.</p>
+<p>In both codes, the <code>mutate</code> function creates a new <code>blackout</code> column that states if the home does (‘TRUE’) or does not (‘FALSE’) experience a power outage.</p>
 <p>To make sure the filtering worked, check the dimensions of each dataframe.</p>
 <div class="cell">
 <details class="code-fold">
@@ -871,7 +871,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="c-create-dataset-of-all-homes-in-houston" class="level4">
 <h4 class="anchored" data-anchor-id="c-create-dataset-of-all-homes-in-houston">(c) Create Dataset of all Homes in Houston</h4>
-<p>Combine the information of homes that did lose power and homes that did not. Since the columns are the same, we can use <code>rbind</code> to stitches together the rows.</p>
+<p>Combine the information of homes that did lose power (<code>income_bo_homes</code>) and homes that did not (<code>income_NO_bo_homes</code>). Since the columns are the same, we can use <code>rbind</code> to stitch together the rows.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge mean income blackouts and no blackout dataframes </span></span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>income_merge <span class="ot">&lt;-</span> <span class="fu">rbind</span>(income_NO_bo_homes, income_bo_homes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -880,7 +880,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="visualizing-blackout-experiences-with-income" class="level3">
 <h3 class="anchored" data-anchor-id="visualizing-blackout-experiences-with-income">Visualizing Blackout Experiences with Income</h3>
-<p>Mapping the household income distributions if they did vs did not experience a blackout.</p>
+<p>Mapping the median household income distributions if homes did vs did not experience a blackout.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -949,7 +949,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#tm_scalebar(position = c(1.14, 0.40)) + </span></span>
 <span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
 <span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
-<span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Median Income Census Tracts in Houston, TX that Experienced a Blackout During Winter Storm Uri"</span>) <span class="sc">+</span> </span>
+<span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Median Income Census Tracts in Houston, TX</span><span class="sc">\n</span><span class="st">that Experienced a Blackout During Winter Storm Uri"</span>) <span class="sc">+</span> </span>
 <span id="cb69-15"><a href="#cb69-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="st">"Figure 6"</span>) <span class="sc">+</span> </span>
 <span id="cb69-16"><a href="#cb69-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -961,18 +961,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Figures 5 and 6 shows us that the downtown area experienced more blackouts. However, it is difficult to understand the income variable within the maps.</p>
+<p>Figures 5 and 6 shows the downtown area experiencing more blackouts. However, it is difficult to understand the income distribution within the maps.</p>
 </section>
 <section id="income-classes" class="level3">
 <h3 class="anchored" data-anchor-id="income-classes">Income Classes</h3>
-<p>To better investigate if socioeconomic status (particularly income level) affected the likelihood of experiencing a blackout, I categorized the population into three income groups: low, middle, and upper class.</p>
-<p>To do this categorization, I created a new dataframe that specified the medium income level’s <em>class</em>. The estimated class separation for Houston, Texas is:</p>
+<p>To better investigate if socioeconomic status (particularly income level) affected the likelihood of experiencing a blackout, we categorized the population into three income groups: low, middle, and upper class.</p>
+<p>To do this categorization, we created a new dataframe that specified the medium income level’s <em>class</em>. The estimated class separation for Houston, Texas is:</p>
 <ul>
 <li><p>Lower class: $40,000 and less</p></li>
 <li><p>Middle class: $40,000 - $125,000</p></li>
 <li><p>Upper class: $125,000 and above</p></li>
 </ul>
-<p>These income class numbers are based on Fullerton, 2025.</p>
+<p><em>These income class numbers are based on Fullerton, 2025.</em></p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -997,7 +997,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb70-19"><a href="#cb70-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>()) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Plot Income Classes</p>
+<p>Plot income Ccasses in terms of experiencing power outages or not.</p>
 <div class="cell" data-wanring="false">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1027,8 +1027,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Find <em>Precentages</em> of Income Classes that Experienced a Blackout</p>
-<p>To find the percents of each income class that experiences a blackout, I found the population within each income bracket, filtered for the population that lost power in each class, then calculated the percent (count that experienced a blackout/total count of income bracket population).</p>
+<p><u>Find <em>Precentages</em> of Income Classes that Experienced a Blackout</u></p>
+<p>To find the percentages of each income class that experiences a blackout, we will find the population within each income bracket, filter for the population that lost power in each class, then calculate the precentage (count that experienced a blackout/total count of income bracket population).</p>
 <div class="cell" data-wanring="false">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1097,8 +1097,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>In Houston, Texas, the power outage centered around the downtown area which is seen in Figures 1 - 5. Figures 6 - 8 investigate the power outages in comparison with income census blocks. The medium income distributions of people who experienced blackouts vs did not experience blackouts are very similar and consistent with the overall medium income distribution in Houston. As shown in Figure 7 and the table, the proportion of residents experiencing blackouts is relatively consistent across income classes, ranging from about 11% to 16%. Accordingly, there is insufficient evidence to suggest that the power outages during Winter Storm Uri were biased or unjustly distributed.</p>
-<p><strong>Limitations</strong>: The light data was from NASA’s Level-1 and Atmosphere Archive and Distribution System Distributed Active Archive Center (LAADS DAAC) which uses Visible Infrared Imaging Radiometer Suite (VIIRS). When using satellite imagery, course spatial resolution and atmospheric interference can impact the study. Furthermore, the road and house data is acquired by Open Street Map which can have data completeness and accuracy issues.</p>
+<p>In Houston, Texas, the power outage centered around the downtown area which is seen in Figures 1 - 5. Figures 6 - 8 investigate the power outages in comparison with income census blocks. The medium income distributions of homes who experienced blackouts vs did not experience blackouts are very similar and consistent with the overall medium income distribution in Houston. As shown in Figure 7 and the table, the proportion of residents experiencing blackouts is relatively consistent across income classes, ranging from about 11% to 16%. Accordingly, there is insufficient evidence to suggest that the power outages during Winter Storm Uri were biased or unjustly distributed.</p>
+<p><strong>Limitations</strong>: The light data was from NASA’s Level-1 and Atmosphere Archive and Distribution System Distributed Active Archive Center (LAADS DAAC) which uses Visible Infrared Imaging Radiometer Suite (VIIRS). When using satellite imagery, coarse spatial resolution and atmospheric interference can impact the study. Furthermore, the road and house data is acquired by Open Street Map which can have data completeness and accuracy issues.</p>
 <section id="personal-statement" class="level3">
 <h3 class="anchored" data-anchor-id="personal-statement">Personal Statement</h3>
 <p>I am originally from Houston, Texas, and I experienced Winter Storm Uri firsthand. The storm brought unprecedented freezing temperatures to the region, overwhelming the power grid and disrupting daily life across the state. During this time, my father and I were without electricity in our home while my mother, Dr.&nbsp;Hessel, remained on call at the hospital for several days. It was an exceptionally difficult week with prolonged power outages, pipes bursting, hazardous conditions keeping us indoors, and widespread school closures. The event shows the importance of resilient infrastructure and highlighted how essential preparedness and coordinated response systems are during extreme weather events.</p>
@@ -1201,7 +1201,7 @@ Blackouts.”</span> December 4, 2025. <a href="https://https//meganhessel.githu
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/meganhessel\.github\.io\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
