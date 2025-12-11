@@ -1,6 +1,6 @@
 ---
 title: "Winter Storm Uri: Houston, TX Blackouts"
-description: "Exploring Winter Storm Uri's impacts on the Houston, TX power grid"
+description: "Exploring Winter Storm Uri's impacts on the Houston, TX power grid."
 author: 
   - name: Megan Hessel  # Link to other people 
     url: https//meganhessel.github.io/
@@ -18,9 +18,9 @@ citation: #true (if without link)
 
 ## Introduction
 
-Between February 11 and 20, 2021, Winter Storm Uri swept across Texas, bring record-breaking cold tempertures and heavy precipitation (NOAA, 2023). The storm produced the longest stretch of freezing temperatures in the state's history, triggering widespread power outages, burst pipes, dangerous road conditions, and numerous accidents (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of people (more than 2 out of 3 people) were left with no electricity or heat during the subfreezing conditions (Watson P, 2021).
+Between February 11 and 20, 2021, Winter Storm Uri swept across Texas, bringing record-breaking cold tempertures and heavy precipitation (NOAA, 2023). The storm produced the longest stretch of freezing temperatures in the state's history, triggering widespread power outages, burst pipes, dangerous road conditions, and numerous accidents (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of civilians (more than 2 out of 3 people) were left with no electricity or heat during the subfreezing conditions (Watson P, 2021).
 
-This project aims to analyze the effects of the extreme weather associated with Winter Storm Uri on Houston’s power grid, and investigate the relationships of household median income as a possible co-variable to power outage distribution.
+This project aims to analyze the effects of the extreme weather associated with Winter Storm Uri on Houston’s power grid, and investigate the relationship of household median income as a possible co-variable to the power outage distribution.
 
 ```{r, out.width = "500px"}
 #| echo: false
@@ -31,15 +31,15 @@ Credits to Joe Raedle/Getty. Image obtained from the [People](https://people.com
 
 ## Datasets
 
-1.  The night light data is Visible Infrared Imaging Radiometer Suite (VIIRS) from [NASA's Level-1 and Atmospheric Archive & Distribution System Distributed Active Archive Center](https://ladsweb.modaps.eosdis.nasa.gov/) (LAADS DAAC). VIIRS collects both visible and infrared imagery on 10 by 10 tiles. Houston, Texas is located between two tiles (h08v05 and h08v06). Therefore, we will need to merge the tiles together. For this project, we will be looking at pre (Feb 7) and post (Feb 16) storm night light data.
+1.  The night light raster data is Visible Infrared Imaging Radiometer Suite (VIIRS) from [NASA's Level-1 and Atmospheric Archive & Distribution System Distributed Active Archive Center](https://ladsweb.modaps.eosdis.nasa.gov/) (LAADS DAAC). VIIRS collects both visible and infrared imagery on 10 by 10 tiles. Houston, Texas is located between two tiles (h08v05 and h08v06). Therefore, we will need to merge the tiles together. For this project, we will be looking at night light pre (Feb 7) and post (Feb 16) the storm.
 
-2.  The road and house data is from originally from [Open Street Map](https://planet.openstreetmap.org/) but taken from a [Geofabrik](https://download.geofabrik.de/) (a third party). Highways account for a large portion of the night lights. During Winter Storm Uri, there is most likely a reduction of traffic as roads iced over and shutdown. In order to not interpret the reduced traffic as blackouts, it is necessary we remove highways from our night light data.
+2.  The road and house data is originally from [Open Street Map](https://planet.openstreetmap.org/) but taken from a [Geofabrik](https://download.geofabrik.de/) (a third party). Highways account for a large portion of the night lights. During Winter Storm Uri, there was most likely a reduction of traffic as roads iced over and were shutdown. To ensure highways are not classified as blackouts, we must remove highways from our night light data.
 
-3.  Texas's socioeconomic data is from the U.S. [Census Bureau’s American Community Survey](https://www.census.gov/programs-surveys/acs) for census tracts in 2019.
+3.  Texas's socioeconomic data is the 2019 census track information from the [U.S. Census Bureau’s American Community Survey](https://www.census.gov/programs-surveys/acs).
 
 ## Initial Steps
 
-Always, the first step is to download all necessary libraries!
+Always, the first step is to load all necessary libraries!
 
 ```{r}
 #| message: false
@@ -60,7 +60,7 @@ library(raster) # for spatial raster data
 library(terra) # for spatial raster data 
 ```
 
-Then, download and load in all the datasets.
+Then, load in all the datasets.
 
 ```{r}
 #| output: false
@@ -152,7 +152,7 @@ All CRSs match!
 
 ## Creating a Blackout Mask
 
-**PURPOSE:** Identify all areas in Houston, TX that experienced power outages. To accomplish this, we will merge the night light raster tiles, find areas that experienced blackouts, and crop the dataframe to Houston's extents while excluding major highways.
+**GOAL:** Identify all areas in Houston, TX that experienced power outages. To accomplish this, we will merge the night light raster tiles, find areas that experienced blackouts, and crop the dataframe to Houston's extents while excluding major highways.
 
 ### (a) Combine the Night light Data
 
@@ -172,7 +172,7 @@ feb16sf <- st_mosaic(light_3, light_4)
 rm(list = c('light_1', 'light_2', 'light_3', 'light_4'))
 ```
 
-Now that we have combined the tiles to create a whole picture of Houston on Feb 7 and Feb 16, we need to make sure the extents of both days are the same. `Extents` refer to the geospatial range encompassed within the data.
+After creating a complete night light image of Feb 7 and 16, we need to make sure the extents of both days are the same. `Extents` refer to the geospatial range encompassed within the data.
 
 ```{r}
 # Check if extents match
@@ -184,7 +184,7 @@ The extents match, and we can move on!
 
 ### (b) Finding Blackouts
 
-**Blackouts** are when the power difference (between pre and post night light data) is greater than 200 nW cm^-2^sr^-1^. We can find this by using mathematics operations between tiles and comparison symbols.
+**Blackouts** are when the power difference (between pre and post night light data) is greater than 200 nW cm^-2^sr^-1^. We can find this by using mathematics operations between tiles and logicals.
 
 ```{r}
 #| code-fold: true
@@ -196,7 +196,7 @@ difference <- (feb7sf - feb16sf) > 200
 
 ### (c) Mask Blackout Data
 
-**Mask** means to convert and/or filter for specific data. In this case, we are masking for *only* areas that experienced a blackout. Everywhere else that did not experience a blackout gets an NA value.
+**Mask** means to convert and/or filter for specific data. In this case, we are masking for *only* areas that experienced a blackout. Anywhere that did not experience a blackout gets an NA value.
 
 ```{r}
 #| code-fold: true
@@ -216,7 +216,7 @@ rm(difference)
 
 ### (d) Vectorize the Blackout Mask
 
-Convert the masked blackout data frame to a vector by using an `st_as_sf` function. Then check and change all the invalid geometries.
+Convert the masked blackout dataframe to a vector by using an `st_as_sf` function. Then, check and change all the invalid geometries.
 
 ```{r}
 #| code-fold: true
@@ -234,7 +234,7 @@ diff_mask_vec <- st_make_valid(diff_mask_vec)
 
 ### (e) Crop the Blackout Mask to the Houston Area
 
-By applying Houston’s city limits to `st_bbox`, we generated a bounding box representing the city’s spatial extent, which was then used with `st_crop` to clip the blackout mask data accordingly.
+By applying Houston’s city limits to `st_bbox`, we generated a bounding box representing the city’s spatial extent, which is then used, with `st_crop`, to clip the blackout mask data.
 
 ```{r}
 #| code-fold: true 
@@ -251,9 +251,9 @@ diff_crop <- st_crop(diff_mask_vec, bound_box)
 
 ### (f) Exclude Highways from Blackout Area
 
-Highway traffic is typically seen from space and accounts for a large portion of the night lights. During Winter Storm Uri, roads were iced over and shut down, reducing traffic. Therefore, in order to ensure the reduction in traffic is not misinterpreted as a blackout, we must exclude the highways from the blackout mask.
+As previously dicussed, highway traffic is typically seen from space and accounts for a large portion of the night lights. During Winter Storm Uri, roads were iced over and shut down, reducing traffic. Therefore, in order to ensure the reduction in traffic is not misinterpreted as a blackout, we must exclude the highways from the blackout mask.
 
-First, use `st_union` to unionize all the highways to make the data more manageable. Secondly, use `st_buffer` to make a 200m buffer zone around all highways.
+First, use `st_union` to unionize all the highways to make the data more manageable. Secondly, make a 200m buffer zone around all highways with `st_buffer` .
 
 ```{r}
 #| code-fold: true
@@ -286,7 +286,7 @@ blackouts_200m_highway <- st_difference(diff_crop, road_buffer)
 blackouts_epsg_hw_buff <- st_transform(blackouts_200m_highway, crs = 'EPSG:3083')
 ```
 
-### Plot!
+### Plot Blackout Areas
 
 ```{r}
 #| code-fold: true
@@ -320,9 +320,9 @@ tm_shape(blackouts_epsg_hw_buff) +
 
 ## Before and After Plot
 
-**PURPOSE:** Map Houston's night light pre and post the Winter Storm.
+**GOAL:** Map Houston's night light pre and post the Winter Storm.
 
-*Crop* Feb 7 and Feb 16 night light raster data to Houston's extent (previously created bounding box).
+[Crop]{.underline} Feb 7 and Feb 16 night light raster data to Houston's extent (previously created bounding box).
 
 ```{r}
 #| code-fold: true
@@ -331,7 +331,7 @@ feb7sf_houston <- st_crop(feb7sf, bound_box)
 feb16sf_houston <- st_crop(feb16sf, bound_box)
 ```
 
-Cloud cover can cause extremely light measurements. Therefore, to correctly plot the night light data, we need to *take out all the extreme*, outliar measurements by masking.
+Cloud cover can cause extreme light measurements. Therefore, to correctly plot the night light data, we need to [remove all the outlier]{.underline} measurements by masking.
 
 ```{r}
 #| code-fold: true
@@ -341,7 +341,7 @@ feb16sf_houston[feb16sf_houston < 200 | feb16sf_houston > 1000] <- NA
 
 ```
 
-*Plot* the light intensity between Feb 7 and Feb 16 to see the considerable amount of blackouts from the storm.
+[Plot]{.underline} the light intensity between Feb 7 and Feb 16 to see the considerable amount of blackouts from the storm.
 
 ```{r}
 #| code-fold: true
@@ -373,7 +373,7 @@ rm(list = c('feb7sf', 'feb16sf'))
 
 ## Homes Impacted by Blackouts
 
-**Goal:** Display only *homes* without power during Winter Storm Uri.
+**GOAL:** Display only *homes* without power during Winter Storm Uri.
 
 First, check and transform CRSs to match. Secondly, check and fix invalid geometries.
 
@@ -398,9 +398,9 @@ diff_crop <- st_make_valid(diff_crop)
 
 ```
 
-### Find homes that Experienced a Blackout
+### Find Homes that Experienced a Blackout
 
-Now, we need to find the homes that experienced a blackout! `st_filter` (with .predicate = st_intersects) will find all the houses that are within the blackout cropped mask.
+Now, we need to find the homes that experienced a blackout! The function `st_filter` (with .predicate = st_intersects) will find all the houses that are within the blackout cropped mask.
 
 ```{r}
 # Homes that experienced  blackouts 
@@ -409,7 +409,7 @@ home_blackout <- st_filter(houses, diff_crop, .predicate = st_intersects)
 
 ### Estimate of the Number of Homes in Houston that Lost Power
 
-Because the `home_blackout` dataframe contains 1 row for every building that experienced a blackout, we can just count the number of rows using `nrow` to estimate the number of homes without power.
+Because the `home_blackout` dataframe contains 1 row for every building that experienced a blackout, we can estimate the amount of homes without power by counting the number of rows with `nrow`.
 
 ```{r}
 #| code-fold: true
@@ -454,13 +454,13 @@ tm_shape(home_blackout) +
 
 ## Blackouts Compared to Income
 
-To assess whether power outages during Winter Storm Uri disproportionately affected certain socioeconomic groups, we integrated census-based median household income data with the blackout data. Initially, we investigated income levels between areas that experience vs did not experience a blackout to determine if income distribution differed across the two groups. This allowed us to evaluate whether lower-income communities experienced higher rates or greater severity of power loss compared to more affluent areas.
+To assess whether power outages disproportionately affected certain socioeconomic groups, we integrated census-based median household income data with the blackout data. Initially, we investigated income levels between areas that experience vs did not experience a blackout to determine if income distribution differed across the two groups. This allowed us to evaluate whether lower-income communities experienced higher rates of power loss compared to more affluent areas.
 
 ### Data Wrangling
 
 #### (a) Join the Texas Income and Geometery Datasets
 
-In the Texas's socioeconomic data, each row is a different census track. Whereas, the columns are different measurements for each census track. By looking at the dimensions of the two layers, we can see that the row numbers match perfectly. This makes sense because the income and geometry dataframes are just different layers of the same large dataset. Therefore, when merging the layers, we can use `cbind` to "stitch" the layers together, keeping all columns.
+In Texas's socioeconomic data, each row is a different census track. Whereas, the columns are different measurements for each census track. By looking at the dimensions of the two layers, we can see that the row numbers match perfectly. This makes sense because the income and geometry dataframes are just different layers of the same large dataset. Therefore, when merging the layers, we can use `cbind` to "stitch" the layers together, keeping all columns.
 
 When merging datasets, its helpful to look at the dimensions before and after the merge to ensure the `cbind` worked properly.
 
@@ -507,15 +507,15 @@ if(st_crs(texas_df) == st_crs(home_blackout)){ # Check if match
 
 #### (c) Filter and Merge
 
-Filtering for homes did vs did not experience a blackout and merging the home dataset to the Texas census track data.
+Filtering for homes that did vs did not experience a blackout and merging the home dataset to the Texas census track data.
 
 **GOALS:**
 
-1.  Make a datasets with homes that *DID* experience a blackout and their income = `income_bo_homes`
+1.  Make a datasets with homes that *DID* experience a blackout and their median household income = `income_bo_homes`
 
-2.  Make a datasets with homes that *did NOT* experience a blackout and their income = `income_NO_bo_homes`
+2.  Make a datasets with homes that *did NOT* experience a blackout and their median household income = `income_NO_bo_homes`
 
-\(1\) Use `st_filter` (with '.predicate = st_intersects') to find the intersection of homes that **experienced blackouts** and the census track data.
+\(1\) Find the intersection of homes that **experienced blackouts** and the census track data with `st_filter` (and `.predicate = st_intersects`).
 
 ```{r}
 #| code-fold: true 
@@ -524,7 +524,7 @@ income_bo_homes <- st_filter(texas_df, home_blackout, .predicate = st_intersects
   mutate(blackout = "TRUE") # Adding a column pertaining to experiencing a BO 
 ```
 
-\(2\) Using the function `st_intersetcions` (with 'sparse = FALSE'), we find locations where homes and census tracks do (TRUE) and do not (FALSE) intersect. Then we filter for only the locations with **no blackouts** (the areas that do not intersect - the FALSEs).
+\(2\) Using the function `st_intersections` (with 'sparse = FALSE'), find the locations where homes and census tracks do (TRUE) and do not (FALSE) intersect. Then, we filter for the locations with **no blackouts** (the areas that do not intersect - the FALSEs).
 
 ```{r}
 #| code-fold: true 
@@ -537,7 +537,7 @@ income_NO_bo_homes <- texas_df[!apply(idx_intersect, 1, any), ] %>% # Filter for
 
 ```
 
-In both codes, the `mutate` function creates a new `blackout` column that states if the data does ('TRUE') or does not (FALSE) contain homes experiencing a power outages.
+In both codes, the `mutate` function creates a new `blackout` column that states if the home does ('TRUE') or does not ('FALSE') experience a power outage.
 
 To make sure the filtering worked, check the dimensions of each dataframe.
 
@@ -560,7 +560,7 @@ rm(idx_intersect)
 
 #### (c) Create Dataset of all Homes in Houston
 
-Combine the information of homes that did lose power and homes that did not. Since the columns are the same, we can use `rbind` to stitches together the rows.
+Combine the information of homes that did lose power (`income_bo_homes`) and homes that did not (`income_NO_bo_homes`). Since the columns are the same, we can use `rbind` to stitch together the rows.
 
 ```{r}
 # Merge mean income blackouts and no blackout dataframes 
@@ -569,7 +569,7 @@ income_merge <- rbind(income_NO_bo_homes, income_bo_homes)
 
 ### Visualizing Blackout Experiences with Income
 
-Mapping the household income distributions if they did vs did not experience a blackout.
+Mapping the median household income distributions if homes did vs did not experience a blackout.
 
 ```{r}
 #| warning: false
@@ -637,19 +637,19 @@ tm_shape(income_bo_homes) +
   #tm_scalebar(position = c(1.14, 0.40)) + 
   tm_compass(position = tm_pos_in('left', 'bottom')) +
   tm_scalebar(position = tm_pos_in('left', 'bottom')) +
-  tm_title(text = "Median Income Census Tracts in Houston, TX that Experienced a Blackout During Winter Storm Uri") + 
+  tm_title(text = "Median Income Census Tracts in Houston, TX\nthat Experienced a Blackout During Winter Storm Uri") + 
   tm_credits("Figure 6") + 
   tm_basemap("Esri.WorldTopoMap")
 
 ```
 
-Figures 5 and 6 shows us that the downtown area experienced more blackouts. However, it is difficult to understand the income variable within the maps.
+Figures 5 and 6 shows the downtown area experiencing more blackouts. However, it is difficult to understand the income distribution within the maps.
 
 ### Income Classes
 
-To better investigate if socioeconomic status (particularly income level) affected the likelihood of experiencing a blackout, I categorized the population into three income groups: low, middle, and upper class.
+To better investigate if socioeconomic status (particularly income level) affected the likelihood of experiencing a blackout, we categorized the population into three income groups: low, middle, and upper class.
 
-To do this categorization, I created a new dataframe that specified the medium income level's *class*. The estimated class separation for Houston, Texas is:
+To do this categorization, we created a new dataframe that specified the medium income level's *class*. The estimated class separation for Houston, Texas is:
 
 -   Lower class: \$40,000 and less
 
@@ -657,7 +657,7 @@ To do this categorization, I created a new dataframe that specified the medium i
 
 -   Upper class: \$125,000 and above
 
-These income class numbers are based on Fullerton, 2025.
+*These income class numbers are based on Fullerton, 2025.*
 
 ```{r}
 #| code-fold: true
@@ -685,7 +685,7 @@ income_class_sum <- income_class %>%
 
 ```
 
-Plot Income Classes
+Plot income Ccasses in terms of experiencing power outages or not.
 
 ```{r}
 #| code-fold: true 
@@ -711,9 +711,9 @@ ggplot(income_class_sum,
 
 ```
 
-Find *Precentages* of Income Classes that Experienced a Blackout
+[Find *Precentages* of Income Classes that Experienced a Blackout]{.underline}
 
-To find the percents of each income class that experiences a blackout, I found the population within each income bracket, filtered for the population that lost power in each class, then calculated the percent (count that experienced a blackout/total count of income bracket population).
+To find the percentages of each income class that experiences a blackout, we will find the population within each income bracket, filter for the population that lost power in each class, then calculate the precentage (count that experienced a blackout/total count of income bracket population).
 
 ```{r}
 #| code-fold: true 
@@ -761,9 +761,9 @@ rm(list = c('class_count_blackout', 'class_count_total'))
 
 ## Conclusion
 
-In Houston, Texas, the power outage centered around the downtown area which is seen in Figures 1 - 5. Figures 6 - 8 investigate the power outages in comparison with income census blocks. The medium income distributions of people who experienced blackouts vs did not experience blackouts are very similar and consistent with the overall medium income distribution in Houston. As shown in Figure 7 and the table, the proportion of residents experiencing blackouts is relatively consistent across income classes, ranging from about 11% to 16%. Accordingly, there is insufficient evidence to suggest that the power outages during Winter Storm Uri were biased or unjustly distributed.
+In Houston, Texas, the power outage centered around the downtown area which is seen in Figures 1 - 5. Figures 6 - 8 investigate the power outages in comparison with income census blocks. The medium income distributions of homes who experienced blackouts vs did not experience blackouts are very similar and consistent with the overall medium income distribution in Houston. As shown in Figure 7 and the table, the proportion of residents experiencing blackouts is relatively consistent across income classes, ranging from about 11% to 16%. Accordingly, there is insufficient evidence to suggest that the power outages during Winter Storm Uri were biased or unjustly distributed.
 
-**Limitations**: The light data was from NASA's Level-1 and Atmosphere Archive and Distribution System Distributed Active Archive Center (LAADS DAAC) which uses Visible Infrared Imaging Radiometer Suite (VIIRS). When using satellite imagery, course spatial resolution and atmospheric interference can impact the study. Furthermore, the road and house data is acquired by Open Street Map which can have data completeness and accuracy issues.
+**Limitations**: The light data was from NASA's Level-1 and Atmosphere Archive and Distribution System Distributed Active Archive Center (LAADS DAAC) which uses Visible Infrared Imaging Radiometer Suite (VIIRS). When using satellite imagery, coarse spatial resolution and atmospheric interference can impact the study. Furthermore, the road and house data is acquired by Open Street Map which can have data completeness and accuracy issues.
 
 ### Personal Statement
 
