@@ -256,7 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Between February 11 and 20, 2021, Winter Storm Uri swept across Texas, bringing record-breaking cold tempertures and heavy precipitation (NOAA, 2023). The storm produced the longest stretch of freezing temperatures in the state’s history, triggering widespread power outages, burst pipes, dangerous road conditions, and numerous accidents (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of civilians (more than 2 out of 3 people) were left with no electricity or heat during the subfreezing conditions (Watson P, 2021).</p>
+<p>In February of 2021, Winter Storm Uri swept across Texas, bringing record-breaking cold tempertures and heavy precipitation (NOAA, 2023). The storm produced the longest stretch of freezing temperatures in the state’s history, triggering widespread power outages, burst pipes, dangerous road conditions, and numerous accidents (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of civilians (more than 2 out of 3 people) were left with no electricity or heat during the subfreezing conditions (Watson P, 2021).</p>
 <p>This project aims to analyze the effects of the extreme weather associated with Winter Storm Uri on Houston’s power grid, and investigate the relationship of household median income as a possible co-variable to the power outage distribution.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Credits to Joe Raedle/Getty. Image obtained from the <a href="https://people.com/human-interest/winter-storm-texas-snow-photos/">People</a>.</p>
+<p><em>Credits to Joe Raedle/Getty. Image obtained from the <a href="https://people.com/human-interest/winter-storm-texas-snow-photos/">People</a>.</em></p>
 </section>
 <section id="datasets" class="level2">
 <h2 class="anchored" data-anchor-id="datasets">Datasets</h2>
@@ -279,7 +279,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="initial-steps" class="level2">
 <h2 class="anchored" data-anchor-id="initial-steps">Initial Steps</h2>
-<p>Always, the first step is to load all necessary libraries!</p>
+<p>Always, the first step is to load all necessary libraries.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -439,7 +439,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
-<p>All CRSs match!</p>
+<p>All coordinate reference systems match!</p>
 </section>
 </section>
 <section id="creating-a-blackout-mask" class="level2">
@@ -456,7 +456,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>feb16sf <span class="ot">&lt;-</span> <span class="fu">st_mosaic</span>(light_3, light_4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>After creating a complete night light image of Feb 7 and 16, we need to make sure the extents of both days are the same. <code>Extents</code> refer to the geospatial range encompassed within the data.</p>
+<p>After creating a complete night light image of Feb 7 and 16, we need to make sure both days have the same extent. <code>Extents</code> refer to the geospatial range encompassed within the data.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if extents match</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">st_bbox</span>(feb7sf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -474,7 +474,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="b-finding-blackouts" class="level3">
 <h3 class="anchored" data-anchor-id="b-finding-blackouts">(b) Finding Blackouts</h3>
-<p><strong>Blackouts</strong> are when the power difference (between pre and post night light data) is greater than 200 nW cm<sup>-2</sup>sr<sup>-1</sup>. We can find this by using mathematics operations between tiles and logicals.</p>
+<p><strong>Blackouts</strong> are when the power difference (between pre and post night light data) is greater than 200 nW cm<sup>-2</sup>sr<sup>-1</sup>. We can find this by using mathematics operations between tiles and logicals (greater than sign)</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -486,7 +486,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="c-mask-blackout-data" class="level3">
 <h3 class="anchored" data-anchor-id="c-mask-blackout-data">(c) Mask Blackout Data</h3>
-<p><strong>Mask</strong> means to convert and/or filter for specific data. In this case, we are masking for <em>only</em> areas that experienced a blackout. Anywhere that did not experience a blackout gets an NA value.</p>
+<p><strong>Mask</strong> means to convert and/or filter for specific data. In this case, we are masking for <em>only</em> areas that experienced a blackout (power difference &gt; 200 nW cm<sup>-2</sup>sr<sup>-1</sup>). Anywhere that did not experience a blackout gets an NA value.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -566,6 +566,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="plot-blackout-areas" class="level3">
 <h3 class="anchored" data-anchor-id="plot-blackout-areas">Plot Blackout Areas</h3>
+<p>Create a map of all areas that experienced a blackout in Houston, TX during Winter Storm Uri.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -575,7 +576,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(road_union) <span class="sc">+</span> </span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>() <span class="sc">+</span></span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"CartoDB.PositronNoLabels"</span>) <span class="sc">+</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Blackouts caused by Winter Storm Uri</span><span class="sc">\n</span><span class="st">in Houston, TX"</span>) <span class="sc">+</span> </span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Blackouts Caused by Winter Storm Uri</span><span class="sc">\n</span><span class="st">in Houston, TX"</span>) <span class="sc">+</span> </span>
 <span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span> </span>
 <span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span> </span>
 <span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="st">"Figure 1"</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span> </span>
@@ -598,7 +599,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="before-and-after-plot" class="level2">
 <h2 class="anchored" data-anchor-id="before-and-after-plot">Before and After Plot</h2>
-<p><strong>GOAL:</strong> Map Houston’s night light pre and post the Winter Storm.</p>
+<p><strong>GOAL:</strong> Map Houston’s night light pre (Feb 7) and post (Feb 16) the Winter Storm.</p>
 <p><u>Crop</u> Feb 7 and Feb 16 night light raster data to Houston’s extent (previously created bounding box).</p>
 <div class="cell">
 <details class="code-fold">
@@ -617,11 +618,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>feb16sf_houston[feb16sf_houston <span class="sc">&lt;</span> <span class="dv">200</span> <span class="sc">|</span> feb16sf_houston <span class="sc">&gt;</span> <span class="dv">1000</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p><u>Plot</u> the light intensity between Feb 7 and Feb 16 to see the considerable amount of blackouts from the storm.</p>
+<p><u>Plot</u> the light intensity between Feb 7 and Feb 16 to visualize the considerable amount of blackouts from the storm.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map feb 7 and feb 16 </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map feb 7 and feb 16 night light rasters </span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>feb7map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(feb7sf_houston) <span class="sc">+</span> </span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.scale =</span> <span class="fu">tm_scale</span>(<span class="at">values =</span> <span class="st">"inferno"</span>),</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Light Intensity (nW cm-2sr-1)"</span>)) <span class="sc">+</span></span>
@@ -688,7 +689,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="find-homes-that-experienced-a-blackout" class="level3">
 <h3 class="anchored" data-anchor-id="find-homes-that-experienced-a-blackout">Find Homes that Experienced a Blackout</h3>
-<p>Now, we need to find the homes that experienced a blackout! The function <code>st_filter</code> (with .predicate = st_intersects) will find all the houses that are within the blackout cropped mask.</p>
+<p>Now, we need to find the homes that experienced a blackout by introducing the Open Street Map home data. The function <code>st_filter</code> (with .predicate = st_intersects) will find all the houses (from Open Street Map data) that are within the blackout cropped mask.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Homes that experienced  blackouts </span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>home_blackout <span class="ot">&lt;-</span> <span class="fu">st_filter</span>(houses, diff_crop, <span class="at">.predicate =</span> st_intersects)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -713,6 +714,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="map-the-homes-experiencing-blackouts" class="level3">
 <h3 class="anchored" data-anchor-id="map-the-homes-experiencing-blackouts">Map the Homes Experiencing Blackouts</h3>
+<p>Map the dataframe of homes that had a power outage.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -808,13 +810,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="c-filter-and-merge" class="level4">
 <h4 class="anchored" data-anchor-id="c-filter-and-merge">(c) Filter and Merge</h4>
-<p>Filtering for homes that did vs did not experience a blackout and merging the home dataset to the Texas census track data.</p>
+<p>Filter for homes that did vs did not experience a blackout and merge the home dataset to the Texas census track data.</p>
 <p><strong>GOALS:</strong></p>
 <ol type="1">
-<li><p>Make a datasets with homes that <em>DID</em> experience a blackout and their median household income = <code>income_bo_homes</code></p></li>
-<li><p>Make a datasets with homes that <em>did NOT</em> experience a blackout and their median household income = <code>income_NO_bo_homes</code></p></li>
+<li><p>Make a datasets with homes that <em>DID</em> experience a blackout (<code>home_blackout</code>) and their median household income (<code>texas_df</code>) = <code>income_bo_homes</code></p></li>
+<li><p>Make a datasets with homes that <em>did NOT</em> experience a blackout and their median household income (<code>texas_df</code>) = <code>income_NO_bo_homes</code></p></li>
 </ol>
-<p>(1) Find the intersection of homes that <strong>experienced blackouts</strong> and the census track data with <code>st_filter</code> (and <code>.predicate = st_intersects</code>).</p>
+<p>In this section, we use <code>st_filter</code> (with <code>.predicate = st_intersects</code>) to find the intersection of <code>home_blackout</code> and <code>texas_df</code>, resulting in a dataframe of homes that experienced power outages and their respective median incomes.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -823,7 +825,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">blackout =</span> <span class="st">"TRUE"</span>) <span class="co"># Adding a column pertaining to experiencing a BO </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>(2) Using the function <code>st_intersections</code> (with ‘sparse = FALSE’), find the locations where homes and census tracks do (TRUE) and do not (FALSE) intersect. Then, we filter for the locations with <strong>no blackouts</strong> (the areas that do not intersect - the FALSEs).</p>
+<p>Then we use <code>st_intersections</code> (with <code>sparse = FALSE</code>) and <code>!apply</code> to find where <code>home_blackout</code> and <code>texas_df</code> do <em>not</em> intersect, resulting in a dataframe of homes that did not experience a power outage and their respective median incomes.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -880,7 +882,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="visualizing-blackout-experiences-with-income" class="level3">
 <h3 class="anchored" data-anchor-id="visualizing-blackout-experiences-with-income">Visualizing Blackout Experiences with Income</h3>
-<p>Mapping the median household income distributions if homes did vs did not experience a blackout.</p>
+<p>Mapping the median household income distributions, separating based on power outage experience.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -894,35 +896,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Median Income ($)"</span>, </span>
 <span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">orientation =</span> <span class="st">'landscape'</span>),</span>
 <span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.scale =</span> <span class="fu">tm_scale_continuous</span>(<span class="at">values =</span> my_palette)</span>
-<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a>              <span class="co">#fill.scale = tm_scale(breaks = c(0, 50000, 100000, 150000, 200000, 300000), </span></span>
-<span id="cb68-12"><a href="#cb68-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="co">#values = my_palette)</span></span>
-<span id="cb68-13"><a href="#cb68-13" aria-hidden="true" tabindex="-1"></a>              ) <span class="sc">+</span></span>
-<span id="cb68-14"><a href="#cb68-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_shape</span>(diff_crop, <span class="at">is.main =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
-<span id="cb68-15"><a href="#cb68-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Medium Income Cenus Track for Homes with Power"</span>) <span class="sc">+</span>   </span>
-<span id="cb68-16"><a href="#cb68-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">#tm_compass(position = c('right', 'bottom')) + </span></span>
-<span id="cb68-17"><a href="#cb68-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">#tm_compass(position = c(0.45, -0.02)) + </span></span>
-<span id="cb68-18"><a href="#cb68-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">#tm_scalebar(position = c(0.60, -0.05)) +</span></span>
-<span id="cb68-19"><a href="#cb68-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>)</span>
-<span id="cb68-20"><a href="#cb68-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-21"><a href="#cb68-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-22"><a href="#cb68-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Map of mean (of median) incomes of home that experienced blackouts </span></span>
-<span id="cb68-23"><a href="#cb68-23" aria-hidden="true" tabindex="-1"></a>blackout_income_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(income_bo_homes) <span class="sc">+</span> </span>
-<span id="cb68-24"><a href="#cb68-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"B19013e1"</span>, </span>
-<span id="cb68-25"><a href="#cb68-25" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Median Income ($)"</span>, </span>
-<span id="cb68-26"><a href="#cb68-26" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">orientation =</span> <span class="st">'landscape'</span>), </span>
-<span id="cb68-27"><a href="#cb68-27" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.scale =</span> <span class="fu">tm_scale_continuous</span>(<span class="at">values =</span> my_palette)</span>
-<span id="cb68-28"><a href="#cb68-28" aria-hidden="true" tabindex="-1"></a>              <span class="co">#fill.scale = tm_scale(breaks = c(0, 50000, 100000, 150000, 200000, 300000), </span></span>
-<span id="cb68-29"><a href="#cb68-29" aria-hidden="true" tabindex="-1"></a>                                     <span class="co">#values = my_palette)</span></span>
-<span id="cb68-30"><a href="#cb68-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb68-31"><a href="#cb68-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(diff_crop, <span class="at">is.main =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
-<span id="cb68-32"><a href="#cb68-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Medium Income Cenus Track for Homes without Power"</span>) <span class="sc">+</span> </span>
-<span id="cb68-33"><a href="#cb68-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'top'</span>)) <span class="sc">+</span> </span>
-<span id="cb68-34"><a href="#cb68-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span> </span>
-<span id="cb68-35"><a href="#cb68-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="at">text =</span> <span class="st">"Figure 5"</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="sc">-</span><span class="fl">0.05</span>)) <span class="sc">+</span> </span>
-<span id="cb68-36"><a href="#cb68-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>)</span>
-<span id="cb68-37"><a href="#cb68-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-38"><a href="#cb68-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at both together </span></span>
-<span id="cb68-39"><a href="#cb68-39" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(no_blackout_income_map, blackout_income_map)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a>              ) <span class="sc">+</span></span>
+<span id="cb68-12"><a href="#cb68-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_shape</span>(diff_crop, <span class="at">is.main =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb68-13"><a href="#cb68-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Medium Income Cenus Track for Homes with Power"</span>) <span class="sc">+</span>   </span>
+<span id="cb68-14"><a href="#cb68-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>)</span>
+<span id="cb68-15"><a href="#cb68-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-16"><a href="#cb68-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-17"><a href="#cb68-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Map of mean (of median) incomes of home that experienced blackouts </span></span>
+<span id="cb68-18"><a href="#cb68-18" aria-hidden="true" tabindex="-1"></a>blackout_income_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(income_bo_homes) <span class="sc">+</span> </span>
+<span id="cb68-19"><a href="#cb68-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"B19013e1"</span>, </span>
+<span id="cb68-20"><a href="#cb68-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Median Income ($)"</span>, </span>
+<span id="cb68-21"><a href="#cb68-21" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">orientation =</span> <span class="st">'landscape'</span>), </span>
+<span id="cb68-22"><a href="#cb68-22" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.scale =</span> <span class="fu">tm_scale_continuous</span>(<span class="at">values =</span> my_palette)</span>
+<span id="cb68-23"><a href="#cb68-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb68-24"><a href="#cb68-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(diff_crop, <span class="at">is.main =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb68-25"><a href="#cb68-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Medium Income Cenus Track for Homes without Power"</span>) <span class="sc">+</span> </span>
+<span id="cb68-26"><a href="#cb68-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'top'</span>)) <span class="sc">+</span> </span>
+<span id="cb68-27"><a href="#cb68-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span> </span>
+<span id="cb68-28"><a href="#cb68-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="at">text =</span> <span class="st">"Figure 5"</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="sc">-</span><span class="fl">0.05</span>)) <span class="sc">+</span> </span>
+<span id="cb68-29"><a href="#cb68-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>)</span>
+<span id="cb68-30"><a href="#cb68-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-31"><a href="#cb68-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at both together </span></span>
+<span id="cb68-32"><a href="#cb68-32" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(no_blackout_income_map, blackout_income_map)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -936,22 +931,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(income_bo_homes) <span class="sc">+</span> </span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"B19013e1"</span>, </span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Median Income that</span><span class="sc">\n</span><span class="st">Experienced Blackouts ($)"</span>, </span>
-<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">orientation =</span> <span class="st">'landscape'</span>, </span>
-<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">position =</span> <span class="fu">tm_pos_out</span>(<span class="st">'center'</span>, <span class="st">'bottom'</span>)), </span>
-<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.scale =</span> <span class="fu">tm_scale_continuous</span>(<span class="at">values =</span> my_palette)</span>
-<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>              <span class="co">#fill.scale = tm_scale(values = my_palette, </span></span>
-<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>                                    <span class="co">#breaks = c(0, 50000, 100000, 150000, 200000, 300000))</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map of households median income without power </span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(income_bo_homes) <span class="sc">+</span> </span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"B19013e1"</span>, </span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Median Income that</span><span class="sc">\n</span><span class="st">Experienced Blackouts ($)"</span>, </span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">orientation =</span> <span class="st">'landscape'</span>, </span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">position =</span> <span class="fu">tm_pos_out</span>(<span class="st">'center'</span>, <span class="st">'bottom'</span>)), </span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.scale =</span> <span class="fu">tm_scale_continuous</span>(<span class="at">values =</span> my_palette)</span>
 <span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a>              ) <span class="sc">+</span></span>
-<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#tm_compass(position = c(1.02, 0.40)) + </span></span>
-<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#tm_scalebar(position = c(1.14, 0.40)) + </span></span>
-<span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
-<span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
-<span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Median Income Census Tracts in Houston, TX</span><span class="sc">\n</span><span class="st">that Experienced a Blackout During Winter Storm Uri"</span>) <span class="sc">+</span> </span>
-<span id="cb69-15"><a href="#cb69-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="st">"Figure 6"</span>) <span class="sc">+</span> </span>
-<span id="cb69-16"><a href="#cb69-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
+<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">tm_pos_in</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
+<span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Median Income Census Tracts in Houston, TX</span><span class="sc">\n</span><span class="st">that Experienced a Blackout During Winter Storm Uri"</span>) <span class="sc">+</span> </span>
+<span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="st">"Figure 6"</span>) <span class="sc">+</span> </span>
+<span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldTopoMap"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -976,7 +969,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select only needs columns and drop geometry </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select only needed columns and drop geometry </span></span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>income_class <span class="ot">&lt;-</span> income_merge[, <span class="fu">c</span>(<span class="st">'GEOID'</span>, <span class="st">'B19013e1'</span>, <span class="st">'blackout'</span>)] <span class="sc">%&gt;%</span> </span>
 <span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() </span>
 <span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -997,7 +990,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb70-19"><a href="#cb70-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>()) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Plot income Ccasses in terms of experiencing power outages or not.</p>
+<p>Plot income classes in terms of experiencing power outages or not.</p>
 <div class="cell" data-wanring="false">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1006,10 +999,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> class, </span>
 <span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> count, </span>
 <span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> blackout)) <span class="sc">+</span> </span>
-<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position=</span><span class="st">"fill"</span>,</span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position=</span><span class="st">"fill"</span>, <span class="co"># proportion plot </span></span>
 <span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a>           <span class="co">#stat = "identity",</span></span>
 <span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
-<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"No Blackout"</span>, <span class="st">"Blackout"</span>),</span>
+<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"No Blackout"</span>, <span class="st">"Blackout"</span>), <span class="co"># labels and colors </span></span>
 <span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#ffad76"</span>, <span class="st">"#488f30"</span>)) <span class="sc">+</span> </span>
 <span id="cb71-11"><a href="#cb71-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Lower Class'</span>, <span class="st">'Middle Class'</span>, <span class="st">'Upper Class'</span>, <span class="st">'NAs'</span>)) <span class="sc">+</span></span>
 <span id="cb71-12"><a href="#cb71-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Proportion of Households that did and did not</span><span class="sc">\n</span><span class="st">Experienced Blackouts in Various Income Classes "</span>, </span>
@@ -1028,7 +1021,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><u>Find <em>Precentages</em> of Income Classes that Experienced a Blackout</u></p>
-<p>To find the percentages of each income class that experiences a blackout, we will find the population within each income bracket, filter for the population that lost power in each class, then calculate the precentage (count that experienced a blackout/total count of income bracket population).</p>
+<p>To find the percentages of each income class that experiences a blackout, we will find the population within each income bracket, filter for the population that lost power in each class, then calculate the percentage (count that lost power/total count of income bracket population).</p>
 <div class="cell" data-wanring="false">
 <details class="code-fold">
 <summary>Code</summary>

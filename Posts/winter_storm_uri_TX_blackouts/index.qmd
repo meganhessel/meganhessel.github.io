@@ -18,7 +18,7 @@ citation: #true (if without link)
 
 ## Introduction
 
-Between February 11 and 20, 2021, Winter Storm Uri swept across Texas, bringing record-breaking cold tempertures and heavy precipitation (NOAA, 2023). The storm produced the longest stretch of freezing temperatures in the state's history, triggering widespread power outages, burst pipes, dangerous road conditions, and numerous accidents (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of civilians (more than 2 out of 3 people) were left with no electricity or heat during the subfreezing conditions (Watson P, 2021).
+In February of 2021, Winter Storm Uri swept across Texas, bringing record-breaking cold tempertures and heavy precipitation (NOAA, 2023). The storm produced the longest stretch of freezing temperatures in the state's history, triggering widespread power outages, burst pipes, dangerous road conditions, and numerous accidents (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of civilians (more than 2 out of 3 people) were left with no electricity or heat during the subfreezing conditions (Watson P, 2021).
 
 This project aims to analyze the effects of the extreme weather associated with Winter Storm Uri on Houston’s power grid, and investigate the relationship of household median income as a possible co-variable to the power outage distribution.
 
@@ -27,7 +27,7 @@ This project aims to analyze the effects of the extreme weather associated with 
 knitr::include_graphics(here::here("Posts","winter_storm_uri_TX_blackouts", "texas_snow.jpg"))
 ```
 
-Credits to Joe Raedle/Getty. Image obtained from the [People](https://people.com/human-interest/winter-storm-texas-snow-photos/).
+*Credits to Joe Raedle/Getty. Image obtained from the [People](https://people.com/human-interest/winter-storm-texas-snow-photos/).*
 
 ## Datasets
 
@@ -39,7 +39,7 @@ Credits to Joe Raedle/Getty. Image obtained from the [People](https://people.com
 
 ## Initial Steps
 
-Always, the first step is to load all necessary libraries!
+Always, the first step is to load all necessary libraries.
 
 ```{r}
 #| message: false
@@ -148,7 +148,7 @@ st_crs(houses) == st_crs(geom_texas)
 
 ```
 
-All CRSs match!
+All coordinate reference systems match!
 
 ## Creating a Blackout Mask
 
@@ -172,7 +172,7 @@ feb16sf <- st_mosaic(light_3, light_4)
 rm(list = c('light_1', 'light_2', 'light_3', 'light_4'))
 ```
 
-After creating a complete night light image of Feb 7 and 16, we need to make sure the extents of both days are the same. `Extents` refer to the geospatial range encompassed within the data.
+After creating a complete night light image of Feb 7 and 16, we need to make sure both days have the same extent. `Extents` refer to the geospatial range encompassed within the data.
 
 ```{r}
 # Check if extents match
@@ -184,7 +184,7 @@ The extents match, and we can move on!
 
 ### (b) Finding Blackouts
 
-**Blackouts** are when the power difference (between pre and post night light data) is greater than 200 nW cm^-2^sr^-1^. We can find this by using mathematics operations between tiles and logicals.
+**Blackouts** are when the power difference (between pre and post night light data) is greater than 200 nW cm^-2^sr^-1^. We can find this by using mathematics operations between tiles and logicals (greater than sign)
 
 ```{r}
 #| code-fold: true
@@ -196,7 +196,7 @@ difference <- (feb7sf - feb16sf) > 200
 
 ### (c) Mask Blackout Data
 
-**Mask** means to convert and/or filter for specific data. In this case, we are masking for *only* areas that experienced a blackout. Anywhere that did not experience a blackout gets an NA value.
+**Mask** means to convert and/or filter for specific data. In this case, we are masking for *only* areas that experienced a blackout (power difference \> 200 nW cm^-2^sr^-1^). Anywhere that did not experience a blackout gets an NA value.
 
 ```{r}
 #| code-fold: true
@@ -288,6 +288,8 @@ blackouts_epsg_hw_buff <- st_transform(blackouts_200m_highway, crs = 'EPSG:3083'
 
 ### Plot Blackout Areas
 
+Create a map of all areas that experienced a blackout in Houston, TX during Winter Storm Uri.
+
 ```{r}
 #| code-fold: true
 #| warning: false 
@@ -298,7 +300,7 @@ tm_shape(blackouts_epsg_hw_buff) +
   tm_shape(road_union) + 
   tm_lines() +
   tm_basemap("CartoDB.PositronNoLabels") +
-  tm_title(text = "Blackouts caused by Winter Storm Uri\nin Houston, TX") + 
+  tm_title(text = "Blackouts Caused by Winter Storm Uri\nin Houston, TX") + 
   tm_compass(position = c("left", "bottom")) + 
   tm_scalebar(position = c("left", "bottom")) + 
   tm_credits("Figure 1", position = c("right", "bottom")) + 
@@ -320,7 +322,7 @@ tm_shape(blackouts_epsg_hw_buff) +
 
 ## Before and After Plot
 
-**GOAL:** Map Houston's night light pre and post the Winter Storm.
+**GOAL:** Map Houston's night light pre (Feb 7) and post (Feb 16) the Winter Storm.
 
 [Crop]{.underline} Feb 7 and Feb 16 night light raster data to Houston's extent (previously created bounding box).
 
@@ -341,12 +343,12 @@ feb16sf_houston[feb16sf_houston < 200 | feb16sf_houston > 1000] <- NA
 
 ```
 
-[Plot]{.underline} the light intensity between Feb 7 and Feb 16 to see the considerable amount of blackouts from the storm.
+[Plot]{.underline} the light intensity between Feb 7 and Feb 16 to visualize the considerable amount of blackouts from the storm.
 
 ```{r}
 #| code-fold: true
 
-# Map feb 7 and feb 16 
+# Map feb 7 and feb 16 night light rasters 
 feb7map <- tm_shape(feb7sf_houston) + 
   tm_raster(col.scale = tm_scale(values = "inferno"),
             col.legend = tm_legend(title = "Light Intensity (nW cm-2sr-1)")) +
@@ -400,7 +402,7 @@ diff_crop <- st_make_valid(diff_crop)
 
 ### Find Homes that Experienced a Blackout
 
-Now, we need to find the homes that experienced a blackout! The function `st_filter` (with .predicate = st_intersects) will find all the houses that are within the blackout cropped mask.
+Now, we need to find the homes that experienced a blackout by introducing the Open Street Map home data. The function `st_filter` (with .predicate = st_intersects) will find all the houses (from Open Street Map data) that are within the blackout cropped mask.
 
 ```{r}
 # Homes that experienced  blackouts 
@@ -428,6 +430,8 @@ rm(est)
 ```
 
 ### Map the Homes Experiencing Blackouts
+
+Map the dataframe of homes that had a power outage.
 
 ```{r}
 #| warning: false
@@ -507,15 +511,15 @@ if(st_crs(texas_df) == st_crs(home_blackout)){ # Check if match
 
 #### (c) Filter and Merge
 
-Filtering for homes that did vs did not experience a blackout and merging the home dataset to the Texas census track data.
+Filter for homes that did vs did not experience a blackout and merge the home dataset to the Texas census track data.
 
 **GOALS:**
 
-1.  Make a datasets with homes that *DID* experience a blackout and their median household income = `income_bo_homes`
+1.  Make a datasets with homes that *DID* experience a blackout (`home_blackout`) and their median household income (`texas_df`) = `income_bo_homes`
 
-2.  Make a datasets with homes that *did NOT* experience a blackout and their median household income = `income_NO_bo_homes`
+2.  Make a datasets with homes that *did NOT* experience a blackout and their median household income (`texas_df`) = `income_NO_bo_homes`
 
-\(1\) Find the intersection of homes that **experienced blackouts** and the census track data with `st_filter` (and `.predicate = st_intersects`).
+In this section, we use `st_filter` (with `.predicate = st_intersects`) to find the intersection of `home_blackout` and `texas_df`, resulting in a dataframe of homes that experienced power outages and their respective median incomes.
 
 ```{r}
 #| code-fold: true 
@@ -524,7 +528,7 @@ income_bo_homes <- st_filter(texas_df, home_blackout, .predicate = st_intersects
   mutate(blackout = "TRUE") # Adding a column pertaining to experiencing a BO 
 ```
 
-\(2\) Using the function `st_intersections` (with 'sparse = FALSE'), find the locations where homes and census tracks do (TRUE) and do not (FALSE) intersect. Then, we filter for the locations with **no blackouts** (the areas that do not intersect - the FALSEs).
+Then we use `st_intersections` (with `sparse = FALSE`) and `!apply` to find where `home_blackout` and `texas_df` do *not* intersect, resulting in a dataframe of homes that did not experience a power outage and their respective median incomes.
 
 ```{r}
 #| code-fold: true 
@@ -569,7 +573,7 @@ income_merge <- rbind(income_NO_bo_homes, income_bo_homes)
 
 ### Visualizing Blackout Experiences with Income
 
-Mapping the median household income distributions if homes did vs did not experience a blackout.
+Mapping the median household income distributions, separating based on power outage experience.
 
 ```{r}
 #| warning: false
@@ -585,14 +589,9 @@ no_blackout_income_map <- tm_shape(income_NO_bo_homes) +
               fill.legend = tm_legend(title = "Median Income ($)", 
                                       orientation = 'landscape'),
               fill.scale = tm_scale_continuous(values = my_palette)
-              #fill.scale = tm_scale(breaks = c(0, 50000, 100000, 150000, 200000, 300000), 
-                                    #values = my_palette)
               ) +
     tm_shape(diff_crop, is.main = TRUE) + 
   tm_title(text = "Medium Income Cenus Track for Homes with Power") +   
-  #tm_compass(position = c('right', 'bottom')) + 
-  #tm_compass(position = c(0.45, -0.02)) + 
-  #tm_scalebar(position = c(0.60, -0.05)) +
   tm_basemap("Esri.WorldTopoMap")
 
 
@@ -602,8 +601,6 @@ blackout_income_map <- tm_shape(income_bo_homes) +
               fill.legend = tm_legend(title = "Median Income ($)", 
                                       orientation = 'landscape'), 
               fill.scale = tm_scale_continuous(values = my_palette)
-              #fill.scale = tm_scale(breaks = c(0, 50000, 100000, 150000, 200000, 300000), 
-                                     #values = my_palette)
   ) +
   tm_shape(diff_crop, is.main = TRUE) + 
   tm_title(text = "Medium Income Cenus Track for Homes without Power") + 
@@ -624,17 +621,15 @@ To get a better understanding of the communities that lost power, map just the `
 #| fig-width: 8
 #| fig-height: 10
 
+# Map of households median income without power 
+
 tm_shape(income_bo_homes) + 
   tm_polygons(fill = "B19013e1", 
               fill.legend = tm_legend(title = "Median Income that\nExperienced Blackouts ($)", 
                                       orientation = 'landscape', 
                                       position = tm_pos_out('center', 'bottom')), 
               fill.scale = tm_scale_continuous(values = my_palette)
-              #fill.scale = tm_scale(values = my_palette, 
-                                    #breaks = c(0, 50000, 100000, 150000, 200000, 300000))
               ) +
-  #tm_compass(position = c(1.02, 0.40)) + 
-  #tm_scalebar(position = c(1.14, 0.40)) + 
   tm_compass(position = tm_pos_in('left', 'bottom')) +
   tm_scalebar(position = tm_pos_in('left', 'bottom')) +
   tm_title(text = "Median Income Census Tracts in Houston, TX\nthat Experienced a Blackout During Winter Storm Uri") + 
@@ -663,7 +658,7 @@ To do this categorization, we created a new dataframe that specified the medium 
 #| code-fold: true
 #| message: false
 
-# Select only needs columns and drop geometry 
+# Select only needed columns and drop geometry 
 income_class <- income_merge[, c('GEOID', 'B19013e1', 'blackout')] %>% 
   st_drop_geometry() 
 
@@ -685,7 +680,7 @@ income_class_sum <- income_class %>%
 
 ```
 
-Plot income Ccasses in terms of experiencing power outages or not.
+Plot income classes in terms of experiencing power outages or not.
 
 ```{r}
 #| code-fold: true 
@@ -696,10 +691,10 @@ ggplot(income_class_sum,
        aes(x = class, 
            y = count, 
            fill = blackout)) + 
-  geom_col(position="fill",
+  geom_col(position="fill", # proportion plot 
            #stat = "identity",
            color = "black") + 
-  scale_fill_manual(labels = c("No Blackout", "Blackout"),
+  scale_fill_manual(labels = c("No Blackout", "Blackout"), # labels and colors 
                     values = c("#ffad76", "#488f30")) + 
   scale_x_discrete(labels = c('Lower Class', 'Middle Class', 'Upper Class', 'NAs')) +
   labs(title = "Proportion of Households that did and did not\nExperienced Blackouts in Various Income Classes ", 
@@ -711,9 +706,9 @@ ggplot(income_class_sum,
 
 ```
 
-[Find *Precentages* of Income Classes that Experienced a Blackout]{.underline}
+[Find *Percentages* of Income Classes that Experienced a Blackout]{.underline}
 
-To find the percentages of each income class that experiences a blackout, we will find the population within each income bracket, filter for the population that lost power in each class, then calculate the precentage (count that experienced a blackout/total count of income bracket population).
+To find the percentages of each income class that experiences a blackout, we will find the population within each income bracket, filter for the population that lost power in each class, then calculate the percentage (count that lost power/total count of income bracket population).
 
 ```{r}
 #| code-fold: true 
