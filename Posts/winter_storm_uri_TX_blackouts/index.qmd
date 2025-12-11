@@ -18,7 +18,7 @@ citation: #true (if without link)
 
 ## Introduction
 
-In February of 2021, Winter Storm Uri swept across Texas, bringing record-breaking cold tempertures and heavy precipitation (NOAA, 2023). The storm produced the longest stretch of freezing temperatures in the state's history, triggering widespread power outages, burst pipes, dangerous road conditions, and numerous accidents (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of civilians (more than 2 out of 3 people) were left with no electricity or heat during the subfreezing conditions (Watson P, 2021).
+In February of 2021, Winter Storm Uri swept across Texas, bringing record-breaking cold temperatures and heavy precipitation (NOAA, 2023). The storm produced the longest stretch of freezing temperatures in the state's history, triggering widespread power outages, burst pipes, dangerous road conditions, and numerous accidents (NOAA, 2023 and Watson P, 2021). At some point during the storm, millions of civilians (more than 2 out of 3 people) were left with no electricity or heat during the subfreezing conditions (Watson P, 2021).
 
 This project aims to analyze the effects of the extreme weather associated with Winter Storm Uri on Houston’s power grid, and investigate the relationship of household median income as a possible co-variable to the power outage distribution.
 
