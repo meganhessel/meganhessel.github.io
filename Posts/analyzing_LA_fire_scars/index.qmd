@@ -1,6 +1,6 @@
 ---
 title: "Analyzing Eaton and Palisades Fire Scars"
-description: "Using Landsat Collection 2 Level-2 atmosperically corrected surface reflectance data to inspect the fire scaring from the 2025 Eaton and Palisades Fires in Los Angeles. Furthermore, investigating the percent of the effect population that was uninsured."
+description: "Examining the fire scars from the 2025 Eaton and Palisade Fires and evaluating the social vulnerability of the affected population."
 author: 
   - name: Megan Hessel  # Link to other people 
     url: https//meganhessel.github.io/
@@ -32,16 +32,16 @@ bibliography: references.bib
 
 ## Introductions
 
-In January of 2025, Los Angeles, California faced two major fires: Palisades and Eaton. Both fires burned for 24 days (Cal Fire, 2025a & Cal Fire, 2025b). Eaton covered approximately 14,000 acres, while Palisades was nearly twice as large, destroying around 23,500 acres (Cal Fire, 2025a & Cal Fire, 2025b). Together, these long-lasting fires destroyed 16,251 structures, injured 13 people, and killed 31 civilians (Cal Fire, 2025a & Cal Fire, 2025b). The extensive devastation is clearly visible in the landscape, leaving behind massive fire scars as the vegetation was burned. 
+In January of 2025, Los Angeles, California faced two major fires: Palisades and Eaton. Both fires burned for 24 days (Cal Fire, 2025a & Cal Fire, 2025b). Eaton fire covered approximately 14,000 acres, while Palisades fire was nearly twice as large, destroying around 23,500 acres (Cal Fire, 2025a & Cal Fire, 2025b). Together, these long-lasting fires destroyed 16,251 structures, injured 13 people, and killed 31 civilians (Cal Fire, 2025a & Cal Fire, 2025b). The extensive devastation is clearly visible in the landscape, leaving behind massive fire scars from the burned vegetation. 
 
 In this project, we use satellite imagery to create true and false color visualization to inspect the burn damages. Additionally, we investigate the affected, uninsured populations using the Environmental Justice Index to understand the social and economic implications of these fires.
 
 
 #### Datasets
 
-1.  Landsat 8 satellite recorded a collection of bands (red, green, blue, near-infrared and shortwave infrared) from the Landsat Collection 2 Level-2 atmospherically corrected surface reflectance data. Data was obtained from the [Microsoft Planetary Computer data catalogue](https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2).
+1.  Landsat 8 satellite record a collection of bands (red, green, blue, near-infrared and shortwave infrared) from the Landsat Collection 2 Level-2 atmospherically corrected surface reflectance data. Data was obtained from the [Microsoft Planetary Computer data catalogue](https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2).
 
-2.  Geometries of the Eaton and Palisades fire perimeters from the [County of Los Angele's ArcGIS page](https://egis-lacounty.hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c/about).
+2.  Geometries of the Eaton and Palisades fire perimeters are from the [County of Los Angele's ArcGIS page](https://egis-lacounty.hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c/about).
 
 3. California's Environmental Justice Index (EJI) is a collection of the demographics, environmental burdens, and health statistics for each census track in California. The EJI data is from the [Geospatial Research, Analysis, and Service Program (GRASP)](https://www.atsdr.cdc.gov/place-health/php/eji/eji-data-download.html). 
 
@@ -71,7 +71,7 @@ from IPython.display import Image  # To nicely display images
 ```
 
 
-The important libraries are the `geopandas` and `xarrary`. The `geopandas` package is useful when dealing with vector data which is point, lines, and polygons. The fire perimeters and EJI dataframes are polygons. Therefore, we will be using `geopandas` for the EJI and borders. Whereas, the `xarrary` package is useful when working with raster data, such as the Landsat data.
+The important libraries are the `geopandas` and `xarrary`. The `geopandas` package is useful when dealing with vector data which consists of point, lines, and polygons. Thus, we will use `geopandas` for the fire perimeters and EJI dataframes as they are polygons. Whereas, the `xarrary` package is useful when working with raster data, such as the Landsat data.
 
 Secondly, we must *load in* the borders, EJI, and Landsat data by using the `geopandas`, `xarrary`, and `os` packages. 
 
@@ -105,18 +105,19 @@ plt.imshow(image) # Display image
 plt.show()
 ```
 
-Satelitte image of the Palisades and Eaton wildfires taken on Thursday. 
+Satelitte image of the Palisades and Eaton wildfires burning. 
 
 Image from Duster, 2025.
 
 ## Data Exploration
 Once the data is loaded, we need to examine each dataset.
 
-The function `.info` provides good information of the dataframes' column names and data types. With this function, we notice there are 5 columns in the fire border data set, with the final column being the vector geometry. We can examine the geometry of each fire with `.plot`. 
+The function `.info` provides information of the dataframes' column names and data types. With this function, we notice there are 5 columns in the fire border dataset, with the final column being the vector geometry. We can examine the geometry of each fire with `.plot`. 
 
-Finally, it is *always* important to know the geospatial data's **coordinate reference systems** (CRS). The CRS defines how the geospatial data is located and plotted. There are 2 CRS types: geographic (how the data is plotted on the 3D globe) and projected (how the data is plotted on a 2D map). It is important to use the correct CRS for your data and intended goal. Additionally, when merging or plotting geospatial data together, the datasets must be in the same CRS.
+Finally, it is *always* important to know the geospatial data's **coordinate reference systems** (CRS). The CRS defines how the geospatial data is located and plotted. There are 2 CRS types: geographic (how the data is plotted on the 3D globe) and projected (how the data is plotted on a 2D map). It is important to use the correct CRS for your data and intended goal. Additionally, when merging or plotting geospatial data together, the datasets' CRSs must match.
 
 ```{python}
+#| code-fold: true
 
 # Border data exploration 
 # .info: Column names, NA counts, and types
@@ -133,6 +134,8 @@ pal.plot()
 ```
 
 ```{python}
+#| code-fold: true
+
 # EJI exploration 
 # .info: Column names, NA counts, and types
 print(cali.info()) 
@@ -152,7 +155,7 @@ Unlike the geopanda vector data, the **raster** datatype is a `xarray`. Xarrays 
 
 3.  *Attributes:* The units and other describing factors (like sample ID)
 
-We can understand the Landsat's variables, dimension, and CRS with `.var`, `.coord`, `dims`, `.rio.crs`.
+We can understand the Landsat's variables, dimension, and CRS with `.var`, `.coord`, `dims`, `.rio.crs` functions.
 
 ```{python}
 # Preliminary Raster Landsat data exploration  
@@ -168,7 +171,7 @@ print(f"THE CRS IS: {landsat.rio.crs}")
 
 *PROBLEM!* Notice, the Landsat's CRS reads 'None'!
 
-This is because the raster's CRS is located in another attribute called 'crs_wkt'. Therefore, we must retrieve the CRS by using `.spatial_ref` (which refers to the Spatial Reference System). Then we will use `.write_crs` to recover the spatial properties of the geospatial dataset.
+This is because the raster's CRS is located in another attribute called 'crs_wkt'. Therefore, we must retrieve the CRS by using `.spatial_ref` (which refers to the Spatial Reference System). Then, we will use `.write_crs` to recover the spatial properties of the dataset.
 
 ```{python}
 # Find the CRS within the 'crs_wkt' attribute 
@@ -184,7 +187,7 @@ print(landsat.rio.crs)
 
 ### b) Coordindate Refereces Systems 
 
-As stated before, when plotting or merging geospatial dataframes together, it is imparative they have the same CRS. Therefore, we need to check if all datasets' CRSs match. If the CRS are not the same, we need to transform them.  
+As stated before, when plotting or merging geospatial dataframes, it is imparative they have the same CRS. Therefore, we need to check if all datasets' coordinate reference systems match. If they are not the same, they need to be transformed.  
 
 ```{python}
 #| code-fold: true
@@ -196,7 +199,7 @@ print(f"Does the Cali EJI and the Landsat raster CRSs match? {landsat.rio.crs ==
 
 ```
 
-*PROBLEM!* The perimeter, Landsat, and EJI CRSs do NOT match. Thus, we must transform them to match using `to_crs`.
+*PROBLEM!* The perimeter, Landsat, and EJI CRSs do NOT match! Thus, they must be transformed using `to_crs`.
 
 ```{python}
 # Transform all data sets to match the Landsat's CRS   
@@ -224,7 +227,7 @@ True color imagery will be used to visualize the Los Angeles landscape!
 
 When mapping, there are 3 color channels: red, green, blue (RGB). If the red, green, and blue Landsat wavelengths are assigned to their proper channels, this is **TRUE COLOR IMAGERY**. True color imagery, in simple terms, is when the red wavelength is assigned to red channel, green wavelength is assigned to the green channel, and blue wavelength is assigned to the blue channel.
 
-To create the true-color imagery, we will select the 'red', 'green', and 'blue' bands (in that order) into the Landsat's [red-channel, green-channel, and blue-channel]. Then, we convert the dataset (with multiple bands) into a single DataArray with `to_array()`. There are a couple spots with 'NA' values and extreme measurements (from cloud cover and/or shadows). The NAs and outliar values will cause the visualizion to fail, not showing the intended image. Filling the NA values with 0s, using `.fillna(0)`, ensures the RGB image will plot cleanly. The function `.plot.imshow()` is xarray's plotting function. The addition of `robust = True` elimiates extreme outlairs, and thus scales the color range to be more representative of the data. 
+To create the true color imagery, we will select the 'red', 'green', and 'blue' bands (in that order) into the Landsat's [red-channel, green-channel, and blue-channel]. Then, we convert the dataset (with multiple bands) into a single DataArray with `to_array()`. There are a couple spots with 'NA' values and extreme measurements (from cloud cover and/or shadows). The NAs and outlier values will cause the visualizion to fail, not showing the intended image. Filling the NA values with 0s, using `.fillna(0)`, ensures the RGB image will plot cleanly. The function `.plot.imshow()` is xarray's plotting function. The addition of `robust = True` eliminates extreme outliers, and thus scales the color range to be more representative of the data. 
 
 ```{python}
 #| code-fold: true
@@ -241,7 +244,7 @@ To create the true-color imagery, we will select the 'red', 'green', and 'blue' 
 
 Conversely, **FALSE COLOR IMAGERY** is when the RGB channels are NOT assigned to the red, green, blue wavelengths. False color imagery uses the unique reflectance and absorbance properties of different wavelengths to enhance or isolate specific features that may be difficult to see in true color imagery. 
 
-For instance, to examine the fire scars, we will assign the short-wave infrared wavelengths ('swir22') to the red channel, near-infrared wavelengths ('nir08') to the green channel, and red wavelength to the blue channel. Near infrared (NIR) wavelengths reflects healthy vegetation. Lower NIR measurements can show unhealthy plant-life conditions, such as drought stress or deforestation. Assigning the NIR to the green channel emphasizes the vegetation health. Hence, super green areas in this figure represent healthy plant-life. Short wave infrared (SWIR) wavelengths reflects fire and recently burned areas. By assigning SWIR to the red channel, the fire markings are highlighted with a red color, especially in contrast to the NIR (green channel). Thus, false color imagery is used to emphasizes the burn damages from the fires in comparison to the neighboring healthy vegetation.
+For instance, to examine the fire scars, we will assign the short-wave infrared wavelengths ('swir22') to the red channel, near-infrared wavelengths ('nir08') to the green channel, and red wavelength to the blue channel. Near infrared (NIR) wavelengths reflects healthy vegetation. Lower NIR measurements can show unhealthy plant-life conditions, such as drought, stress, or deforestation. Assigning the NIR to the green channel emphasizes the vegetation health. Hence, super green areas in this figure represent healthy plant-life. Short wave infrared (SWIR) wavelengths reflects fire and recently burned areas. By assigning SWIR to the red channel, the fire markings are highlighted with a red color, especially in contrast to the NIR (green channel). Thus, false color imagery is used to emphasizes the burn damages from the fires in comparison to the neighboring healthy vegetation.
 
 ```{python}
 #| code-fold: true
@@ -257,7 +260,7 @@ For instance, to examine the fire scars, we will assign the short-wave infrared 
 
 ### All together! 
 
-To finalize the plot, we will outline the fire scares shown in the false color imagery map with the perimeter dataframes. Additionally, adding legends, text, a title, and a scalebar are important factors in creating a professional map. 
+To finalize the plot, we will outline the fire scars with the perimeter dataframes. Additionally, adding legends, text, a title, and a scalebar are important factors in creating a professional map. 
 
 ```{python}
 #| code-fold: true 
@@ -315,9 +318,9 @@ plt.show()
 
 ## Uninsured Population Effected by the Eaton and Palisades Fires
 
-Natural disasters negatively impact everyone involved. However, uninsured communities are exteremely vulnerable as the catastrophes can causes severe financial loss and strain public resources. 
+Natural disasters negatively impact everyone involved. However, uninsured communities are exteremely vulnerable as the catastrophes can cause severe financial loss and strain public resources. 
 
-To investigate the impact of the Eaton and Paslisades fires on unisured communities, we will use the California's Environmental Justice Index (EJI) 'E_UNINSUR' variable. First, we must *clip* the EJI dataset to the fire perimeters. Then, assess the uninsured community by *plotting* the census tract data for each fire.
+To investigate the impact of the Eaton and Paslisades fires on uninsured communities, we will use California's Environmental Justice Index (EJI) 'E_UNINSUR' variable. First, we must *clip* the EJI dataset to the fire perimeters. Then, assess the uninsured community by *plotting* the census tract's 'E_UNINSUR' measurements for each fire.
 
 ### Prelimary Exploration 
 
@@ -418,7 +421,7 @@ ax2.axis('off')
 plt.show()
 ```
 
-### Plot 
+### Plotting the Uninsured Variable 
 
 To study the affected community, we will use the clipped dataframes and display the census tracks' 'E_UNINSUR' measurements.
 
@@ -466,9 +469,9 @@ cbar.set_label('Precentage of People that are Uninsured (%)')
 plt.show()
 ``` 
 
-The Palisade Fire primarily affected the Pacific Palisades, a region located around the Pacific Ocean's water edge and widely recognized for its affluence and wealth. In contrast, the Eaton fire devestated the Altadena neighborhood, a community with a historically Black population (Ong et al., n.d.). Altadena faces financial and environmental pressures, including rising home prices and climate-related diseasters, that has caused a decline in young Black homeowners in the region (Ong et al., n.d.). 
+The Palisade Fire primarily affected the Pacific Palisades, a region located around the Pacific Ocean's water edge and widely recognized for its affluence and wealth. In contrast, the Eaton fire devestated the Altadena neighborhood, a community with a historically Black population (Ong et al., n.d.). Altadena faces financial and environmental pressures, including rising home prices and climate-related disasters, which have caused a decline in young Black homeowners in the region (Ong et al., n.d.). 
 
-The figure above highlights the disparities between these communities' fire impacts and social vulnerability. While both areas exhibit relatively low percentages of uninsured residents, the Eaton fire area (located further from the waters edge with more historical minorities percentages) shows a higher concentraion of households affected by the disaster without adequate insurance coverage. This discrepancy displays how vulnerabilities play into the communities ability to recover from catastrohic events. 
+The figure above highlights the disparities between these communities' social vulnerability and fire impacts. While both areas exhibit relatively low percentages of uninsured residents, the Eaton fire area (located further from the waters edge with greater historical minorities percentages) shows a higher concentraion of households affected by the disaster without adequate insurance coverage. This discrepancy displays how vulnerabilities play into the communities ability to recover from catastrophic events. 
 
 
 # References 
