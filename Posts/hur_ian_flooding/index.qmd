@@ -18,15 +18,15 @@ citation: #true (if without link)
 
 ## Introduction
 
-In Fall of 2022, Hurricane Ian formed south of the Cayman Islands. Reaching Cuba, the storm grew into a Category 2 and 3 (Rafferty, 2022). In less then a week, Hurricane Ian traveled to Florida (FL), hitting its west coast (near Sarasota) as a Category 4 (Rafferty, 2022). It ended its treacherous path in the Carolinas. Ian was a deadly hurricane, bringing 250 km/hr winds, disastrous rainfall, and inundations of 6-14 feet of storm surge (Walls, 2022; Rafferty, 2022; Bucci et al., 2023). About 160 people died, mostly due to drowning in the insane storm surge (Rafferty, 2022 & Bucci et al., 2023). In Florida, there is an estimated \$109.5 billion of damges, and \$112.9 billion of total damages in the US (Bucci et al., 2023). Furthermore, about 3.28 million people in FL lost power (Bucci et al., 2023). While Hurricane Ian's physical destruction was immense, disasters rarely impacts all communities equally. Beyond wind speeds, rainfall totals, and storm surge heights, social and economic factors often shape who is most exposed to flooding and who faces the greatest challenges in recovery.
+In Fall of 2022, Hurricane Ian formed South of the Cayman Islands. As the storm traveled North, reaching Cuba, the storm grew into a Category 3 (Rafferty, 2022). In less then a week, Hurricane Ian hit Florida's west coast (near Sarasota) as a Category 4 (Rafferty, 2022). Finally, it ended its treacherous path in the Carolinas. Ian was a deadly hurricane, bringing 250 km/hr winds, disastrous rainfall, and inundations of 6-14 feet of storm surge (Walls, 2022; Rafferty, 2022; Bucci et al., 2023). About 160 people died, mostly due to drowning in the catastrophic storm surge (Rafferty, 2022 & Bucci et al., 2023). In Florida, there was an estimated \$109.5 billion of damages, and \$112.9 billion of total damages in the US (Bucci et al., 2023). Furthermore, about 3.28 million people in FL lost power (Bucci et al., 2023). While Hurricane Ian's physical destruction was immense, disasters rarely impact all communities equally. Beyond wind speeds, rainfall, and storm surge, social and economic factors often shape who is most exposed to flooding and who faces the greatest challenges in recovery.
 
-Dr. Chakraborty studied the inequitable impacts of Hurricane Harvey flooding in Houston, Texas, and found race, ethnicity, and socioeconomic status played a significant role in the spatial distribution of flooding (Chakraborty, Collins, & Grineski, 2019). Black, Hispanic, and socioeconomically disadvantaged residents faced substantially more flooding compared to their counterparts (Chakraborty, Collins, & Grineski, 2019). While rainfall happens everywhere equally, flooding intensity and duration is not equally distributed as community infrastructure, drainage, and food-control investments vary between neighborhoods (Chakraborty, Collins, & Grineski, 2019).
+Dr. Chakraborty studied the inequitable impacts of Hurricane Harvey's flooding in Houston, Texas, and found race, ethnicity, and socioeconomic status played a significant role in the distribution of flooding (Chakraborty, Collins, & Grineski, 2019). Black, Hispanic, and socioeconomically disadvantaged residents faced substantially more flooding compared to their counterparts (Chakraborty, Collins, & Grineski, 2019). While rainfall happens everywhere equally, flooding intensity and duration is not equally distributed as community infrastructure, drainage, and food-control investments vary between neighborhoods (Chakraborty, Collins, & Grineski, 2019).
 
-Inspired by Dr. Chakraborty study, this project aims to investigate the socio-demographics impacts of flooding for Hurricane Ian in Florida. To accomplish this, we will merge flooding data (inches) and census track measurements for easy comparisons. Then, we will run a generalized linear mixed model (glmm). Initially, glmms runs a zero-inflated logistic regression model, which explores if being in the hurricane's path causes flooding (a yes or no question). Then the glmm runs a possion regression model to investigate *how much* impact does the predictors have on flooding exposure.
+Inspired by Dr. Chakraborty's study, this project aims to investigate the socio-demographics impacts of flooding from Hurricane Ian in Florida. To accomplish this, we will merge flooding data (inches) and census track measurements for easy comparisons. Then, we will run a Tweedie model which is a specialized generalized linear model (GLM) (Ford, 2025).
 
-## Statical Notation
+## Statistical Notation
 
-Statistical Notation for a generalized linear mixed modeling is
+Statistical Notation for a Tweedie model is
 
 $$
 \begin{align}
@@ -42,7 +42,7 @@ $$
 
 ## Hypothesis
 
-Areas with higher concentrations of low-income and minority populations are more susceptible to severe flooding when located close to the hurricane path.
+Areas with higher concentrations of low-income and minority populations are more susceptible to severe flooding when located in close proximity to the Hurricane's path.
 
 **Null Hypothesis:** There is no association between flooding intensity and the predictors - low-income percentages, minority populations, and the distance from the hurricane.
 
@@ -60,9 +60,11 @@ $$
 knitr::include_graphics(here::here("Posts","hur_ian_flooding", "DAG2.jpeg"))
 ```
 
-While precipitation is based on natural occurrences and happen everywhere with no bias, flooding intensity can be reliant on other human built mechanisms. Places that lack green spaces and open soil, fill their neighborhoods with impervious surfaces, increase there likelihood to flood because the water cannot soak into the ground. Roe, Aspinall, & Ward Thompson find that poorer, minority communities lack open green spaces (2016), which might disproportionately cause lower income, minority communities to flood more. Flood mitigation infrastructure (such as levees, storm drains, retention ponds, and seawalls) are important tools that influence flood severity. Poor communities tend to have limited financial resources and lack political leverage to advocate for flood mitigation projects in their communities which could result in more intense flooding. Finally, minority communities can face structural inequities and redlining that cause infrastructure improvement to go 'unnoticed,' increasing their likelihood to flood. Thus, a population's percentage of low income and people of color could impact the flooding intensity.
+While precipitation is based on natural occurrences and happen everywhere with no bias, flooding intensity can be reliant on other human built mechanisms. Areas with limited green spaces, filled with impervious surfaces, are more likely to flood due to waters inability to percolate. Roe, Aspinall, & Ward Thompson find that poorer, minority communities lack open green spaces (2016), which might disproportionately cause them to flood more. Flood mitigation infrastructure (such as levees, storm drains, retention ponds, and seawalls) are important tools that influence flood severity. Poor communities tend to have limited financial resources and lack political leverage to advocate for flood mitigation projects in their communities which could result in more intense flooding. Finally, minority communities can face structural inequities and redlining that cause infrastructure improvement to go 'unnoticed,' increasing their likelihood to flood. Thus, a population's percentage of low-income and People of Color could impact the flooding intensity.
 
-The final predictor in this model indicates whether a location lies within the hurricane’s path. Closer to the center of the hurricane, conditions intensify, causing stronger rainfall and wind-force. Hence, areas that intersect along the hurricane's path will (most likely) experience more flooding.
+Kochhar and Moslimani found large wealth gaps between racial and ethnic groups (2023). Median income for minority households tend to be less due to historical segregation and immigration status (Kochhar & Moslimani, 2023). Therefore, the DAG includes the interaction of People of Color percentage and low-income, which could impact the communities flood exposure.
+
+The final predictor in this model is the distance (km) to the Hurricane's path. Closer to the center of the hurricane, conditions intensify, causing stronger rainfall and wind-force. Hence, areas closer the hurricane will (most likely) experience more flooding.
 
 ```{r, out.width = "400px"}
 #| echo: false
@@ -73,7 +75,7 @@ knitr::include_graphics(here::here("Posts","hur_ian_flooding", "hurricane_intens
 
 1.  Hurricane Ian flooding data from ...
 
-2.  Hurricane Ian path data is vector line geometry acquired from [ArcGIS online](https://www.arcgis.com/home/webmap/viewer.html?layers=20d971f4472e4037af0f260f6454e7ab).
+2.  Hurricane Ian's path data is vector line geometry acquired from [ArcGIS online](https://www.arcgis.com/home/webmap/viewer.html?layers=20d971f4472e4037af0f260f6454e7ab).
 
 3.  Florida's census track contains various attributes of each census track and is from the [U.S. Census Bureau's American Community Survey Data](https://www.census.gov/programs-surveys/acs/guidance/estimates.html).
 
@@ -81,7 +83,7 @@ knitr::include_graphics(here::here("Posts","hur_ian_flooding", "hurricane_intens
 
 ## Initial Steps
 
-First, download all necessary libraries!
+First, load all necessary libraries.
 
 ```{r}
 #| output: false 
@@ -100,7 +102,7 @@ library(tweedie)
 library(statmod)
 ```
 
-Second, download and load in all datasets. Use `read_sf` to load in geospatial vector data (such as gdp and shp files), and use `read_csv` for csv files. After loading in the data, piping in filters and selections for specific attributes and columns as well as cleaning up column names with `clean_names()` will make your code more efficient.
+Second, load in all datasets. Use `read_sf` to load in geospatial vector data (such as gdp and shp files), and use `read_csv` for csv files. Piping in filters and selections for specific attributes and columns as well as cleaning up column names with `clean_names()` will make your code more efficient.
 
 ```{r}
 #| code-fold: true 
@@ -145,26 +147,26 @@ ian_buffer <- st_buffer(hurr_union, dist = units::set_units(120, "miles")) # Buf
 
 ```
 
-Map the Hurricane's path with the buffer
+Map the Hurricane's path with the buffer.
 
 ```{r}
 #| code-fold: true
-# Hurricane Ian Buffer 
+# Map of Hurricane Ian's Buffer 
 tm_shape(ian_buffer) +
   tm_polygons(col = NA,
               lwd = 0,
               fill = "red",
               fill_alpha = 0.4) +
-  tm_shape(hurr_ian) + 
+  tm_shape(hurr_ian) + # Ian's path as line 
   tm_lines(lwd = 2) +
-  tm_shape(fl_sociodem, is.main = TRUE) +
+  tm_shape(fl_sociodem, is.main = TRUE) + # Extent of fl_sociodem 
   tm_title(text = "Hurricane Ian's Path Through Florida") +
   tm_basemap("OpenTopoMap") + 
   tm_layout(text.fontfamily = "serif", text.fontface = "plain") + 
-  tm_add_legend(type = 'lines', 
+  tm_add_legend(type = 'lines', # Legend for path line 
                 labels = "Path", 
                 title = 'Hurricane Ian') + 
-    tm_add_legend(type = "polygons",
+    tm_add_legend(type = "polygons", # Legend for buffer zone 
                 labels = "120m Buffer Zone",
                 fill = "red",
                 alpha = 0.4)  + 
@@ -178,7 +180,7 @@ tm_shape(ian_buffer) +
 
 ### Datatypes
 
-While the flooding data has a longitude and latitude columns, it is not read as a geometry. Therefore, we need to use `st_as_sf` to change the datatype to simple feature (sf).
+While the flooding data has longitude and latitude columns, it is not read as a geometry. Therefore, we need to use `st_as_sf` to change the datatype to simple feature (sf).
 
 ```{r}
 flooding_FL_sf <- st_as_sf(flooding_FL, coords = c("longitude", "latitude"), crs = 'EPSG:4326')
@@ -186,7 +188,7 @@ flooding_FL_sf <- st_as_sf(flooding_FL, coords = c("longitude", "latitude"), crs
 
 ### Coordinate Reference Systems
 
-It is *always* important to know the geospatial datas' **coordinate reference systems** (CRS). The CRS defines how the geospatial data is located and plotted. There are 2 CRS types: geographic (how the data is plotted on the 3D globe) and projected (how the data is plotted on a 2D map). It is important to use the correct CRS for your data and intended goal. Additionally, when merging or plotting geospatial data together, the datasets must be in the same CRS. Matching CRSs ensures that all spatial data layers align correctly, calculations are meaningful, and analytical results are trustworthy.
+It is *always* important to know the geospatial data's **coordinate reference systems** (CRS). The CRS defines how the geospatial data is located and plotted. There are 2 CRS types: geographic (how the data is plotted on the 3D globe) and projected (how the data is plotted on a 2D map). It is important to use the correct CRS for your data and intended goal. Additionally, when merging or plotting geospatial data, the CRS must be the same CRS. Matching CRSs ensures that all spatial data layers align correctly, calculations are meaningful, and analytic results are trustworthy.
 
 Therefore, we need to check and change CRS using `st_transforms` to ensure all CRS match.
 
@@ -207,34 +209,9 @@ st_crs(ian_buffer) == st_crs(fl_sociodem)
 
 ```
 
-### Add Column: Flooding in Hurricane's Path?
-
-**GOAL:** Create a new column where "1" indicated the flooding is within the Hurricane's path, and "0" indicates if flooding is outside of the Hurricane's path.
-
-To find if the flood data is within the Hurricane's path (the buffer), we used `st_intersects` which returns '0' (if x and y do not intersect) and '1' (if x and y intersects).
-
-```{r}
-#| code-fold: true 
-
-# Intersections of flooding points and hurricane path 
-intersect <- st_intersects(flooding_FL_sf, ian_buffer) #sparse = FALSE) # See which rows did and didn't intersect 
-len <- data.frame(lengths(intersect) > 0) # Returns TRUE (where 1) and FALSE (where 0)
-
-# Combine dataframes 
-flooding_FL_sf <- cbind(flooding_FL_sf, len) %>%  
-  rename('hur_path' = `lengths.intersect....0` ) 
-
-# Change to 1 and 0s 
-flooding_FL_sf$hur_path <- as.numeric(flooding_FL_sf$hur_path)  
-
-# Remove unnecessary objects  
-rm(list = c('intersect', 'len'))
-
-```
-
 ### Add Column: Distance (m) from Flooding Point to Hurricane Line
 
-Calculate the distance (km) from each flooding point to the hurricane's path using `dist2Line`.
+**GOAL:** Calculate the distance (km) from each flooding point to the hurricane's path using `dist2Line`, and put the distance calculation in a new column called `dist_hur`.
 
 ```{r}
 #| warning: false 
@@ -251,7 +228,7 @@ line_coord <- st_coordinates(hurr_union_espg) [, c("X", "Y")]
 # Find distance from flooding point to hurricane path 
 dist_hur <- dist2Line(point_coord, line_coord) 
 
-# Add distance (m) measurements to dataframe 
+# Add distance (m) measurements into a new column 
 flooding_FL_sf$dist_hur <- dist_hur[, "distance"]
 flooding_FL_sf$dist_hur <- flooding_FL_sf$dist_hur / 1000 # Covert to km 
 
@@ -264,15 +241,16 @@ rm(list = c("flooding_FL_espg", "hurr_union_espg", "point_coord", "line_coord"))
 ```{r}
 #| code-fold: true 
 
+# Map pf the flooding data's distance from the Hurricane 
 tm_shape(flooding_FL_sf) + 
   tm_dots(fill = 'dist_hur',
           fill_alpha = 0.7,
           fill.scale = tm_scale(values = c("firebrick", 'red','orange','gold',"grey35",'grey50',"lightgrey")),
           fill.legend = tm_legend(title = "Distance from Hurricane\nIan's Path (km)")
           ) + 
-  tm_shape(hurr_ian) + 
+  tm_shape(hurr_ian) + # Ian's path as a line 
   tm_lines(lwd = 1.5) +
-  tm_add_legend(labels = "Path", 
+  tm_add_legend(labels = "Path", #. Add legend for path 
                 type= "lines", 
                 title = "Hurricane Ian"
                 )  + 
@@ -284,9 +262,9 @@ tm_shape(flooding_FL_sf) +
   tm_basemap("Esri.OceanBasemap") 
 ```
 
-### Join Flood Data and Socioeconomic Data
+### Join Flood and Socioeconomic Data
 
-Using `st_join` to merge the flooding and socio-demographic data.
+Use `st_join` to merge the flooding and socio-demographic data.
 
 ```{r}
 join_df <- st_join(flooding_FL_sf, fl_sociodem, join = st_within)
@@ -300,6 +278,7 @@ Create maps to examine Florida's flooding measurements and the socio-demographic
 
 ```{r}
 #| code-fold: true
+# Map of flooding amounts 
 tm_shape(flooding_FL_sf) +
   tm_dots(fill = 'totals_inches', 
           fill_alpha = 0.7,
@@ -309,7 +288,7 @@ tm_shape(flooding_FL_sf) +
           #border.col = 'black',
           size = 0.2) + 
   tm_title(text = "Flooding in Florida from Hurricane Ian") +
-  tm_shape(hurr_ian) + 
+  tm_shape(hurr_ian) + # Ian's path as a line 
   tm_lines(lwd = 1.5) +
   tm_basemap("Esri.OceanBasemap") + 
   tm_compass(position = c('left', 'bottom')) +
@@ -319,7 +298,7 @@ tm_shape(flooding_FL_sf) +
                 title = "Hurricane Ian"
                 )  + 
   tm_layout(text.fontfamily = "serif", text.fontface = "plain") +
-    tm_credits("Figure 2", 
+    tm_credits("Figure 3", 
                position = c('left', 'bottom'))
 
 ```
@@ -330,13 +309,12 @@ tm_shape(flooding_FL_sf) +
 #| code-fold: true
 #| warning: false
 
+# Color palattes 
 my_palette1 <- c('#DEEBDFFF', '#A9CCACFF', '#399043FF', '#00740EFF')
-
-#00740EFF #399043FF #72AC79FF #ABC8AEFF
 my_palette2 <- c('#E4E4E4','#DDC5B6', '#D5A78B', '#CF895E') #CF895EFF')
 
-#E4E4E4FF #DDC5B7FF #D6A78BFF #CF895EFF
 
+# Map of FL's People of Color % 
 tm_shape(
    fl_sociodem, 
    bbox = sf::st_bbox(c(
@@ -347,16 +325,12 @@ tm_shape(
   tm_polygons(fill = 'p_peopcolorpct', 
               fill.scale = tm_scale(breaks = c(0, 25, 50, 75, 100), 
                                     values = my_palette1),
-              fill.legend = tm_legend(title = "Low Income (%)"),
+              fill.legend = tm_legend(title = "Low-Income (%)"),
               lwd = 0.1) + 
   tm_title(text = "Minority Populations Exposed to the Hurricane") +
   tm_shape(hurr_ian) + 
   tm_lines(lwd = 2) +
   tm_shape(ian_buffer) +
-  # tm_polygons(col = NA,
-  #             lwd = 0,
-  #             fill = "red",
-  #             fill_alpha = 0.2) +
  tm_basemap("Esri.WorldShadedRelief") + 
 tm_scalebar(position = c('right', 'top')) +
   tm_compass(position = c('right', 'bottom'))+
@@ -365,10 +339,10 @@ tm_scalebar(position = c('right', 'top')) +
                 type= "lines", 
                 title = "Hurricane Ian"
                 ) + 
-    tm_credits("Figure 3")
+    tm_credits("Figure 4")
 
 
-
+# Map of FL low income % 
 tm_shape(
    fl_sociodem, 
    bbox = sf::st_bbox(c(
@@ -379,7 +353,7 @@ tm_shape(
   tm_polygons(fill = 'p_lowincpct', 
               fill.scale = tm_scale(breaks = c(0, 25, 50, 75, 100), 
                                     values = my_palette2),
-              fill.legend = tm_legend(title = "Low Income (%)"),
+              fill.legend = tm_legend(title = "Low-Income (%)"),
               lwd = 0.1) + 
   tm_title(text = "Low-Income Populations Exposed to the Hurricane") +
   tm_shape(hurr_ian) + 
@@ -392,7 +366,7 @@ tm_scalebar(position = c('right', 'top')) +
                 type= "lines", 
                 title = "Hurricane Ian"
                 ) + 
-    tm_credits("Figure 4")
+    tm_credits("Figure 5")
 
 ```
 
@@ -403,6 +377,7 @@ tm_scalebar(position = c('right', 'top')) +
 First, it is important to examine the distributional properties of our data and assess whether the normality assumption is reasonable. To do this, we will fit a simple linear regression model, visualize the residuals, and generate a histogram of the response variable (flooding).
 
 ```{r}
+# Linear Model 
 invest_model <- lm(totals_inches ~ p_peopcolorpct * p_lowincpct + dist_hur, 
         data = join_df, 
         )
@@ -413,35 +388,35 @@ invest_model <- lm(totals_inches ~ p_peopcolorpct * p_lowincpct + dist_hur,
 #| message: false 
 #| warning: false
 
+# Look at resiudals 
 plot(invest_model, which = 1)
 plot(invest_model, which = 2)
 
-
+# Create a histogram 
 ggplot(join_df, 
        aes(totals_inches)) + 
   geom_histogram() + 
   labs(x = "Flooding (inches)", 
        y = "Count", 
-       title = "Histogram of Flooding (inches)", 
-       caption = "Figure 5") + 
+       title = "Histogram of Flooding (inches)") + 
   theme_bw()
 
-
+# Investing zero-inflated-ness of data 
 print(paste("Number of flood measurements less than 0:", sum(join_df$totals_inches < 0))) # No negatives 
 print(paste("Number of flood measurements that = 0:", sum(join_df$totals_inches == 0))) # zeros 
 ```
 
-These figures show the data has strong positive (right) skew, violating the normality assumption of linear regression. Because there was no rainfall in some parts of Florida, there are 138 recorded zeros, making up 9% of the data. Therefore, the data is zero-inflated, skewed, and continuous positive.
+These figures show the data has strong positive (right) skew, violating the normality assumption of linear regression. Because there was no rainfall in some parts of Florida, there are 138 record zeros, making up 9% of the data. Therefore, the data is zero-inflated, skewed, and continuous positive.
 
-The zero-inflated nature of this dataset, pulls Gamma regression off the table. The more appropriate model is a Tweedie model. **Tweedie model** is the standard distributions for rainfall modeling as it preserves the zeroes. The model is a special Generalized Linear Model (GLM) that acts similar to a continuous gamma distribution but can also handle the positive mass at zero.
+The zero-inflated nature of this dataset, pulls Gamma regression off the table. The more appropriate model is a Tweedie model. **Tweedie model** is the standard distributions for rainfall modeling as it preserves the zeroes (Ford, 2025). The model is a special Generalized Linear Model (GLM) that acts similar to a continuous gamma distribution but can also handle the positive mass at zero (Ford, 2025).
 
 **The Tweedie model has 3 main parameters:**
 
-1.  **mu:** mean of the response
+1.  **mu:** Mean of the response
 
-2.  **phi:** dispersion - Controls the variance (higher the phi, the more variability around mu )
+2.  **phi:** Dispersion - controls the variance (higher the phi, the more variability around mu)
 
-3.  **p:** power parameter - Determines the Tweedie distribution type
+3.  **p:** Power parameter - determines the Tweedie distribution type
 
 |                     |                                     |
 |:-------------------:|:-----------------------------------:|
@@ -452,18 +427,19 @@ The zero-inflated nature of this dataset, pulls Gamma regression off the table. 
 |          2          |                Gamma                |
 |          3          |          Inverse Gaussian           |
 
-
 ### Simulate the Tweedie Model
 
 **Simulating data steps:**
 
 1.  Define sample size, parameters (mu, phi, p, and betas), and predictors' range
 
-2.  Set a the linear predictor and its inverse
+2.  Set the linear predictor and its inverse
 
 3.  Generate a response using `rtweedie()`
 
 4.  Create a fit model
+
+5.  Report model summary results
 
 ```{r}
 #| code-fold: true
@@ -480,8 +456,10 @@ p <- 1.5
 beta_0 <- 0.5 # Intercept 
 beta_1 <- 1.2 # Effect of low income percentages
 beta_2 <- 1.8 # Effect of People of Color percentages
-beta_3 <- 0.2 # Interaction of low income and people of color percentages 
+beta_3 <- 0.1 # Interaction of low income and people of color percentages 
 beta_4 <- -2.3 # Effect of distance of Hurricane's path 
+
+given_parameters <- c(beta_0, beta_1, beta_2, beta_4, beta_3)
 
 # Define predictors ranges 
 p_lowincomepct <- runif(n, 0, 1)
@@ -505,43 +483,61 @@ sim_model <- gam(flooding ~ p_lowincomepct * p_PofC + dist_hur,
         data = sim_df,
         family = tw(link = "log"))
 
-# Summarize model 
+# Summarize model
 sim_model_summary <- summary(sim_model)
 
-sim_model_summary
+# Report Simulated model 
+sim_model_summary$family # P value 
+
+coef <- sim_model_summary$p.coeff # Parameters of simulated model 
+
+# Making a dataframe and kable table of given and resulting estimates for comparison 
+coef <- data.frame(given_parameters, coef, row.names = c("Intercept", 
+  "People of Color (%)",
+  "Low-Income (%)",
+  "Distance from Hurricane Path",
+  "PoC × Low-Income Interaction"))
+
+
+kableExtra::kable(coef, 
+                  digits = 1, 
+                  align = 'c', 
+                  col.names = c("Given betas", "Simulated Model Estimates"),
+                  caption = "Simulated Model Coefficient Estimates")
+
 ```
 
+The simulation model recovered the given parameters (including the given p = 1.5), validating the model and demonstrating the inter-workings of it.
 
 ### Fit Model: Tweedie Model
 
+Create a fit Tweedie model to test the hypothesis.
+
 ```{r}
+# Fit Model: Tweedie Model 
 tweedie_model  <- gam(totals_inches ~ p_peopcolorpct * p_lowincpct + dist_hur, 
         data = join_df,
         family = tw(link = "log"))
 
+# Model Summary 
 mod_summary <- summary(tweedie_model)
-
 ```
 
-[It's important to note, you can run the Tweedie model various ways!]{.underline}
-
-Options:
+[It's important to note, you can run the Tweedie model various ways, such as:]{.underline}
 
 -   `gam(Y ~ predictors, family = tw(link = "log")))` \# library(mgcv)
 
-    -   Do not need to specify the p; the model chooses the best-fitting p for us
+    -   Do not need to specify the p; the model chooses the best-fitting p for us.
 
 -   `glm(Y ~ predictors, family = tweedie(var.power = #, link.power = #))` \# library(statmod)
 
-    -   Must supply the model parameters manually
+    -   Must supply the model parameters manually.
 
         -   var.power: defines the Tweedie p parameter
 
         -   link.power = 0: log link
 
 -   `glmmTMB(Y ~ predictors,  family = tweedie(link = 'log'))`
-
-    -   Kept defaulting the p = 1, which is a Poisson distribution (not typical for rainfall predictions)
 
 *To learn more about the [tweedie model](https://library.virginia.edu/data/articles/getting-started-tweedie-models-0).*
 
@@ -551,24 +547,25 @@ Pulling out all the important information from the model and making a pretty kab
 
 ```{r}
 #| code-fold: true
+# Print Just the P and link function 
 print(mod_summary$family)
 ```
 
 ```{r}
 #| code-fold: true
-# Data frame of coefficients 
+# Dataframe of coefficients 
 mod_summary_cond_table <- data.frame(mod_summary$p.table, row.names = c("Intercept",
   "People of Color (%)",
-  "Low Income (%)",
+  "Low-Income (%)",
   "Distance from Hurricane Path",
-  "PoC × Low Income Interaction"))
+  "PoC × Low-Income Interaction"))
 
 # Kable table 
 kableExtra::kable(mod_summary_cond_table, 
                   digits = 4, 
                   align = 'c',
                   col.names = c("Estimates", "Std.Error", "T.value", "P.value"),
-                  caption = "Generalized Linear Mixed Model Conditional Coeffients")
+                  caption = "Tweedie Model Results")
 
 
 ```
@@ -577,23 +574,25 @@ kableExtra::kable(mod_summary_cond_table,
 
 Rainfall usually has Tweedie power paramter (**p**) that ranges 1 \< p \< 2 which is interpreted as a compound Poisson–Gamma. The Tweedies model's estimated p parameter is 1.446, corresponding to a compound Poisson–Gamma. This p estimate is good as it matches rainfall physics and is similar estimate to other rainfall Tweedie models!
 
-Percent of People of Color, low income, and distance from the Hurricane have a significant relationship to flooding exposure. However, the interaction of communities with low income and People of Color does *not* have a significant relationship to flooding. 
+Percent of People of Color, low-income, and distance from the Hurricane have a significant relationship to flooding exposure. However, the interaction of communities with low-income and People of Color does *not* have a significant relationship to flooding.
 
-The percent of People of Color has a positive, significant relationship where communities with higher percentages of People of Color have slightly higher flooding.
+The percent of People of Color has a positive, significant relationship where communities with higher percentages of minorities have slightly higher flooding measurements.
 
-The percent of low income and distance from the hurricane's path have a negative, significant relationship. Communities with a higher percentage of low-income (poorer communities), have slightly lower flooding predictions. This is most likely due to Florida coastline facing the brunt of the storm. Beach front properties, which tend to be wealthy, faced Ian head-on as a Category 4 Hurricane causing more damage and flooding in wealthier communities. Additionally, the hurricane path results show a *strong,* negative relationship where flooding rapidly decreases with distance from hurricane.
+The percent of low-income and distance from the hurricane's path have a negative, significant relationship. Communities with a higher percentage of low-income (poorer communities), have slightly lower flooding predictions. This is most likely due to Florida's coastline, consisting of wealthy, beach-front properties facing the brunt of the Catagory 4 hurricane, resulting in more damages and flooding in affluent communities. Additionally, the hurricane path results show a *strong,* negative relationship where flooding rapidly decreases with distance from the Hurricane.
 
 ### Create Expand Grid
 
-I made two expanded grids because I wanted to see the food predictions when distance from the hurricane was constant vs not constant in order to display the interactions of People of Color percentages vs low income percentages (without distance from Hurricane impact) as well as the interplay of distance from hurricane on flooding.
+I made two expanded grids to inspect the food predictions when distance from the Hurricane is constant and variable. This allows me to display (1) the interactions of People of Color percentages vs low-income percentages (without the distance from the Hurricane impacting the predictions) and (2) the influence of location relative to the storm on flood exposure.
 
 ```{r}
+# Expand grid - Distance held constant 
 grid_dist_constant <- expand_grid(p_peopcolorpct = seq(min(join_df$p_peopcolorpct), max(join_df$p_peopcolorpct)), 
             p_lowincpct = seq(min(join_df$p_lowincpct), max(join_df$p_lowincpct)), 
-            dist_hur = mean(join_df$dist_hur)) 
+            dist_hur = mean(join_df$dist_hur)) # Hold constant at the mean value
 ```
 
 ```{r}
+# Expand grid - Distance varies 
 grid <- expand_grid(p_peopcolorpct = seq(min(join_df$p_peopcolorpct), max(join_df$p_peopcolorpct), length.out = 50), 
             p_lowincpct = seq(min(join_df$p_lowincpct), max(join_df$p_lowincpct), length.out = 50), 
             dist_hur = seq(min(join_df$dist_hur), max(join_df$dist_hur), length.out = 50))
@@ -604,13 +603,14 @@ grid <- expand_grid(p_peopcolorpct = seq(min(join_df$p_peopcolorpct), max(join_d
 Using the `tweedie_model`, make flooding predictions for the expand grids.
 
 ```{r}
-prediction_grid_dist_constant <- grid_dist_constant %>% 
+# Calculate flood prediction and put them in new column 
+prediction_grid_dist_constant <- grid_dist_constant %>% # Distance = constant 
   mutate(flood_predictions = predict(object = tweedie_model, 
                                      newdata = grid_dist_constant, 
                                      type = 'response'))
 
 
-prediction_grid <- grid %>% 
+prediction_grid <- grid %>% # Distance = varies 
   mutate(flood_predictions = predict(object = tweedie_model, 
                                      newdata = grid, 
                                      type = 'response'))
@@ -618,6 +618,8 @@ prediction_grid <- grid %>%
 ```
 
 ### Confidence Intervals
+
+Create confidence intervals for the predictions where the distance is constant.
 
 ```{r}
 #| code-fold: true
@@ -647,13 +649,16 @@ prediction_grid_dist_constant <- prediction_grid_dist_constant %>%
   )
 ```
 
-### Plots
+### Final Plots
 
 #### Distance from Hurricane = Constant
 
-Investigating community make-up (People of Color and low income populations) in correspondence to flooding predictions. 
+Investigating community composition (People of Color and low-income populations) in correspondence to flood predictions.
+
 ```{r}
 #| code-fold: true
+
+# Geom_rasters plots of flood predictions via minority and low income % 
 prediction_grid_dist_constant %>% 
   ggplot(aes(x = p_peopcolorpct, y = p_lowincpct, fill = flood_predictions)) + 
   geom_raster() + 
@@ -661,28 +666,26 @@ prediction_grid_dist_constant %>%
                      mid = "#ffe896",
                      high = "#488f30", 
                      midpoint = median(prediction_grid$flood_predictions)) +
-  #scale_fill_gradient(low = "#466DA7", high = "#D9252A") + # Produces the continuous color scale 
   theme_classic() + 
-  labs(title = "Flood Predictions in Minority and Low Income Communities", 
+  labs(title = "Flood Predictions in Minority and Low-Income Communities", 
        x = "People of Color (%)", 
-       y = "Low Income (%)", 
+       y = "Low-Income (%)", 
        fill = "Flood Predictions\n(inches)", 
        caption = "Figure 6"
        )
 ```
 
-
-Selecting 3 representative low income levels at the 10%, 50%, 90% percentiles
+Selecting 3 representative low-income levels at the 10%, 50%, 90% percentiles.
 
 ```{r}
 #| code-fold: true 
-# Pick 3 low income levels at the 10%, 50%, 90% percentile 
+# Three low income levels at the 10%, 50%, 90% percentile 
 selected_levels <- quantile(join_df$p_lowincpct, probs = c(0.1, 0.5, 0.9))
 
 selected_levels
 ```
 
-Creating a plot at those 3 quantiles
+Creating a plot at those 3 low-income quantiles.
 
 ```{r}
 #| code-fold: true
@@ -693,15 +696,14 @@ plot_data <- prediction_grid_dist_constant %>%
   filter(p_lowincpct %in% selected_levels)
 
 
-
-# Change labels of quantiles 
+# Change labels for quantiles 
 plot_data <- plot_data %>%
   mutate(lowinc_label = factor(p_lowincpct, 
                                levels = selected_levels, 
                                labels = c("10%", "50%", "90%")))
 
 
-# Plot the reduced dataframe 
+# Plot the reduced dataframe - % minorities & flood predictions at low income's 10th, 50th, and 90th precentile 
 ggplot(plot_data, 
        aes(x = p_peopcolorpct, 
            y = flood_predictions, 
@@ -715,22 +717,24 @@ ggplot(plot_data,
               alpha = 0.2) +
   labs(x = "% People of Color", 
        y = "Predicted Flooding", 
-       color = "Low Income (%)\nQuartiles", 
-       fill = "Low Income (%)\nQuartiles", 
+       color = "Low-Income (%)\nQuartiles", 
+       fill = "Low-Income (%)\nQuartiles", 
        caption = "Figure 7") +
   theme_minimal()
 
 ```
 
-The problem while plotting: 
+The problem while plotting:
 
 From the expand grid, we could not plot all 50×50 points as lines; ggplot's line was zigzaged and oscillating through the various combinations. To eliminate this crazy oscillation, we fixed low-income percentages at a 3 representative levels (10th, 50th, 90th percentile), and filtered the data for those fixed percentages. Now, the `plot_data` has fewer rows (only the combinations of p_peopcolorpct and the 3 fixed low-income levels).
 
-#### Community Make-up in Comparison to their Distance from the Hurricane
+#### Community Composition in Comparison to their Distance from the Hurricane
+
+Plotting People of Color and low-income percentages in relation to their distance from the storm.
 
 ```{r}
 #| code-fold: true 
-
+# Geom_rasters plots of flood predictions via minority % and distance from Hurricane 
 prediction_grid %>% 
   ggplot(aes(x = dist_hur, y = p_lowincpct, fill = flood_predictions)) + 
   geom_raster() + 
@@ -739,13 +743,14 @@ prediction_grid %>%
                      high = "#488f30", 
                      midpoint = median(prediction_grid$flood_predictions)) + 
   theme_classic() + 
-  labs(title = "Flood Predictions for Low Income Communities", 
+  labs(title = "Flood Predictions for Low-Income Communities", 
        x = "Distance from the Hurricane (km)", 
-       y = "Low Income (%)", 
+       y = "Low-Income (%)", 
        fill = "Flood Predictions\n(inches)", 
        caption = "Figure 8"
        )
   
+# Geom_rasters plots of flood predictions via low-income % and distance from Hurricane 
 prediction_grid %>% 
   ggplot(aes(x = dist_hur, y = p_peopcolorpct, fill = flood_predictions)) + 
   geom_raster() + 
@@ -763,40 +768,37 @@ prediction_grid %>%
 
 ```
 
-## Evaulating Coefficients and Plots
+## Evaluating Coefficients and Plots
 
-As previously discussed, the percentages of People of Color within a community exhibit a *positive*, significant relationship with flood exposure. Communities with high minority populations are predicted to experience greater flooding. This trend is illustrated in Figures 6, 7, and 9 where flooding estimate increase with rising percentages of People of Color. This interaction is persistent regardless of whether the distance from the hurricane's path is held constant or varies.
+As previously discussed, the **percentages of People of Color** within a community exhibit a *positive*, significant relationship to flood exposure. Communities with high minority populations are predicted to experience greater flooding. This trend is illustrated in Figures 6, 7, and 9 where flooding estimates increase with rising percentages of minorities. This interaction is persistent regardless of whether the distance from the hurricane's path is held constant or varies.
 
-In contrast, the low income population shows a *negative*, significant relationship to floodpredictions. 
+In contrast, the **low-income percentages** shows a *negative*, significant relationship to flood predictions. During Hurricane Ian, areas with high low-income percentages (poorer communities), are predicted to have less flooding, which is evident in Figures 6, 7, and 8. Notably, the 10% low income quartile (representing wealthier communities) experiences the greatest amount of flooding in Figure 7. The separation of prediction lines in Figure 7 highlights the significant effects of low-income percentages on flooding predictions. The negative relationship is opposite of typical expectations. This counterintuitive outcome is likely attributable to the Florida coastline bearing the full force of the storm. Coastal properties, which are typically higher-income and affluent communities, were directly exposed to Hurricane Ian as a Category 4 storm, resulting in greater damage and flooding in these wealthier communities.
 
-During Hurricane Ian, areas with high low-income percentages (poorer communities), are predicted to have less flooding, which is evident in Figures 6, 7, and 8. Notably, the 10% low income quartile (representing wealther communities) experiences the greatest amount of flooding in Figure 7. The separation of prediction lines in Figure 7 highlights the significant effects of low-income precentages on flooding predictions. The negative relationship is opposite of typical expectations. This counterintuitive outcome is likely attributable to the Florida coastline bearing the full force of the storm. Coastal properties, which are typically higher-income, were directly exposed to Hurricane Ian as a Category 4 storm, resulting in greater damage and flooding in these wealthier communities.
+Yet, the interaction between these socio-demographic variables (low-income and minority percentages) is not significant when determining flood exposure.
 
-Similarly, distance from the Hurricane's path has a strong *negative*, significant relationship. Regardless of the community composition, areas closer to the Hurricane's trajectory experienced greater flooding (Figures 8 and 9). Once communities were approximately 200km from the storm's path, predicted flooding decreased remarkably.
+**Distance from the Hurricane Ian's path** has a strong *negative*, significant relationship. Regardless of the community composition, areas closer to the Hurricane's trajectory experienced greater flooding (Figures 8 and 9). Once communities were approximately 200km from the storm's path, predicted flooding decreased remarkably.
 
+The **R-squared** value of 0.214 means the model explains about 21.4% of the variability in flooding intensity. While 0.214 seems low, it is expected in environmental hazard modeling, where flooding is driven by numerous unaccounted factors, such as drainage patterns and land cover. Additionally, Tweedie models, dealing with zero-inflated, skewed, positive data, rarely produce high R-squared values. Thus, an R-squared around 0.2 is considered typical, still reflecting meaningful explanatory power as it is paired with several statistically significant predictors.
 
-# ------------------------
-
-## Old explination 
-
-**Model coefficient explanations:** The zero-inflated portion evaluates whether being inside versus outside the storm’s path affects the probability that a location experienced any flooding. In the model, "flooding" is any amount of rain \> 0 inches. The high P-value for 'Hurricane Path' in the zero-inflated model shows that weither inside or outside of the storm, the majority of communities experienced some type of *flooding*. Thus, the hurricane path did not influenced the likelihood of a location having any flooding.
-
-However, the second part of the glmm askes: *how much* influence did the predictors have on response. The interaction of percentages of low income and people of color communities have a very small P-value, indicating they play a significant role in determining how much a community will flood. This significant relationship is also seen in low income and people of color predictors individually having low P-values (that are less than a set alpha of 0.05). Illustrated in Figure 5, 6, and 7, minority populations have a direct relationship to flooding; as minority populations increase, flooding tends to increase. Interestingly, low income communities have an inverse relationship to flooding during Hurricane Ian (seen in Figure 5, 6, and 8); as percentages of low income population increases, flooding decreases. This is most likely due to Florida coastline facing the brunt of the storm. Beach front properties, which tend to be wealthy, faced Ian head-on as a Category 4 Hurricane causing more damage and flooding in wealthier communities. Therefore, while there is a significant relationship between these predictors and the response, this relationship does not support the hypothesis.
-
-In the conditional portion of the model, hurricane path has a P-values greater than the critical threshold (0.05), meaning we found no statistical significance for flooding inside and outside the Hurricane's path. The p-value itself suggests the difference in flooding between areas inside and outside the hurricane’s path is 10% due to random chance. Yet, in comparing Figures 5 and 6, there is a noticeable difference between flood predictions in communities located within or outside the Hurricane's perimeters. Furthermore, Figures 7 and 8 show 2 distinct lines where sites that falls inside the hurricane’s trajectory have greater flood predictions.
+Overall, the study emphasizes vulnerability is multidimensional. Social inequality and geographic exposures influence flood outcomes. Supporting the hypothesis, minority communities disproportionately faced greater flooding exposure, and flood severity was mainly driven by proximity to the storm. Contradictory to the hypothesis, low-income percentages have an inverse relationship with flooding. The wealthier, coastal communities faced the brunt of the damage as the Category 4 Hurricane hit Florida's coast head on. Also against the hypothesis, the combination between the socio-demographic variables do not explain flooding. These results demonstrate the need for risk assessments that combine social and geographic factors to best anticipate who is most vulnerable.
 
 # Limitations
 
--   Want urbanization / impermeable surface data
-
--   'flooding' in logistic regression was any rain at all - wish it could be data on *actual* flooding
-
--   Considered inside vs outside the data was based on a single 120 mile buffer - hurricane Ian hit FL being huge and got smaller, but buffer doesn't show the change in size.
+This analysis has several limitations. First, this study does not account for other important factors influencing flood intensity, such as urbanization, impermeable surface, or land cover data. Flooding is highly dictated by the water not being able to percolate into the soil due to high levels of cement. Adding a predictor about the land composition and elevation would greatly improve the model. Secondly, an inaccuracy of predictor measurements could be a limitation. American Community Survey census track data and the defined Hurricane path both come with marginal errors that could influence the model. Lastly, flooding can have a spatial autocorrectional that is not accounted for in this model.
 
 # References
 
+Bonat, W. H., & Kokonendji, C. C. (2017). Flexible Tweedie regression models for continuous data. *Journal of Statistical Computation and Simulation*, *87*(11), 2138-2152.
+
 Bucci, L., Alaka, L., Hagen, A., Delgado, S., & Beven, J. (2023). *National hurricane center tropical cyclone report*. Hurricane Ian (AL092022), 1-72.
 
+Ford, C. (2025). *Getting Started with Tweedie Models.* University of Virginia Library. <https://library.virginia.edu/data/articles/getting-started-tweedie-models-0>
+
+Gilchrist, R., & Drinkwater, D. (2000). The use of the Tweedie distribution in statistical modelling. In *COMPSTAT: Proceedings in computational statistics 14th symposium held in Utrecht, the Netherlands, 2000* (pp. 313-318). Heidelberg: Physica-Verlag HD.
+
 Chakraborty, J., Collins, T.W., Grineski, SE. (2019). *Exploring the Environmental Justice Implications of Hurricane Harvey Flooding in Greater Houston, Texas.* Am J Public Health. Doi: 10.2105/AJPH.2018.304846.
+
+Kochhar, R., and Moslimani, M. (2023). "Wealth surged in the pandemic, but debt endures for poorer Black and Hispanic families." Pew Research Center. <https://www.pewresearch.org/2023/12/04/wealth-gaps-across-racial-and-ethnic-groups/>
 
 Rafferty, J.P. (2022). *Hurricane Ian*. Britannica. https://www.britannica.com/event/Hurricane-Ian-2022.
 

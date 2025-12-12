@@ -192,7 +192,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#statical-notation" id="toc-statical-notation" class="nav-link" data-scroll-target="#statical-notation">Statical Notation</a></li>
+  <li><a href="#statistical-notation" id="toc-statistical-notation" class="nav-link" data-scroll-target="#statistical-notation">Statistical Notation</a></li>
   <li><a href="#hypothesis" id="toc-hypothesis" class="nav-link" data-scroll-target="#hypothesis">Hypothesis</a></li>
   <li><a href="#directed-acyclic-gragh-dag" id="toc-directed-acyclic-gragh-dag" class="nav-link" data-scroll-target="#directed-acyclic-gragh-dag">Directed Acyclic Gragh (DAG)</a></li>
   <li><a href="#datasets" id="toc-datasets" class="nav-link" data-scroll-target="#datasets">Datasets</a></li>
@@ -202,9 +202,8 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#datatypes" id="toc-datatypes" class="nav-link" data-scroll-target="#datatypes">Datatypes</a></li>
   <li><a href="#coordinate-reference-systems" id="toc-coordinate-reference-systems" class="nav-link" data-scroll-target="#coordinate-reference-systems">Coordinate Reference Systems</a></li>
-  <li><a href="#add-column-flooding-in-hurricanes-path" id="toc-add-column-flooding-in-hurricanes-path" class="nav-link" data-scroll-target="#add-column-flooding-in-hurricanes-path">Add Column: Flooding in Hurricane’s Path?</a></li>
   <li><a href="#add-column-distance-m-from-flooding-point-to-hurricane-line" id="toc-add-column-distance-m-from-flooding-point-to-hurricane-line" class="nav-link" data-scroll-target="#add-column-distance-m-from-flooding-point-to-hurricane-line">Add Column: Distance (m) from Flooding Point to Hurricane Line</a></li>
-  <li><a href="#join-flood-data-and-socioeconomic-data" id="toc-join-flood-data-and-socioeconomic-data" class="nav-link" data-scroll-target="#join-flood-data-and-socioeconomic-data">Join Flood Data and Socioeconomic Data</a></li>
+  <li><a href="#join-flood-and-socioeconomic-data" id="toc-join-flood-and-socioeconomic-data" class="nav-link" data-scroll-target="#join-flood-and-socioeconomic-data">Join Flood and Socioeconomic Data</a></li>
   </ul></li>
   <li><a href="#maps-of-florida" id="toc-maps-of-florida" class="nav-link" data-scroll-target="#maps-of-florida">Maps of Florida</a>
   <ul class="collapse">
@@ -220,13 +219,9 @@ window.Quarto = {
   <li><a href="#create-expand-grid" id="toc-create-expand-grid" class="nav-link" data-scroll-target="#create-expand-grid">Create Expand Grid</a></li>
   <li><a href="#make-predictions" id="toc-make-predictions" class="nav-link" data-scroll-target="#make-predictions">Make Predictions</a></li>
   <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals">Confidence Intervals</a></li>
-  <li><a href="#plots" id="toc-plots" class="nav-link" data-scroll-target="#plots">Plots</a></li>
+  <li><a href="#final-plots" id="toc-final-plots" class="nav-link" data-scroll-target="#final-plots">Final Plots</a></li>
   </ul></li>
-  <li><a href="#evaulating-coefficients-and-plots" id="toc-evaulating-coefficients-and-plots" class="nav-link" data-scroll-target="#evaulating-coefficients-and-plots">Evaulating Coefficients and Plots</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">————————</a>
-  <ul class="collapse">
-  <li><a href="#old-explination" id="toc-old-explination" class="nav-link" data-scroll-target="#old-explination">Old explination</a></li>
-  </ul></li>
+  <li><a href="#evaluating-coefficients-and-plots" id="toc-evaluating-coefficients-and-plots" class="nav-link" data-scroll-target="#evaluating-coefficients-and-plots">Evaluating Coefficients and Plots</a></li>
   <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -287,13 +282,13 @@ window.Quarto = {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In Fall of 2022, Hurricane Ian formed south of the Cayman Islands. Reaching Cuba, the storm grew into a Category 2 and 3 (Rafferty, 2022). In less then a week, Hurricane Ian traveled to Florida (FL), hitting its west coast (near Sarasota) as a Category 4 (Rafferty, 2022). It ended its treacherous path in the Carolinas. Ian was a deadly hurricane, bringing 250 km/hr winds, disastrous rainfall, and inundations of 6-14 feet of storm surge (Walls, 2022; Rafferty, 2022; Bucci et al., 2023). About 160 people died, mostly due to drowning in the insane storm surge (Rafferty, 2022 &amp; Bucci et al., 2023). In Florida, there is an estimated $109.5 billion of damges, and $112.9 billion of total damages in the US (Bucci et al., 2023). Furthermore, about 3.28 million people in FL lost power (Bucci et al., 2023). While Hurricane Ian’s physical destruction was immense, disasters rarely impacts all communities equally. Beyond wind speeds, rainfall totals, and storm surge heights, social and economic factors often shape who is most exposed to flooding and who faces the greatest challenges in recovery.</p>
-<p>Dr.&nbsp;Chakraborty studied the inequitable impacts of Hurricane Harvey flooding in Houston, Texas, and found race, ethnicity, and socioeconomic status played a significant role in the spatial distribution of flooding (Chakraborty, Collins, &amp; Grineski, 2019). Black, Hispanic, and socioeconomically disadvantaged residents faced substantially more flooding compared to their counterparts (Chakraborty, Collins, &amp; Grineski, 2019). While rainfall happens everywhere equally, flooding intensity and duration is not equally distributed as community infrastructure, drainage, and food-control investments vary between neighborhoods (Chakraborty, Collins, &amp; Grineski, 2019).</p>
-<p>Inspired by Dr.&nbsp;Chakraborty study, this project aims to investigate the socio-demographics impacts of flooding for Hurricane Ian in Florida. To accomplish this, we will merge flooding data (inches) and census track measurements for easy comparisons. Then, we will run a generalized linear mixed model (glmm). Initially, glmms runs a zero-inflated logistic regression model, which explores if being in the hurricane’s path causes flooding (a yes or no question). Then the glmm runs a possion regression model to investigate <em>how much</em> impact does the predictors have on flooding exposure.</p>
+<p>In Fall of 2022, Hurricane Ian formed South of the Cayman Islands. As the storm traveled North, reaching Cuba, the storm grew into a Category 3 (Rafferty, 2022). In less then a week, Hurricane Ian hit Florida’s west coast (near Sarasota) as a Category 4 (Rafferty, 2022). Finally, it ended its treacherous path in the Carolinas. Ian was a deadly hurricane, bringing 250 km/hr winds, disastrous rainfall, and inundations of 6-14 feet of storm surge (Walls, 2022; Rafferty, 2022; Bucci et al., 2023). About 160 people died, mostly due to drowning in the catastrophic storm surge (Rafferty, 2022 &amp; Bucci et al., 2023). In Florida, there was an estimated $109.5 billion of damages, and $112.9 billion of total damages in the US (Bucci et al., 2023). Furthermore, about 3.28 million people in FL lost power (Bucci et al., 2023). While Hurricane Ian’s physical destruction was immense, disasters rarely impact all communities equally. Beyond wind speeds, rainfall, and storm surge, social and economic factors often shape who is most exposed to flooding and who faces the greatest challenges in recovery.</p>
+<p>Dr.&nbsp;Chakraborty studied the inequitable impacts of Hurricane Harvey’s flooding in Houston, Texas, and found race, ethnicity, and socioeconomic status played a significant role in the distribution of flooding (Chakraborty, Collins, &amp; Grineski, 2019). Black, Hispanic, and socioeconomically disadvantaged residents faced substantially more flooding compared to their counterparts (Chakraborty, Collins, &amp; Grineski, 2019). While rainfall happens everywhere equally, flooding intensity and duration is not equally distributed as community infrastructure, drainage, and food-control investments vary between neighborhoods (Chakraborty, Collins, &amp; Grineski, 2019).</p>
+<p>Inspired by Dr.&nbsp;Chakraborty’s study, this project aims to investigate the socio-demographics impacts of flooding from Hurricane Ian in Florida. To accomplish this, we will merge flooding data (inches) and census track measurements for easy comparisons. Then, we will run a Tweedie model which is a specialized generalized linear model (GLM) (Ford, 2025).</p>
 </section>
-<section id="statical-notation" class="level2">
-<h2 class="anchored" data-anchor-id="statical-notation">Statical Notation</h2>
-<p>Statistical Notation for a generalized linear mixed modeling is</p>
+<section id="statistical-notation" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-notation">Statistical Notation</h2>
+<p>Statistical Notation for a Tweedie model is</p>
 <p><span class="math display">\[
 \begin{align}
 \text{Flooding} &amp;\sim \text{Tweedie}(\mu, \phi, p) \\
@@ -308,7 +303,7 @@ window.Quarto = {
 </section>
 <section id="hypothesis" class="level2">
 <h2 class="anchored" data-anchor-id="hypothesis">Hypothesis</h2>
-<p>Areas with higher concentrations of low-income and minority populations are more susceptible to severe flooding when located close to the hurricane path.</p>
+<p>Areas with higher concentrations of low-income and minority populations are more susceptible to severe flooding when located in close proximity to the Hurricane’s path.</p>
 <p><strong>Null Hypothesis:</strong> There is no association between flooding intensity and the predictors - low-income percentages, minority populations, and the distance from the hurricane.</p>
 <p><span class="math display">\[
 \begin{align}
@@ -327,8 +322,9 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>While precipitation is based on natural occurrences and happen everywhere with no bias, flooding intensity can be reliant on other human built mechanisms. Places that lack green spaces and open soil, fill their neighborhoods with impervious surfaces, increase there likelihood to flood because the water cannot soak into the ground. Roe, Aspinall, &amp; Ward Thompson find that poorer, minority communities lack open green spaces (2016), which might disproportionately cause lower income, minority communities to flood more. Flood mitigation infrastructure (such as levees, storm drains, retention ponds, and seawalls) are important tools that influence flood severity. Poor communities tend to have limited financial resources and lack political leverage to advocate for flood mitigation projects in their communities which could result in more intense flooding. Finally, minority communities can face structural inequities and redlining that cause infrastructure improvement to go ‘unnoticed,’ increasing their likelihood to flood. Thus, a population’s percentage of low income and people of color could impact the flooding intensity.</p>
-<p>The final predictor in this model indicates whether a location lies within the hurricane’s path. Closer to the center of the hurricane, conditions intensify, causing stronger rainfall and wind-force. Hence, areas that intersect along the hurricane’s path will (most likely) experience more flooding.</p>
+<p>While precipitation is based on natural occurrences and happen everywhere with no bias, flooding intensity can be reliant on other human built mechanisms. Areas with limited green spaces, filled with impervious surfaces, are more likely to flood due to waters inability to percolate. Roe, Aspinall, &amp; Ward Thompson find that poorer, minority communities lack open green spaces (2016), which might disproportionately cause them to flood more. Flood mitigation infrastructure (such as levees, storm drains, retention ponds, and seawalls) are important tools that influence flood severity. Poor communities tend to have limited financial resources and lack political leverage to advocate for flood mitigation projects in their communities which could result in more intense flooding. Finally, minority communities can face structural inequities and redlining that cause infrastructure improvement to go ‘unnoticed,’ increasing their likelihood to flood. Thus, a population’s percentage of low-income and People of Color could impact the flooding intensity.</p>
+<p>Kochhar and Moslimani found large wealth gaps between racial and ethnic groups (2023). Median income for minority households tend to be less due to historical segregation and immigration status (Kochhar &amp; Moslimani, 2023). Therefore, the DAG includes the interaction of People of Color percentage and low-income, which could impact the communities flood exposure.</p>
+<p>The final predictor in this model is the distance (km) to the Hurricane’s path. Closer to the center of the hurricane, conditions intensify, causing stronger rainfall and wind-force. Hence, areas closer the hurricane will (most likely) experience more flooding.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -343,14 +339,14 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="datasets">Datasets</h2>
 <ol type="1">
 <li><p>Hurricane Ian flooding data from …</p></li>
-<li><p>Hurricane Ian path data is vector line geometry acquired from <a href="https://www.arcgis.com/home/webmap/viewer.html?layers=20d971f4472e4037af0f260f6454e7ab">ArcGIS online</a>.</p></li>
+<li><p>Hurricane Ian’s path data is vector line geometry acquired from <a href="https://www.arcgis.com/home/webmap/viewer.html?layers=20d971f4472e4037af0f260f6454e7ab">ArcGIS online</a>.</p></li>
 <li><p>Florida’s census track contains various attributes of each census track and is from the <a href="https://www.census.gov/programs-surveys/acs/guidance/estimates.html">U.S. Census Bureau’s American Community Survey Data</a>.</p></li>
 <li><p>Geometries of Florida’s counties accessed from <a href="https://catalog.data.gov/dataset/tiger-line-shapefile-2023-nation-u-s-county-and-equivalent-entities/resource/b1d924fa-6554-4653-b217-ef95785654cb">U.S. Census Bureau’s Data Catalog</a>.</p></li>
 </ol>
 </section>
 <section id="initial-steps" class="level2">
 <h2 class="anchored" data-anchor-id="initial-steps">Initial Steps</h2>
-<p>First, download all necessary libraries!</p>
+<p>First, load all necessary libraries.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -368,7 +364,7 @@ window.Quarto = {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(statmod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Second, download and load in all datasets. Use <code>read_sf</code> to load in geospatial vector data (such as gdp and shp files), and use <code>read_csv</code> for csv files. After loading in the data, piping in filters and selections for specific attributes and columns as well as cleaning up column names with <code>clean_names()</code> will make your code more efficient.</p>
+<p>Second, load in all datasets. Use <code>read_sf</code> to load in geospatial vector data (such as gdp and shp files), and use <code>read_csv</code> for csv files. Piping in filters and selections for specific attributes and columns as well as cleaning up column names with <code>clean_names()</code> will make your code more efficient.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -414,26 +410,26 @@ window.Quarto = {
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ian_buffer <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(hurr_union, <span class="at">dist =</span> units<span class="sc">::</span><span class="fu">set_units</span>(<span class="dv">120</span>, <span class="st">"miles"</span>)) <span class="co"># Buffer </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Map the Hurricane’s path with the buffer</p>
+<p>Map the Hurricane’s path with the buffer.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hurricane Ian Buffer </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map of Hurricane Ian's Buffer </span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(ian_buffer) <span class="sc">+</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">col =</span> <span class="cn">NA</span>,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">lwd =</span> <span class="dv">0</span>,</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">"red"</span>,</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill_alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(hurr_ian) <span class="sc">+</span> </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(hurr_ian) <span class="sc">+</span> <span class="co"># Ian's path as line </span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">lwd =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(fl_sociodem, <span class="at">is.main =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(fl_sociodem, <span class="at">is.main =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co"># Extent of fl_sociodem </span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Hurricane Ian's Path Through Florida"</span>) <span class="sc">+</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"OpenTopoMap"</span>) <span class="sc">+</span> </span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">text.fontfamily =</span> <span class="st">"serif"</span>, <span class="at">text.fontface =</span> <span class="st">"plain"</span>) <span class="sc">+</span> </span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(<span class="at">type =</span> <span class="st">'lines'</span>, </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(<span class="at">type =</span> <span class="st">'lines'</span>, <span class="co"># Legend for path line </span></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">labels =</span> <span class="st">"Path"</span>, </span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">'Hurricane Ian'</span>) <span class="sc">+</span> </span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_add_legend</span>(<span class="at">type =</span> <span class="st">"polygons"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_add_legend</span>(<span class="at">type =</span> <span class="st">"polygons"</span>, <span class="co"># Legend for buffer zone </span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                <span class="at">labels =</span> <span class="st">"120m Buffer Zone"</span>,</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">fill =</span> <span class="st">"red"</span>,</span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                <span class="at">alpha =</span> <span class="fl">0.4</span>)  <span class="sc">+</span> </span>
@@ -454,14 +450,14 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="data-wrangling">Data Wrangling</h2>
 <section id="datatypes" class="level3">
 <h3 class="anchored" data-anchor-id="datatypes">Datatypes</h3>
-<p>While the flooding data has a longitude and latitude columns, it is not read as a geometry. Therefore, we need to use <code>st_as_sf</code> to change the datatype to simple feature (sf).</p>
+<p>While the flooding data has longitude and latitude columns, it is not read as a geometry. Therefore, we need to use <code>st_as_sf</code> to change the datatype to simple feature (sf).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>flooding_FL_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(flooding_FL, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs =</span> <span class="st">'EPSG:4326'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="coordinate-reference-systems" class="level3">
 <h3 class="anchored" data-anchor-id="coordinate-reference-systems">Coordinate Reference Systems</h3>
-<p>It is <em>always</em> important to know the geospatial datas’ <strong>coordinate reference systems</strong> (CRS). The CRS defines how the geospatial data is located and plotted. There are 2 CRS types: geographic (how the data is plotted on the 3D globe) and projected (how the data is plotted on a 2D map). It is important to use the correct CRS for your data and intended goal. Additionally, when merging or plotting geospatial data together, the datasets must be in the same CRS. Matching CRSs ensures that all spatial data layers align correctly, calculations are meaningful, and analytical results are trustworthy.</p>
+<p>It is <em>always</em> important to know the geospatial data’s <strong>coordinate reference systems</strong> (CRS). The CRS defines how the geospatial data is located and plotted. There are 2 CRS types: geographic (how the data is plotted on the 3D globe) and projected (how the data is plotted on a 2D map). It is important to use the correct CRS for your data and intended goal. Additionally, when merging or plotting geospatial data, the CRS must be the same CRS. Matching CRSs ensures that all spatial data layers align correctly, calculations are meaningful, and analytic results are trustworthy.</p>
 <p>Therefore, we need to check and change CRS using <code>st_transforms</code> to ensure all CRS match.</p>
 <div class="cell">
 <details class="code-fold">
@@ -491,91 +487,69 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="add-column-flooding-in-hurricanes-path" class="level3">
-<h3 class="anchored" data-anchor-id="add-column-flooding-in-hurricanes-path">Add Column: Flooding in Hurricane’s Path?</h3>
-<p><strong>GOAL:</strong> Create a new column where “1” indicated the flooding is within the Hurricane’s path, and “0” indicates if flooding is outside of the Hurricane’s path.</p>
-<p>To find if the flood data is within the Hurricane’s path (the buffer), we used <code>st_intersects</code> which returns ‘0’ (if x and y do not intersect) and ‘1’ (if x and y intersects).</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Intersections of flooding points and hurricane path </span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>intersect <span class="ot">&lt;-</span> <span class="fu">st_intersects</span>(flooding_FL_sf, ian_buffer) <span class="co">#sparse = FALSE) # See which rows did and didn't intersect </span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>len <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">lengths</span>(intersect) <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="co"># Returns TRUE (where 1) and FALSE (where 0)</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine dataframes </span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>flooding_FL_sf <span class="ot">&lt;-</span> <span class="fu">cbind</span>(flooding_FL_sf, len) <span class="sc">%&gt;%</span>  </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">'hur_path'</span> <span class="ot">=</span> <span class="st">`</span><span class="at">lengths.intersect....0</span><span class="st">`</span> ) </span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Change to 1 and 0s </span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>flooding_FL_sf<span class="sc">$</span>hur_path <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(flooding_FL_sf<span class="sc">$</span>hur_path)  </span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unnecessary objects  </span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">'intersect'</span>, <span class="st">'len'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
 <section id="add-column-distance-m-from-flooding-point-to-hurricane-line" class="level3">
 <h3 class="anchored" data-anchor-id="add-column-distance-m-from-flooding-point-to-hurricane-line">Add Column: Distance (m) from Flooding Point to Hurricane Line</h3>
-<p>Calculate the distance (km) from each flooding point to the hurricane’s path using <code>dist2Line</code>.</p>
+<p><strong>GOAL:</strong> Calculate the distance (km) from each flooding point to the hurricane’s path using <code>dist2Line</code>, and put the distance calculation in a new column called <code>dist_hur</code>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For 'dist2Line' CRS need to be in EPSG:4326 </span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>flooding_FL_espg <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(flooding_FL_sf, <span class="dv">4326</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>hurr_union_espg <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(hurr_union, <span class="dv">4326</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Make Points and line coordinates </span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>point_coord <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(flooding_FL_espg)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>line_coord <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(hurr_union_espg) [, <span class="fu">c</span>(<span class="st">"X"</span>, <span class="st">"Y"</span>)]</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Find distance from flooding point to hurricane path </span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>dist_hur <span class="ot">&lt;-</span> <span class="fu">dist2Line</span>(point_coord, line_coord) </span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Add distance (m) measurements to dataframe </span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>flooding_FL_sf<span class="sc">$</span>dist_hur <span class="ot">&lt;-</span> dist_hur[, <span class="st">"distance"</span>]</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>flooding_FL_sf<span class="sc">$</span>dist_hur <span class="ot">&lt;-</span> flooding_FL_sf<span class="sc">$</span>dist_hur <span class="sc">/</span> <span class="dv">1000</span> <span class="co"># Covert to km </span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unnecessary objects </span></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">"flooding_FL_espg"</span>, <span class="st">"hurr_union_espg"</span>, <span class="st">"point_coord"</span>, <span class="st">"line_coord"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For 'dist2Line' CRS need to be in EPSG:4326 </span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>flooding_FL_espg <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(flooding_FL_sf, <span class="dv">4326</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>hurr_union_espg <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(hurr_union, <span class="dv">4326</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Make Points and line coordinates </span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>point_coord <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(flooding_FL_espg)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>line_coord <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(hurr_union_espg) [, <span class="fu">c</span>(<span class="st">"X"</span>, <span class="st">"Y"</span>)]</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Find distance from flooding point to hurricane path </span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>dist_hur <span class="ot">&lt;-</span> <span class="fu">dist2Line</span>(point_coord, line_coord) </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Add distance (m) measurements into a new column </span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>flooding_FL_sf<span class="sc">$</span>dist_hur <span class="ot">&lt;-</span> dist_hur[, <span class="st">"distance"</span>]</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>flooding_FL_sf<span class="sc">$</span>dist_hur <span class="ot">&lt;-</span> flooding_FL_sf<span class="sc">$</span>dist_hur <span class="sc">/</span> <span class="dv">1000</span> <span class="co"># Covert to km </span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unnecessary objects </span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">"flooding_FL_espg"</span>, <span class="st">"hurr_union_espg"</span>, <span class="st">"point_coord"</span>, <span class="st">"line_coord"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(flooding_FL_sf) <span class="sc">+</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="at">fill =</span> <span class="st">'dist_hur'</span>,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill_alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill.scale =</span> <span class="fu">tm_scale</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">'red'</span>,<span class="st">'orange'</span>,<span class="st">'gold'</span>,<span class="st">"grey35"</span>,<span class="st">'grey50'</span>,<span class="st">"lightgrey"</span>)),</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Distance from Hurricane</span><span class="sc">\n</span><span class="st">Ian's Path (km)"</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span> </span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(hurr_ian) <span class="sc">+</span> </span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">lwd =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(<span class="at">labels =</span> <span class="st">"Path"</span>, </span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">type=</span> <span class="st">"lines"</span>, </span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Hurricane Ian"</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                )  <span class="sc">+</span> </span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">text.fontfamily =</span> <span class="st">"serif"</span>, <span class="at">text.fontface =</span> <span class="st">"plain"</span>) <span class="sc">+</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span> </span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="st">"Figure 2"</span>, </span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.OceanBasemap"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map pf the flooding data's distance from the Hurricane </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(flooding_FL_sf) <span class="sc">+</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="at">fill =</span> <span class="st">'dist_hur'</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill_alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill.scale =</span> <span class="fu">tm_scale</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">'red'</span>,<span class="st">'orange'</span>,<span class="st">'gold'</span>,<span class="st">"grey35"</span>,<span class="st">'grey50'</span>,<span class="st">"lightgrey"</span>)),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Distance from Hurricane</span><span class="sc">\n</span><span class="st">Ian's Path (km)"</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span> </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(hurr_ian) <span class="sc">+</span> <span class="co"># Ian's path as a line </span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">lwd =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(<span class="at">labels =</span> <span class="st">"Path"</span>, <span class="co">#. Add legend for path </span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">type=</span> <span class="st">"lines"</span>, </span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Hurricane Ian"</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>                )  <span class="sc">+</span> </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">text.fontfamily =</span> <span class="st">"serif"</span>, <span class="at">text.fontface =</span> <span class="st">"plain"</span>) <span class="sc">+</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span> </span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="st">"Figure 2"</span>, </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.OceanBasemap"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="join-flood-data-and-socioeconomic-data" class="level3">
-<h3 class="anchored" data-anchor-id="join-flood-data-and-socioeconomic-data">Join Flood Data and Socioeconomic Data</h3>
-<p>Using <code>st_join</code> to merge the flooding and socio-demographic data.</p>
+<section id="join-flood-and-socioeconomic-data" class="level3">
+<h3 class="anchored" data-anchor-id="join-flood-and-socioeconomic-data">Join Flood and Socioeconomic Data</h3>
+<p>Use <code>st_join</code> to merge the flooding and socio-demographic data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>join_df <span class="ot">&lt;-</span> <span class="fu">st_join</span>(flooding_FL_sf, fl_sociodem, <span class="at">join =</span> st_within)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>join_df <span class="ot">&lt;-</span> <span class="fu">st_join</span>(flooding_FL_sf, fl_sociodem, <span class="at">join =</span> st_within)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
@@ -587,32 +561,33 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(flooding_FL_sf) <span class="sc">+</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="at">fill =</span> <span class="st">'totals_inches'</span>, </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill_alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill.scale =</span> <span class="fu">tm_scale</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">30</span>), </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                                <span class="at">values =</span> <span class="fu">c</span>(<span class="st">'grey'</span>, <span class="st">"grey35"</span>, <span class="st">'gold'</span>, <span class="st">'orange'</span>, <span class="st">'red'</span>)),</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Total Flooding</span><span class="sc">\n</span><span class="st">(inches)"</span>), </span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>          <span class="co">#border.col = 'black',</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Flooding in Florida from Hurricane Ian"</span>) <span class="sc">+</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(hurr_ian) <span class="sc">+</span> </span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">lwd =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.OceanBasemap"</span>) <span class="sc">+</span> </span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span> </span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(<span class="at">labels =</span> <span class="st">"Path"</span>, </span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">type=</span> <span class="st">"lines"</span>, </span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Hurricane Ian"</span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>                )  <span class="sc">+</span> </span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">text.fontfamily =</span> <span class="st">"serif"</span>, <span class="at">text.fontface =</span> <span class="st">"plain"</span>) <span class="sc">+</span></span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_credits</span>(<span class="st">"Figure 2"</span>, </span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map of flooding amounts </span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(flooding_FL_sf) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="at">fill =</span> <span class="st">'totals_inches'</span>, </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill_alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill.scale =</span> <span class="fu">tm_scale</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">30</span>), </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                                <span class="at">values =</span> <span class="fu">c</span>(<span class="st">'grey'</span>, <span class="st">"grey35"</span>, <span class="st">'gold'</span>, <span class="st">'orange'</span>, <span class="st">'red'</span>)),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Total Flooding</span><span class="sc">\n</span><span class="st">(inches)"</span>), </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>          <span class="co">#border.col = 'black',</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Flooding in Florida from Hurricane Ian"</span>) <span class="sc">+</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(hurr_ian) <span class="sc">+</span> <span class="co"># Ian's path as a line </span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">lwd =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.OceanBasemap"</span>) <span class="sc">+</span> </span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span> </span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(<span class="at">labels =</span> <span class="st">"Path"</span>, </span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>                <span class="at">type=</span> <span class="st">"lines"</span>, </span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Hurricane Ian"</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>                )  <span class="sc">+</span> </span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">text.fontfamily =</span> <span class="st">"serif"</span>, <span class="at">text.fontface =</span> <span class="st">"plain"</span>) <span class="sc">+</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_credits</span>(<span class="st">"Figure 3"</span>, </span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">c</span>(<span class="st">'left'</span>, <span class="st">'bottom'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -623,81 +598,77 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>my_palette1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'#DEEBDFFF'</span>, <span class="st">'#A9CCACFF'</span>, <span class="st">'#399043FF'</span>, <span class="st">'#00740EFF'</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#00740EFF #399043FF #72AC79FF #ABC8AEFF</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>my_palette2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'#E4E4E4'</span>,<span class="st">'#DDC5B6'</span>, <span class="st">'#D5A78B'</span>, <span class="st">'#CF895E'</span>) <span class="co">#CF895EFF')</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#E4E4E4FF #DDC5B7FF #D6A78BFF #CF895EFF</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>   fl_sociodem, </span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>   <span class="at">bbox =</span> sf<span class="sc">::</span><span class="fu">st_bbox</span>(<span class="fu">c</span>(</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">xmin =</span> <span class="sc">-</span><span class="fl">82.86</span>, <span class="at">xmax =</span> <span class="sc">-</span><span class="fl">79.71</span>,</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> <span class="fl">26.54</span>,  <span class="at">ymax =</span> <span class="fl">28.59</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  )), </span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">crs =</span> <span class="fu">st_crs</span>(fl_sociodem) ) <span class="sc">+</span> </span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">'p_peopcolorpct'</span>, </span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.scale =</span> <span class="fu">tm_scale</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">100</span>), </span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">values =</span> my_palette1),</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Low Income (%)"</span>),</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">lwd =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Minority Populations Exposed to the Hurricane"</span>) <span class="sc">+</span></span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(hurr_ian) <span class="sc">+</span> </span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">lwd =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(ian_buffer) <span class="sc">+</span></span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># tm_polygons(col = NA,</span></span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>  <span class="co">#             lwd = 0,</span></span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>  <span class="co">#             fill = "red",</span></span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>  <span class="co">#             fill_alpha = 0.2) +</span></span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a> <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldShadedRelief"</span>) <span class="sc">+</span> </span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'right'</span>, <span class="st">'top'</span>)) <span class="sc">+</span></span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'right'</span>, <span class="st">'bottom'</span>))<span class="sc">+</span></span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">text.fontfamily =</span> <span class="st">"serif"</span>, <span class="at">text.fontface =</span> <span class="st">"plain"</span>) <span class="sc">+</span> </span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(<span class="at">labels =</span> <span class="st">"Path"</span>, </span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>                <span class="at">type=</span> <span class="st">"lines"</span>, </span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Hurricane Ian"</span></span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>                ) <span class="sc">+</span> </span>
-<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_credits</span>(<span class="st">"Figure 3"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Color palattes </span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>my_palette1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'#DEEBDFFF'</span>, <span class="st">'#A9CCACFF'</span>, <span class="st">'#399043FF'</span>, <span class="st">'#00740EFF'</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>my_palette2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'#E4E4E4'</span>,<span class="st">'#DDC5B6'</span>, <span class="st">'#D5A78B'</span>, <span class="st">'#CF895E'</span>) <span class="co">#CF895EFF')</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Map of FL's People of Color % </span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>   fl_sociodem, </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>   <span class="at">bbox =</span> sf<span class="sc">::</span><span class="fu">st_bbox</span>(<span class="fu">c</span>(</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">xmin =</span> <span class="sc">-</span><span class="fl">82.86</span>, <span class="at">xmax =</span> <span class="sc">-</span><span class="fl">79.71</span>,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> <span class="fl">26.54</span>,  <span class="at">ymax =</span> <span class="fl">28.59</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  )), </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">crs =</span> <span class="fu">st_crs</span>(fl_sociodem) ) <span class="sc">+</span> </span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">'p_peopcolorpct'</span>, </span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.scale =</span> <span class="fu">tm_scale</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">100</span>), </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">values =</span> my_palette1),</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Low-Income (%)"</span>),</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">lwd =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Minority Populations Exposed to the Hurricane"</span>) <span class="sc">+</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(hurr_ian) <span class="sc">+</span> </span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">lwd =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(ian_buffer) <span class="sc">+</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a> <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldShadedRelief"</span>) <span class="sc">+</span> </span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'right'</span>, <span class="st">'top'</span>)) <span class="sc">+</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'right'</span>, <span class="st">'bottom'</span>))<span class="sc">+</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">text.fontfamily =</span> <span class="st">"serif"</span>, <span class="at">text.fontface =</span> <span class="st">"plain"</span>) <span class="sc">+</span> </span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(<span class="at">labels =</span> <span class="st">"Path"</span>, </span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>                <span class="at">type=</span> <span class="st">"lines"</span>, </span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Hurricane Ian"</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>                ) <span class="sc">+</span> </span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_credits</span>(<span class="st">"Figure 4"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>   fl_sociodem, </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">bbox =</span> sf<span class="sc">::</span><span class="fu">st_bbox</span>(<span class="fu">c</span>(</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">xmin =</span> <span class="sc">-</span><span class="fl">82.86</span>, <span class="at">xmax =</span> <span class="sc">-</span><span class="fl">79.71</span>,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> <span class="fl">26.54</span>,  <span class="at">ymax =</span> <span class="fl">28.59</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  )), </span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">crs =</span> <span class="fu">st_crs</span>(fl_sociodem) ) <span class="sc">+</span> </span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">'p_lowincpct'</span>, </span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.scale =</span> <span class="fu">tm_scale</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">100</span>), </span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">values =</span> my_palette2),</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Low Income (%)"</span>),</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">lwd =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Low-Income Populations Exposed to the Hurricane"</span>) <span class="sc">+</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(hurr_ian) <span class="sc">+</span> </span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">lwd =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a> <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldShadedRelief"</span>) <span class="sc">+</span> </span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'right'</span>, <span class="st">'top'</span>)) <span class="sc">+</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'right'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">text.fontfamily =</span> <span class="st">"serif"</span>, <span class="at">text.fontface =</span> <span class="st">"plain"</span>) <span class="sc">+</span> </span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(<span class="at">labels =</span> <span class="st">"Path"</span>, </span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>                <span class="at">type=</span> <span class="st">"lines"</span>, </span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Hurricane Ian"</span></span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>                ) <span class="sc">+</span> </span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_credits</span>(<span class="st">"Figure 4"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map of FL low income % </span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>   fl_sociodem, </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">bbox =</span> sf<span class="sc">::</span><span class="fu">st_bbox</span>(<span class="fu">c</span>(</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">xmin =</span> <span class="sc">-</span><span class="fl">82.86</span>, <span class="at">xmax =</span> <span class="sc">-</span><span class="fl">79.71</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> <span class="fl">26.54</span>,  <span class="at">ymax =</span> <span class="fl">28.59</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  )), </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">crs =</span> <span class="fu">st_crs</span>(fl_sociodem) ) <span class="sc">+</span> </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">'p_lowincpct'</span>, </span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.scale =</span> <span class="fu">tm_scale</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">100</span>), </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">values =</span> my_palette2),</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Low-Income (%)"</span>),</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">lwd =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Low-Income Populations Exposed to the Hurricane"</span>) <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(hurr_ian) <span class="sc">+</span> </span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">lwd =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a> <span class="fu">tm_basemap</span>(<span class="st">"Esri.WorldShadedRelief"</span>) <span class="sc">+</span> </span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'right'</span>, <span class="st">'top'</span>)) <span class="sc">+</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">'right'</span>, <span class="st">'bottom'</span>)) <span class="sc">+</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">text.fontfamily =</span> <span class="st">"serif"</span>, <span class="at">text.fontface =</span> <span class="st">"plain"</span>) <span class="sc">+</span> </span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(<span class="at">labels =</span> <span class="st">"Path"</span>, </span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>                <span class="at">type=</span> <span class="st">"lines"</span>, </span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Hurricane Ian"</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>                ) <span class="sc">+</span> </span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_credits</span>(<span class="st">"Figure 5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -710,73 +681,76 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="model-investigation">Model Investigation</h3>
 <p>First, it is important to examine the distributional properties of our data and assess whether the normality assumption is reasonable. To do this, we will fit a simple linear regression model, visualize the residuals, and generate a histogram of the response variable (flooding).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>invest_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(totals_inches <span class="sc">~</span> p_peopcolorpct <span class="sc">*</span> p_lowincpct <span class="sc">+</span> dist_hur, </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> join_df, </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear Model </span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>invest_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(totals_inches <span class="sc">~</span> p_peopcolorpct <span class="sc">*</span> p_lowincpct <span class="sc">+</span> dist_hur, </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> join_df, </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(invest_model, <span class="at">which =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at resiudals </span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(invest_model, <span class="at">which =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(invest_model, <span class="at">which =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(invest_model, <span class="at">which =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-17-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(join_df, </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(totals_inches)) <span class="sc">+</span> </span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span> </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Flooding (inches)"</span>, </span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>, </span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Histogram of Flooding (inches)"</span>, </span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Figure 5"</span>) <span class="sc">+</span> </span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a histogram </span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(join_df, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(totals_inches)) <span class="sc">+</span> </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span> </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Flooding (inches)"</span>, </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>, </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Histogram of Flooding (inches)"</span>) <span class="sc">+</span> </span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-18-3.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-17-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Number of flood measurements less than 0:"</span>, <span class="fu">sum</span>(join_df<span class="sc">$</span>totals_inches <span class="sc">&lt;</span> <span class="dv">0</span>))) <span class="co"># No negatives </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Investing zero-inflated-ness of data </span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Number of flood measurements less than 0:"</span>, <span class="fu">sum</span>(join_df<span class="sc">$</span>totals_inches <span class="sc">&lt;</span> <span class="dv">0</span>))) <span class="co"># No negatives </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Number of flood measurements less than 0: 0"</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Number of flood measurements that = 0:"</span>, <span class="fu">sum</span>(join_df<span class="sc">$</span>totals_inches <span class="sc">==</span> <span class="dv">0</span>))) <span class="co"># zeros </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Number of flood measurements that = 0:"</span>, <span class="fu">sum</span>(join_df<span class="sc">$</span>totals_inches <span class="sc">==</span> <span class="dv">0</span>))) <span class="co"># zeros </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Number of flood measurements that = 0: 138"</code></pre>
 </div>
 </div>
-<p>These figures show the data has strong positive (right) skew, violating the normality assumption of linear regression. Because there was no rainfall in some parts of Florida, there are 138 recorded zeros, making up 9% of the data. Therefore, the data is zero-inflated, skewed, and continuous positive.</p>
-<p>The zero-inflated nature of this dataset, pulls Gamma regression off the table. The more appropriate model is a Tweedie model. <strong>Tweedie model</strong> is the standard distributions for rainfall modeling as it preserves the zeroes. The model is a special Generalized Linear Model (GLM) that acts similar to a continuous gamma distribution but can also handle the positive mass at zero.</p>
+<p>These figures show the data has strong positive (right) skew, violating the normality assumption of linear regression. Because there was no rainfall in some parts of Florida, there are 138 record zeros, making up 9% of the data. Therefore, the data is zero-inflated, skewed, and continuous positive.</p>
+<p>The zero-inflated nature of this dataset, pulls Gamma regression off the table. The more appropriate model is a Tweedie model. <strong>Tweedie model</strong> is the standard distributions for rainfall modeling as it preserves the zeroes (Ford, 2025). The model is a special Generalized Linear Model (GLM) that acts similar to a continuous gamma distribution but can also handle the positive mass at zero (Ford, 2025).</p>
 <p><strong>The Tweedie model has 3 main parameters:</strong></p>
 <ol type="1">
-<li><p><strong>mu:</strong> mean of the response</p></li>
-<li><p><strong>phi:</strong> dispersion - Controls the variance (higher the phi, the more variability around mu )</p></li>
-<li><p><strong>p:</strong> power parameter - Determines the Tweedie distribution type</p></li>
+<li><p><strong>mu:</strong> Mean of the response</p></li>
+<li><p><strong>phi:</strong> Dispersion - controls the variance (higher the phi, the more variability around mu)</p></li>
+<li><p><strong>p:</strong> Power parameter - determines the Tweedie distribution type</p></li>
 </ol>
 <table class="caption-top table">
 <tbody>
@@ -812,108 +786,157 @@ window.Quarto = {
 <p><strong>Simulating data steps:</strong></p>
 <ol type="1">
 <li><p>Define sample size, parameters (mu, phi, p, and betas), and predictors’ range</p></li>
-<li><p>Set a the linear predictor and its inverse</p></li>
+<li><p>Set the linear predictor and its inverse</p></li>
 <li><p>Generate a response using <code>rtweedie()</code></p></li>
 <li><p>Create a fit model</p></li>
+<li><p>Report model summary results</p></li>
 </ol>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># Set seed </span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define sample size </span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100000</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the Parameters  </span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">10</span> </span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>phi <span class="ot">&lt;-</span> <span class="fl">0.5</span> </span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">1.5</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>beta_0 <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Intercept </span></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>beta_1 <span class="ot">&lt;-</span> <span class="fl">1.2</span> <span class="co"># Effect of low income percentages</span></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>beta_2 <span class="ot">&lt;-</span> <span class="fl">1.8</span> <span class="co"># Effect of People of Color percentages</span></span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>beta_3 <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Interaction of low income and people of color percentages </span></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>beta_4 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">2.3</span> <span class="co"># Effect of distance of Hurricane's path </span></span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Define predictors ranges </span></span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>p_lowincomepct <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>p_PofC <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>dist_hur <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Set Linear predictor </span></span>
-<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>log_mu <span class="ot">=</span> beta_0 <span class="sc">+</span> beta_1<span class="sc">*</span>p_lowincomepct  <span class="sc">+</span> beta_2<span class="sc">*</span>p_PofC <span class="sc">+</span> beta_3<span class="sc">*</span>(p_lowincomepct<span class="sc">*</span>p_PofC) <span class="sc">+</span> beta_4<span class="sc">*</span>dist_hur</span>
-<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Inverse of linear predictor </span></span>
-<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">=</span> <span class="fu">exp</span>(log_mu)</span>
-<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate response with rtweedie </span></span>
-<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>flooding <span class="ot">&lt;-</span> <span class="fu">rtweedie</span>(<span class="at">n =</span> n, <span class="at">mu =</span> mu, <span class="at">phi =</span> <span class="dv">1</span>, <span class="at">power =</span> <span class="fl">1.5</span>)</span>
-<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dataframe with simulated data </span></span>
-<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a>sim_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(p_lowincomepct, p_PofC, dist_hur, flooding)</span>
-<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-34"><a href="#cb30-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model </span></span>
-<span id="cb30-35"><a href="#cb30-35" aria-hidden="true" tabindex="-1"></a>sim_model <span class="ot">&lt;-</span> <span class="fu">gam</span>(flooding <span class="sc">~</span> p_lowincomepct <span class="sc">*</span> p_PofC <span class="sc">+</span> dist_hur, </span>
-<span id="cb30-36"><a href="#cb30-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> sim_df,</span>
-<span id="cb30-37"><a href="#cb30-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">family =</span> <span class="fu">tw</span>(<span class="at">link =</span> <span class="st">"log"</span>))</span>
-<span id="cb30-38"><a href="#cb30-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-39"><a href="#cb30-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize model </span></span>
-<span id="cb30-40"><a href="#cb30-40" aria-hidden="true" tabindex="-1"></a>sim_model_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(sim_model)</span>
-<span id="cb30-41"><a href="#cb30-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-42"><a href="#cb30-42" aria-hidden="true" tabindex="-1"></a>sim_model_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># Set seed </span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define sample size </span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100000</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the Parameters  </span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">10</span> </span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>phi <span class="ot">&lt;-</span> <span class="fl">0.5</span> </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">1.5</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>beta_0 <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Intercept </span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>beta_1 <span class="ot">&lt;-</span> <span class="fl">1.2</span> <span class="co"># Effect of low income percentages</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>beta_2 <span class="ot">&lt;-</span> <span class="fl">1.8</span> <span class="co"># Effect of People of Color percentages</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>beta_3 <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="co"># Interaction of low income and people of color percentages </span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>beta_4 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">2.3</span> <span class="co"># Effect of distance of Hurricane's path </span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>given_parameters <span class="ot">&lt;-</span> <span class="fu">c</span>(beta_0, beta_1, beta_2, beta_4, beta_3)</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Define predictors ranges </span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>p_lowincomepct <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>p_PofC <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>dist_hur <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Set Linear predictor </span></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>log_mu <span class="ot">=</span> beta_0 <span class="sc">+</span> beta_1<span class="sc">*</span>p_lowincomepct  <span class="sc">+</span> beta_2<span class="sc">*</span>p_PofC <span class="sc">+</span> beta_3<span class="sc">*</span>(p_lowincomepct<span class="sc">*</span>p_PofC) <span class="sc">+</span> beta_4<span class="sc">*</span>dist_hur</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Inverse of linear predictor </span></span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">=</span> <span class="fu">exp</span>(log_mu)</span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate response with rtweedie </span></span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>flooding <span class="ot">&lt;-</span> <span class="fu">rtweedie</span>(<span class="at">n =</span> n, <span class="at">mu =</span> mu, <span class="at">phi =</span> <span class="dv">1</span>, <span class="at">power =</span> <span class="fl">1.5</span>)</span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dataframe with simulated data </span></span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>sim_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(p_lowincomepct, p_PofC, dist_hur, flooding)</span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model </span></span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>sim_model <span class="ot">&lt;-</span> <span class="fu">gam</span>(flooding <span class="sc">~</span> p_lowincomepct <span class="sc">*</span> p_PofC <span class="sc">+</span> dist_hur, </span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> sim_df,</span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">family =</span> <span class="fu">tw</span>(<span class="at">link =</span> <span class="st">"log"</span>))</span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize model</span></span>
+<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>sim_model_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(sim_model)</span>
+<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Report Simulated model </span></span>
+<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>sim_model_summary<span class="sc">$</span>family <span class="co"># P value </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-Family: Tweedie(p=1.501) 
-Link function: log 
-
-Formula:
-flooding ~ p_lowincomepct * p_PofC + dist_hur
-
-Parametric coefficients:
-                       Estimate Std. Error  t value Pr(&gt;|t|)    
-(Intercept)            0.501643   0.031791   15.779   &lt;2e-16 ***
-p_lowincomepct         1.237108   0.050121   24.682   &lt;2e-16 ***
-p_PofC                 1.795495   0.048588   36.954   &lt;2e-16 ***
-dist_hur              -2.303307   0.007206 -319.623   &lt;2e-16 ***
-p_lowincomepct:p_PofC  0.144768   0.078207    1.851   0.0642 .  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-
-R-sq.(adj) =  0.732   Deviance explained = 90.1%
--REML =  31440  Scale est. = 1.0067    n = 100000</code></pre>
+Family: Tweedie(p=1.499) 
+Link function: log </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>coef <span class="ot">&lt;-</span> sim_model_summary<span class="sc">$</span>p.coeff <span class="co"># Parameters of simulated model </span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Making a dataframe and kable table of given and resulting estimates for comparison </span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>coef <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(given_parameters, coef, <span class="at">row.names =</span> <span class="fu">c</span>(<span class="st">"Intercept"</span>, </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"People of Color (%)"</span>,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Low-Income (%)"</span>,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Distance from Hurricane Path"</span>,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"PoC × Low-Income Interaction"</span>))</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">kable</span>(coef, </span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">digits =</span> <span class="dv">1</span>, </span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">align =</span> <span class="st">'c'</span>, </span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Given betas"</span>, <span class="st">"Simulated Model Estimates"</span>),</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Simulated Model Coefficient Estimates"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Simulated Model Coefficient Estimates</caption>
+<colgroup>
+<col style="width: 42%">
+<col style="width: 18%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">Given betas</th>
+<th style="text-align: center;">Simulated Model Estimates</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: center;">0.5</td>
+<td style="text-align: center;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">People of Color (%)</td>
+<td style="text-align: center;">1.2</td>
+<td style="text-align: center;">1.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Low-Income (%)</td>
+<td style="text-align: center;">1.8</td>
+<td style="text-align: center;">1.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Distance from Hurricane Path</td>
+<td style="text-align: center;">-2.3</td>
+<td style="text-align: center;">-2.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PoC × Low-Income Interaction</td>
+<td style="text-align: center;">0.1</td>
+<td style="text-align: center;">0.1</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
+<p>The simulation model recovered the given parameters (including the given p = 1.5), validating the model and demonstrating the inter-workings of it.</p>
 </section>
 <section id="fit-model-tweedie-model" class="level3">
 <h3 class="anchored" data-anchor-id="fit-model-tweedie-model">Fit Model: Tweedie Model</h3>
+<p>Create a fit Tweedie model to test the hypothesis.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>tweedie_model  <span class="ot">&lt;-</span> <span class="fu">gam</span>(totals_inches <span class="sc">~</span> p_peopcolorpct <span class="sc">*</span> p_lowincpct <span class="sc">+</span> dist_hur, </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> join_df,</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">family =</span> <span class="fu">tw</span>(<span class="at">link =</span> <span class="st">"log"</span>))</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>mod_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(tweedie_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit Model: Tweedie Model </span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>tweedie_model  <span class="ot">&lt;-</span> <span class="fu">gam</span>(totals_inches <span class="sc">~</span> p_peopcolorpct <span class="sc">*</span> p_lowincpct <span class="sc">+</span> dist_hur, </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> join_df,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">family =</span> <span class="fu">tw</span>(<span class="at">link =</span> <span class="st">"log"</span>))</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Model Summary </span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>mod_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(tweedie_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><u>It’s important to note, you can run the Tweedie model various ways!</u></p>
-<p>Options:</p>
+<p><u>It’s important to note, you can run the Tweedie model various ways, such as:</u></p>
 <ul>
 <li><p><code>gam(Y ~ predictors, family = tw(link = "log")))</code> # library(mgcv)</p>
 <ul>
-<li>Do not need to specify the p; the model chooses the best-fitting p for us</li>
+<li>Do not need to specify the p; the model chooses the best-fitting p for us.</li>
 </ul></li>
 <li><p><code>glm(Y ~ predictors, family = tweedie(var.power = #, link.power = #))</code> # library(statmod)</p>
 <ul>
-<li><p>Must supply the model parameters manually</p>
+<li><p>Must supply the model parameters manually.</p>
 <ul>
 <li><p>var.power: defines the Tweedie p parameter</p></li>
 <li><p>link.power = 0: log link</p></li>
 </ul></li>
 </ul></li>
-<li><p><code>glmmTMB(Y ~ predictors,  family = tweedie(link = 'log'))</code></p>
-<ul>
-<li>Kept defaulting the p = 1, which is a Poisson distribution (not typical for rainfall predictions)</li>
-</ul></li>
+<li><p><code>glmmTMB(Y ~ predictors,  family = tweedie(link = 'log'))</code></p></li>
 </ul>
 <p><em>To learn more about the <a href="https://library.virginia.edu/data/articles/getting-started-tweedie-models-0">tweedie model</a>.</em></p>
 </section>
@@ -923,7 +946,8 @@ R-sq.(adj) =  0.732   Deviance explained = 90.1%
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mod_summary<span class="sc">$</span>family)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print Just the P and link function </span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mod_summary<span class="sc">$</span>family)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -934,23 +958,23 @@ Link function: log </code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data frame of coefficients </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dataframe of coefficients </span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>mod_summary_cond_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(mod_summary<span class="sc">$</span>p.table, <span class="at">row.names =</span> <span class="fu">c</span>(<span class="st">"Intercept"</span>,</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"People of Color (%)"</span>,</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Low Income (%)"</span>,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Low-Income (%)"</span>,</span>
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Distance from Hurricane Path"</span>,</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"PoC × Low Income Interaction"</span>))</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"PoC × Low-Income Interaction"</span>))</span>
 <span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Kable table </span></span>
 <span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">kable</span>(mod_summary_cond_table, </span>
 <span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">digits =</span> <span class="dv">4</span>, </span>
 <span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">align =</span> <span class="st">'c'</span>,</span>
 <span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Estimates"</span>, <span class="st">"Std.Error"</span>, <span class="st">"T.value"</span>, <span class="st">"P.value"</span>),</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Generalized Linear Mixed Model Conditional Coeffients"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Tweedie Model Results"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Generalized Linear Mixed Model Conditional Coeffients</caption>
+<caption>Tweedie Model Results</caption>
 <colgroup>
 <col style="width: 41%">
 <col style="width: 15%">
@@ -983,7 +1007,7 @@ Link function: log </code></pre>
 <td style="text-align: center;">0.0000</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Low Income (%)</td>
+<td style="text-align: left;">Low-Income (%)</td>
 <td style="text-align: center;">-0.0084</td>
 <td style="text-align: center;">0.0013</td>
 <td style="text-align: center;">-6.4669</td>
@@ -997,7 +1021,7 @@ Link function: log </code></pre>
 <td style="text-align: center;">0.0000</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">PoC × Low Income Interaction</td>
+<td style="text-align: left;">PoC × Low-Income Interaction</td>
 <td style="text-align: center;">0.0000</td>
 <td style="text-align: center;">0.0000</td>
 <td style="text-align: center;">1.5334</td>
@@ -1009,42 +1033,46 @@ Link function: log </code></pre>
 </div>
 <p><strong>Model Coefficient Explanations</strong></p>
 <p>Rainfall usually has Tweedie power paramter (<strong>p</strong>) that ranges 1 &lt; p &lt; 2 which is interpreted as a compound Poisson–Gamma. The Tweedies model’s estimated p parameter is 1.446, corresponding to a compound Poisson–Gamma. This p estimate is good as it matches rainfall physics and is similar estimate to other rainfall Tweedie models!</p>
-<p>Percent of People of Color, low income, and distance from the Hurricane have a significant relationship to flooding exposure. However, the interaction of communities with low income and People of Color does <em>not</em> have a significant relationship to flooding.</p>
-<p>The percent of People of Color has a positive, significant relationship where communities with higher percentages of People of Color have slightly higher flooding.</p>
-<p>The percent of low income and distance from the hurricane’s path have a negative, significant relationship. Communities with a higher percentage of low-income (poorer communities), have slightly lower flooding predictions. This is most likely due to Florida coastline facing the brunt of the storm. Beach front properties, which tend to be wealthy, faced Ian head-on as a Category 4 Hurricane causing more damage and flooding in wealthier communities. Additionally, the hurricane path results show a <em>strong,</em> negative relationship where flooding rapidly decreases with distance from hurricane.</p>
+<p>Percent of People of Color, low-income, and distance from the Hurricane have a significant relationship to flooding exposure. However, the interaction of communities with low-income and People of Color does <em>not</em> have a significant relationship to flooding.</p>
+<p>The percent of People of Color has a positive, significant relationship where communities with higher percentages of minorities have slightly higher flooding measurements.</p>
+<p>The percent of low-income and distance from the hurricane’s path have a negative, significant relationship. Communities with a higher percentage of low-income (poorer communities), have slightly lower flooding predictions. This is most likely due to Florida’s coastline, consisting of wealthy, beach-front properties facing the brunt of the Catagory 4 hurricane, resulting in more damages and flooding in affluent communities. Additionally, the hurricane path results show a <em>strong,</em> negative relationship where flooding rapidly decreases with distance from the Hurricane.</p>
 </section>
 <section id="create-expand-grid" class="level3">
 <h3 class="anchored" data-anchor-id="create-expand-grid">Create Expand Grid</h3>
-<p>I made two expanded grids because I wanted to see the food predictions when distance from the hurricane was constant vs not constant in order to display the interactions of People of Color percentages vs low income percentages (without distance from Hurricane impact) as well as the interplay of distance from hurricane on flooding.</p>
+<p>I made two expanded grids to inspect the food predictions when distance from the Hurricane is constant and variable. This allows me to display (1) the interactions of People of Color percentages vs low-income percentages (without the distance from the Hurricane impacting the predictions) and (2) the influence of location relative to the storm on flood exposure.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>grid_dist_constant <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(<span class="at">p_peopcolorpct =</span> <span class="fu">seq</span>(<span class="fu">min</span>(join_df<span class="sc">$</span>p_peopcolorpct), <span class="fu">max</span>(join_df<span class="sc">$</span>p_peopcolorpct)), </span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_lowincpct =</span> <span class="fu">seq</span>(<span class="fu">min</span>(join_df<span class="sc">$</span>p_lowincpct), <span class="fu">max</span>(join_df<span class="sc">$</span>p_lowincpct)), </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">dist_hur =</span> <span class="fu">mean</span>(join_df<span class="sc">$</span>dist_hur)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Expand grid - Distance held constant </span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>grid_dist_constant <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(<span class="at">p_peopcolorpct =</span> <span class="fu">seq</span>(<span class="fu">min</span>(join_df<span class="sc">$</span>p_peopcolorpct), <span class="fu">max</span>(join_df<span class="sc">$</span>p_peopcolorpct)), </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_lowincpct =</span> <span class="fu">seq</span>(<span class="fu">min</span>(join_df<span class="sc">$</span>p_lowincpct), <span class="fu">max</span>(join_df<span class="sc">$</span>p_lowincpct)), </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">dist_hur =</span> <span class="fu">mean</span>(join_df<span class="sc">$</span>dist_hur)) <span class="co"># Hold constant at the mean value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(<span class="at">p_peopcolorpct =</span> <span class="fu">seq</span>(<span class="fu">min</span>(join_df<span class="sc">$</span>p_peopcolorpct), <span class="fu">max</span>(join_df<span class="sc">$</span>p_peopcolorpct), <span class="at">length.out =</span> <span class="dv">50</span>), </span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_lowincpct =</span> <span class="fu">seq</span>(<span class="fu">min</span>(join_df<span class="sc">$</span>p_lowincpct), <span class="fu">max</span>(join_df<span class="sc">$</span>p_lowincpct), <span class="at">length.out =</span> <span class="dv">50</span>), </span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">dist_hur =</span> <span class="fu">seq</span>(<span class="fu">min</span>(join_df<span class="sc">$</span>dist_hur), <span class="fu">max</span>(join_df<span class="sc">$</span>dist_hur), <span class="at">length.out =</span> <span class="dv">50</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Expand grid - Distance varies </span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(<span class="at">p_peopcolorpct =</span> <span class="fu">seq</span>(<span class="fu">min</span>(join_df<span class="sc">$</span>p_peopcolorpct), <span class="fu">max</span>(join_df<span class="sc">$</span>p_peopcolorpct), <span class="at">length.out =</span> <span class="dv">50</span>), </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_lowincpct =</span> <span class="fu">seq</span>(<span class="fu">min</span>(join_df<span class="sc">$</span>p_lowincpct), <span class="fu">max</span>(join_df<span class="sc">$</span>p_lowincpct), <span class="at">length.out =</span> <span class="dv">50</span>), </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">dist_hur =</span> <span class="fu">seq</span>(<span class="fu">min</span>(join_df<span class="sc">$</span>dist_hur), <span class="fu">max</span>(join_df<span class="sc">$</span>dist_hur), <span class="at">length.out =</span> <span class="dv">50</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="make-predictions" class="level3">
 <h3 class="anchored" data-anchor-id="make-predictions">Make Predictions</h3>
 <p>Using the <code>tweedie_model</code>, make flooding predictions for the expand grids.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>prediction_grid_dist_constant <span class="ot">&lt;-</span> grid_dist_constant <span class="sc">%&gt;%</span> </span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">flood_predictions =</span> <span class="fu">predict</span>(<span class="at">object =</span> tweedie_model, </span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">newdata =</span> grid_dist_constant, </span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">type =</span> <span class="st">'response'</span>))</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate flood prediction and put them in new column </span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>prediction_grid_dist_constant <span class="ot">&lt;-</span> grid_dist_constant <span class="sc">%&gt;%</span> <span class="co"># Distance = constant </span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">flood_predictions =</span> <span class="fu">predict</span>(<span class="at">object =</span> tweedie_model, </span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">newdata =</span> grid_dist_constant, </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">type =</span> <span class="st">'response'</span>))</span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>prediction_grid <span class="ot">&lt;-</span> grid <span class="sc">%&gt;%</span> </span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">flood_predictions =</span> <span class="fu">predict</span>(<span class="at">object =</span> tweedie_model, </span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">newdata =</span> grid, </span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">type =</span> <span class="st">'response'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>prediction_grid <span class="ot">&lt;-</span> grid <span class="sc">%&gt;%</span> <span class="co"># Distance = varies </span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">flood_predictions =</span> <span class="fu">predict</span>(<span class="at">object =</span> tweedie_model, </span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">newdata =</span> grid, </span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">type =</span> <span class="st">'response'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="confidence-intervals" class="level3">
 <h3 class="anchored" data-anchor-id="confidence-intervals">Confidence Intervals</h3>
+<p>Create confidence intervals for the predictions where the distance is constant.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1075,26 +1103,26 @@ Link function: log </code></pre>
 </details>
 </div>
 </section>
-<section id="plots" class="level3">
-<h3 class="anchored" data-anchor-id="plots">Plots</h3>
+<section id="final-plots" class="level3">
+<h3 class="anchored" data-anchor-id="final-plots">Final Plots</h3>
 <section id="distance-from-hurricane-constant" class="level4">
 <h4 class="anchored" data-anchor-id="distance-from-hurricane-constant">Distance from Hurricane = Constant</h4>
-<p>Investigating community make-up (People of Color and low income populations) in correspondence to flooding predictions.</p>
+<p>Investigating community composition (People of Color and low-income populations) in correspondence to flood predictions.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>prediction_grid_dist_constant <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> p_peopcolorpct, <span class="at">y =</span> p_lowincpct, <span class="at">fill =</span> flood_predictions)) <span class="sc">+</span> </span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span> </span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_steps2</span>(<span class="at">low =</span> <span class="st">"#ffad76"</span>,        <span class="co">#- THIS CREATES COLOR BINS </span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mid =</span> <span class="st">"#ffe896"</span>,</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">high =</span> <span class="st">"#488f30"</span>, </span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">midpoint =</span> <span class="fu">median</span>(prediction_grid<span class="sc">$</span>flood_predictions)) <span class="sc">+</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_fill_gradient(low = "#466DA7", high = "#D9252A") + # Produces the continuous color scale </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Geom_rasters plots of flood predictions via minority and low income % </span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>prediction_grid_dist_constant <span class="sc">%&gt;%</span> </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> p_peopcolorpct, <span class="at">y =</span> p_lowincpct, <span class="at">fill =</span> flood_predictions)) <span class="sc">+</span> </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span> </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_steps2</span>(<span class="at">low =</span> <span class="st">"#ffad76"</span>,        <span class="co">#- THIS CREATES COLOR BINS </span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mid =</span> <span class="st">"#ffe896"</span>,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">high =</span> <span class="st">"#488f30"</span>, </span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">midpoint =</span> <span class="fu">median</span>(prediction_grid<span class="sc">$</span>flood_predictions)) <span class="sc">+</span></span>
 <span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Flood Predictions in Minority and Low Income Communities"</span>, </span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Flood Predictions in Minority and Low-Income Communities"</span>, </span>
 <span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"People of Color (%)"</span>, </span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Low Income (%)"</span>, </span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Low-Income (%)"</span>, </span>
 <span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Flood Predictions</span><span class="sc">\n</span><span class="st">(inches)"</span>, </span>
 <span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Figure 6"</span></span>
 <span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1102,16 +1130,16 @@ Link function: log </code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Selecting 3 representative low income levels at the 10%, 50%, 90% percentiles</p>
+<p>Selecting 3 representative low-income levels at the 10%, 50%, 90% percentiles.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick 3 low income levels at the 10%, 50%, 90% percentile </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Three low income levels at the 10%, 50%, 90% percentile </span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>selected_levels <span class="ot">&lt;-</span> <span class="fu">quantile</span>(join_df<span class="sc">$</span>p_lowincpct, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>))</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>selected_levels</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1121,7 +1149,7 @@ Link function: log </code></pre>
   5  41  85 </code></pre>
 </div>
 </div>
-<p>Creating a plot at those 3 quantiles</p>
+<p>Creating a plot at those 3 low-income quantiles.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1130,32 +1158,64 @@ Link function: log </code></pre>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(p_lowincpct <span class="sc">%in%</span> selected_levels)</span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Change labels of quantiles </span></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lowinc_label =</span> <span class="fu">factor</span>(p_lowincpct, </span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> selected_levels, </span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"10%"</span>, <span class="st">"50%"</span>, <span class="st">"90%"</span>)))</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Change labels for quantiles </span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lowinc_label =</span> <span class="fu">factor</span>(p_lowincpct, </span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> selected_levels, </span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"10%"</span>, <span class="st">"50%"</span>, <span class="st">"90%"</span>)))</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the reduced dataframe </span></span>
-<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, </span>
-<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> p_peopcolorpct, </span>
-<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> flood_predictions, </span>
-<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="fu">factor</span>(lowinc_label),   <span class="co"># Different colors for each low-income level</span></span>
-<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">group =</span> <span class="fu">factor</span>(lowinc_label))  <span class="co"># Separate lines</span></span>
-<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span> </span>
-<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co"># Predicted line </span></span>
-<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> ci_lower, <span class="co"># Confidence intervals </span></span>
-<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymax =</span> ci_upper, </span>
-<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> <span class="fu">factor</span>(lowinc_label)), <span class="co"># Per each income percentile </span></span>
-<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"% People of Color"</span>, </span>
-<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Flooding"</span>, </span>
-<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Low Income (%)</span><span class="sc">\n</span><span class="st">Quartiles"</span>, </span>
-<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Low Income (%)</span><span class="sc">\n</span><span class="st">Quartiles"</span>, </span>
-<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Figure 7"</span>) <span class="sc">+</span></span>
-<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the reduced dataframe - % minorities &amp; flood predictions at low income's 10th, 50th, and 90th precentile </span></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, </span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> p_peopcolorpct, </span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> flood_predictions, </span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="fu">factor</span>(lowinc_label),   <span class="co"># Different colors for each low-income level</span></span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">group =</span> <span class="fu">factor</span>(lowinc_label))  <span class="co"># Separate lines</span></span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span> </span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co"># Predicted line </span></span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> ci_lower, <span class="co"># Confidence intervals </span></span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymax =</span> ci_upper, </span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> <span class="fu">factor</span>(lowinc_label)), <span class="co"># Per each income percentile </span></span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"% People of Color"</span>, </span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Flooding"</span>, </span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Low-Income (%)</span><span class="sc">\n</span><span class="st">Quartiles"</span>, </span>
+<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Low-Income (%)</span><span class="sc">\n</span><span class="st">Quartiles"</span>, </span>
+<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Figure 7"</span>) <span class="sc">+</span></span>
+<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The problem while plotting:</p>
+<p>From the expand grid, we could not plot all 50×50 points as lines; ggplot’s line was zigzaged and oscillating through the various combinations. To eliminate this crazy oscillation, we fixed low-income percentages at a 3 representative levels (10th, 50th, 90th percentile), and filtered the data for those fixed percentages. Now, the <code>plot_data</code> has fewer rows (only the combinations of p_peopcolorpct and the 3 fixed low-income levels).</p>
+</section>
+<section id="community-composition-in-comparison-to-their-distance-from-the-hurricane" class="level4">
+<h4 class="anchored" data-anchor-id="community-composition-in-comparison-to-their-distance-from-the-hurricane">Community Composition in Comparison to their Distance from the Hurricane</h4>
+<p>Plotting People of Color and low-income percentages in relation to their distance from the storm.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Geom_rasters plots of flood predictions via minority % and distance from Hurricane </span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>prediction_grid <span class="sc">%&gt;%</span> </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dist_hur, <span class="at">y =</span> p_lowincpct, <span class="at">fill =</span> flood_predictions)) <span class="sc">+</span> </span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span> </span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_steps2</span>(<span class="at">low =</span> <span class="st">"#ffad76"</span>,        <span class="co">#- THIS CREATES COLOR BINS </span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mid =</span> <span class="st">"#ffe896"</span>,</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">high =</span> <span class="st">"#488f30"</span>, </span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">midpoint =</span> <span class="fu">median</span>(prediction_grid<span class="sc">$</span>flood_predictions)) <span class="sc">+</span> </span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Flood Predictions for Low-Income Communities"</span>, </span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Distance from the Hurricane (km)"</span>, </span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Low-Income (%)"</span>, </span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Flood Predictions</span><span class="sc">\n</span><span class="st">(inches)"</span>, </span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Figure 8"</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1164,58 +1224,28 @@ Link function: log </code></pre>
 </figure>
 </div>
 </div>
-</div>
-<p>The problem while plotting:</p>
-<p>From the expand grid, we could not plot all 50×50 points as lines; ggplot’s line was zigzaged and oscillating through the various combinations. To eliminate this crazy oscillation, we fixed low-income percentages at a 3 representative levels (10th, 50th, 90th percentile), and filtered the data for those fixed percentages. Now, the <code>plot_data</code> has fewer rows (only the combinations of p_peopcolorpct and the 3 fixed low-income levels).</p>
-</section>
-<section id="community-make-up-in-comparison-to-their-distance-from-the-hurricane" class="level4">
-<h4 class="anchored" data-anchor-id="community-make-up-in-comparison-to-their-distance-from-the-hurricane">Community Make-up in Comparison to their Distance from the Hurricane</h4>
-<div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>prediction_grid <span class="sc">%&gt;%</span> </span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dist_hur, <span class="at">y =</span> p_lowincpct, <span class="at">fill =</span> flood_predictions)) <span class="sc">+</span> </span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span> </span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_steps2</span>(<span class="at">low =</span> <span class="st">"#ffad76"</span>,        <span class="co">#- THIS CREATES COLOR BINS </span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mid =</span> <span class="st">"#ffe896"</span>,</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">high =</span> <span class="st">"#488f30"</span>, </span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">midpoint =</span> <span class="fu">median</span>(prediction_grid<span class="sc">$</span>flood_predictions)) <span class="sc">+</span> </span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Flood Predictions for Low Income Communities"</span>, </span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Distance from the Hurricane (km)"</span>, </span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Low Income (%)"</span>, </span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Flood Predictions</span><span class="sc">\n</span><span class="st">(inches)"</span>, </span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Figure 8"</span></span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Geom_rasters plots of flood predictions via low-income % and distance from Hurricane </span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>prediction_grid <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dist_hur, <span class="at">y =</span> p_peopcolorpct, <span class="at">fill =</span> flood_predictions)) <span class="sc">+</span> </span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span> </span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_steps2</span>(<span class="at">low =</span> <span class="st">"#ffad76"</span>,        <span class="co">#- THIS CREATES COLOR BINS </span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mid =</span> <span class="st">"#ffe896"</span>,</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">high =</span> <span class="st">"#488f30"</span>, </span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">midpoint =</span> <span class="fu">median</span>(prediction_grid<span class="sc">$</span>flood_predictions)) <span class="sc">+</span> </span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Flood Predictions for Minority Communities"</span>, </span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Distance from the Hurricane (km)"</span>, </span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"People of Color (%)"</span>, </span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Flood Predictions</span><span class="sc">\n</span><span class="st">(inches)"</span>, </span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Figure 9"</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>prediction_grid <span class="sc">%&gt;%</span> </span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dist_hur, <span class="at">y =</span> p_peopcolorpct, <span class="at">fill =</span> flood_predictions)) <span class="sc">+</span> </span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span> </span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_steps2</span>(<span class="at">low =</span> <span class="st">"#ffad76"</span>,        <span class="co">#- THIS CREATES COLOR BINS </span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mid =</span> <span class="st">"#ffe896"</span>,</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">high =</span> <span class="st">"#488f30"</span>, </span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">midpoint =</span> <span class="fu">median</span>(prediction_grid<span class="sc">$</span>flood_predictions)) <span class="sc">+</span> </span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Flood Predictions for Minority Communities"</span>, </span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Distance from the Hurricane (km)"</span>, </span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"People of Color (%)"</span>, </span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Flood Predictions</span><span class="sc">\n</span><span class="st">(inches)"</span>, </span>
-<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Figure 9"</span></span>
-<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-30-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-29-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1223,34 +1253,27 @@ Link function: log </code></pre>
 </section>
 </section>
 </section>
-<section id="evaulating-coefficients-and-plots" class="level2">
-<h2 class="anchored" data-anchor-id="evaulating-coefficients-and-plots">Evaulating Coefficients and Plots</h2>
-<p>As previously discussed, the percentages of People of Color within a community exhibit a <em>positive</em>, significant relationship with flood exposure. Communities with high minority populations are predicted to experience greater flooding. This trend is illustrated in Figures 6, 7, and 9 where flooding estimate increase with rising percentages of People of Color. This interaction is persistent regardless of whether the distance from the hurricane’s path is held constant or varies.</p>
-<p>In contrast, the low income population shows a <em>negative</em>, significant relationship to floodpredictions.</p>
-<p>During Hurricane Ian, areas with high low-income percentages (poorer communities), are predicted to have less flooding, which is evident in Figures 6, 7, and 8. Notably, the 10% low income quartile (representing wealther communities) experiences the greatest amount of flooding in Figure 7. The separation of prediction lines in Figure 7 highlights the significant effects of low-income precentages on flooding predictions. The negative relationship is opposite of typical expectations. This counterintuitive outcome is likely attributable to the Florida coastline bearing the full force of the storm. Coastal properties, which are typically higher-income, were directly exposed to Hurricane Ian as a Category 4 storm, resulting in greater damage and flooding in these wealthier communities.</p>
-<p>Similarly, distance from the Hurricane’s path has a strong <em>negative</em>, significant relationship. Regardless of the community composition, areas closer to the Hurricane’s trajectory experienced greater flooding (Figures 8 and 9). Once communities were approximately 200km from the storm’s path, predicted flooding decreased remarkably.</p>
-</section>
-<section id="section" class="level1">
-<h1>————————</h1>
-<section id="old-explination" class="level2">
-<h2 class="anchored" data-anchor-id="old-explination">Old explination</h2>
-<p><strong>Model coefficient explanations:</strong> The zero-inflated portion evaluates whether being inside versus outside the storm’s path affects the probability that a location experienced any flooding. In the model, “flooding” is any amount of rain &gt; 0 inches. The high P-value for ‘Hurricane Path’ in the zero-inflated model shows that weither inside or outside of the storm, the majority of communities experienced some type of <em>flooding</em>. Thus, the hurricane path did not influenced the likelihood of a location having any flooding.</p>
-<p>However, the second part of the glmm askes: <em>how much</em> influence did the predictors have on response. The interaction of percentages of low income and people of color communities have a very small P-value, indicating they play a significant role in determining how much a community will flood. This significant relationship is also seen in low income and people of color predictors individually having low P-values (that are less than a set alpha of 0.05). Illustrated in Figure 5, 6, and 7, minority populations have a direct relationship to flooding; as minority populations increase, flooding tends to increase. Interestingly, low income communities have an inverse relationship to flooding during Hurricane Ian (seen in Figure 5, 6, and 8); as percentages of low income population increases, flooding decreases. This is most likely due to Florida coastline facing the brunt of the storm. Beach front properties, which tend to be wealthy, faced Ian head-on as a Category 4 Hurricane causing more damage and flooding in wealthier communities. Therefore, while there is a significant relationship between these predictors and the response, this relationship does not support the hypothesis.</p>
-<p>In the conditional portion of the model, hurricane path has a P-values greater than the critical threshold (0.05), meaning we found no statistical significance for flooding inside and outside the Hurricane’s path. The p-value itself suggests the difference in flooding between areas inside and outside the hurricane’s path is 10% due to random chance. Yet, in comparing Figures 5 and 6, there is a noticeable difference between flood predictions in communities located within or outside the Hurricane’s perimeters. Furthermore, Figures 7 and 8 show 2 distinct lines where sites that falls inside the hurricane’s trajectory have greater flood predictions.</p>
-</section>
+<section id="evaluating-coefficients-and-plots" class="level2">
+<h2 class="anchored" data-anchor-id="evaluating-coefficients-and-plots">Evaluating Coefficients and Plots</h2>
+<p>As previously discussed, the <strong>percentages of People of Color</strong> within a community exhibit a <em>positive</em>, significant relationship to flood exposure. Communities with high minority populations are predicted to experience greater flooding. This trend is illustrated in Figures 6, 7, and 9 where flooding estimates increase with rising percentages of minorities. This interaction is persistent regardless of whether the distance from the hurricane’s path is held constant or varies.</p>
+<p>In contrast, the <strong>low-income percentages</strong> shows a <em>negative</em>, significant relationship to flood predictions. During Hurricane Ian, areas with high low-income percentages (poorer communities), are predicted to have less flooding, which is evident in Figures 6, 7, and 8. Notably, the 10% low income quartile (representing wealthier communities) experiences the greatest amount of flooding in Figure 7. The separation of prediction lines in Figure 7 highlights the significant effects of low-income percentages on flooding predictions. The negative relationship is opposite of typical expectations. This counterintuitive outcome is likely attributable to the Florida coastline bearing the full force of the storm. Coastal properties, which are typically higher-income and affluent communities, were directly exposed to Hurricane Ian as a Category 4 storm, resulting in greater damage and flooding in these wealthier communities.</p>
+<p>Yet, the interaction between these socio-demographic variables (low-income and minority percentages) is not significant when determining flood exposure.</p>
+<p><strong>Distance from the Hurricane Ian’s path</strong> has a strong <em>negative</em>, significant relationship. Regardless of the community composition, areas closer to the Hurricane’s trajectory experienced greater flooding (Figures 8 and 9). Once communities were approximately 200km from the storm’s path, predicted flooding decreased remarkably.</p>
+<p>The <strong>R-squared</strong> value of 0.214 means the model explains about 21.4% of the variability in flooding intensity. While 0.214 seems low, it is expected in environmental hazard modeling, where flooding is driven by numerous unaccounted factors, such as drainage patterns and land cover. Additionally, Tweedie models, dealing with zero-inflated, skewed, positive data, rarely produce high R-squared values. Thus, an R-squared around 0.2 is considered typical, still reflecting meaningful explanatory power as it is paired with several statistically significant predictors.</p>
+<p>Overall, the study emphasizes vulnerability is multidimensional. Social inequality and geographic exposures influence flood outcomes. Supporting the hypothesis, minority communities disproportionately faced greater flooding exposure, and flood severity was mainly driven by proximity to the storm. Contradictory to the hypothesis, low-income percentages have an inverse relationship with flooding. The wealthier, coastal communities faced the brunt of the damage as the Category 4 Hurricane hit Florida’s coast head on. Also against the hypothesis, the combination between the socio-demographic variables do not explain flooding. These results demonstrate the need for risk assessments that combine social and geographic factors to best anticipate who is most vulnerable.</p>
 </section>
 <section id="limitations" class="level1">
 <h1>Limitations</h1>
-<ul>
-<li><p>Want urbanization / impermeable surface data</p></li>
-<li><p>‘flooding’ in logistic regression was any rain at all - wish it could be data on <em>actual</em> flooding</p></li>
-<li><p>Considered inside vs outside the data was based on a single 120 mile buffer - hurricane Ian hit FL being huge and got smaller, but buffer doesn’t show the change in size.</p></li>
-</ul>
+<p>This analysis has several limitations. First, this study does not account for other important factors influencing flood intensity, such as urbanization, impermeable surface, or land cover data. Flooding is highly dictated by the water not being able to percolate into the soil due to high levels of cement. Adding a predictor about the land composition and elevation would greatly improve the model. Secondly, an inaccuracy of predictor measurements could be a limitation. American Community Survey census track data and the defined Hurricane path both come with marginal errors that could influence the model. Lastly, flooding can have a spatial autocorrectional that is not accounted for in this model.</p>
 </section>
 <section id="references" class="level1">
 <h1>References</h1>
+<p>Bonat, W. H., &amp; Kokonendji, C. C. (2017). Flexible Tweedie regression models for continuous data. <em>Journal of Statistical Computation and Simulation</em>, <em>87</em>(11), 2138-2152.</p>
 <p>Bucci, L., Alaka, L., Hagen, A., Delgado, S., &amp; Beven, J. (2023). <em>National hurricane center tropical cyclone report</em>. Hurricane Ian (AL092022), 1-72.</p>
+<p>Ford, C. (2025). <em>Getting Started with Tweedie Models.</em> University of Virginia Library. <a href="https://library.virginia.edu/data/articles/getting-started-tweedie-models-0" class="uri">https://library.virginia.edu/data/articles/getting-started-tweedie-models-0</a></p>
+<p>Gilchrist, R., &amp; Drinkwater, D. (2000). The use of the Tweedie distribution in statistical modelling. In <em>COMPSTAT: Proceedings in computational statistics 14th symposium held in Utrecht, the Netherlands, 2000</em> (pp.&nbsp;313-318). Heidelberg: Physica-Verlag HD.</p>
 <p>Chakraborty, J., Collins, T.W., Grineski, SE. (2019). <em>Exploring the Environmental Justice Implications of Hurricane Harvey Flooding in Greater Houston, Texas.</em> Am J Public Health. Doi: 10.2105/AJPH.2018.304846.</p>
+<p>Kochhar, R., and Moslimani, M. (2023). “Wealth surged in the pandemic, but debt endures for poorer Black and Hispanic families.” Pew Research Center. <a href="https://www.pewresearch.org/2023/12/04/wealth-gaps-across-racial-and-ethnic-groups/" class="uri">https://www.pewresearch.org/2023/12/04/wealth-gaps-across-racial-and-ethnic-groups/</a></p>
 <p>Rafferty, J.P. (2022). <em>Hurricane Ian</em>. Britannica. https://www.britannica.com/event/Hurricane-Ian-2022.</p>
 <p>Roe, J., Aspinall, P. A., &amp; Ward Thompson, C. (2016). Understanding relationships between health, ethnicity, place and the role of urban green space in deprived urban communities. International journal of environmental research and public health, 13(7), 681.</p>
 <p>Walls, K. (2022). <em>New data reveals peak of storm surge height during Ian.</em> Scripps https://www.fox4now.com/weather/new-data-reveals-peak-of-storm-surge-height-during-ian.</p>
@@ -1342,7 +1365,7 @@ December 4, 2025. <a href="https://https//meganhessel.github.io/Posts/hur_ian_fl
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/meganhessel\.github\.io\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
