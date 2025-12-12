@@ -32,7 +32,7 @@ bibliography: references.bib
 
 ## Introductions
 
-In January of 2025, Los Angeles, California faced two major fires: Palisades and Eaton. Both fires burned for 24 days (Cal Fire, 2025a & Cal Fire, 2025b). Eaton fire covered approximately 14,000 acres, while Palisades fire was nearly twice as large, destroying around 23,500 acres (Cal Fire, 2025a & Cal Fire, 2025b). Together, these long-lasting fires destroyed 16,251 structures, injured 13 people, and killed 31 civilians (Cal Fire, 2025a & Cal Fire, 2025b). The extensive devastation is clearly visible in the landscape, leaving behind massive fire scars from the burned vegetation. 
+In January of 2025, Los Angeles, California faced two major wildfires: Palisades and Eaton. Both fires burned for 24 days (Cal Fire, 2025a & Cal Fire, 2025b). Eaton fire covered approximately 14,000 acres, while Palisades fire was nearly twice as large, destroying around 23,500 acres (Cal Fire, 2025a & Cal Fire, 2025b). Together, these long-lasting fires destroyed 16,251 structures, injured 13 people, and killed 31 civilians (Cal Fire, 2025a & Cal Fire, 2025b). The extensive devastation is clearly visible in the landscape, leaving behind massive fire scars from the burned vegetation. 
 
 In this project, we use satellite imagery to create true and false color visualization to inspect the burn damages. Additionally, we investigate the affected, uninsured populations using the Environmental Justice Index to understand the social and economic implications of these fires.
 
@@ -47,7 +47,7 @@ In this project, we use satellite imagery to create true and false color visuali
 
 ## Inital Steps
 
-First, we must *load all necessary libraries*!
+First, we must load all necessary libraries!
 
 ```{python}
 #| code-fold: true
@@ -73,7 +73,7 @@ from IPython.display import Image  # To nicely display images
 
 The important libraries are the `geopandas` and `xarrary`. The `geopandas` package is useful when dealing with vector data which consists of point, lines, and polygons. Thus, we will use `geopandas` for the fire perimeters and EJI dataframes as they are polygons. Whereas, the `xarrary` package is useful when working with raster data, such as the Landsat data.
 
-Secondly, we must *load in* the borders, EJI, and Landsat data by using the `geopandas`, `xarrary`, and `os` packages. 
+Secondly, we must load in the borders, Environmental Justice Index (EJI), and Landsat data by using the `geopandas`, `xarrary`, and `os` packages. 
 
 ```{python}
 #| code-fold: true
@@ -105,16 +105,16 @@ plt.imshow(image) # Display image
 plt.show()
 ```
 
-Satelitte image of the Palisades and Eaton wildfires burning. 
+*Satelitte image of the Palisades and Eaton wildfires burning.* 
 
-Image from Duster, 2025.
+*Image from Duster, 2025.*
 
 ## Data Exploration
 Once the data is loaded, we need to examine each dataset.
 
 The function `.info` provides information of the dataframes' column names and data types. With this function, we notice there are 5 columns in the fire border dataset, with the final column being the vector geometry. We can examine the geometry of each fire with `.plot`. 
 
-Finally, it is *always* important to know the geospatial data's **coordinate reference systems** (CRS). The CRS defines how the geospatial data is located and plotted. There are 2 CRS types: geographic (how the data is plotted on the 3D globe) and projected (how the data is plotted on a 2D map). It is important to use the correct CRS for your data and intended goal. Additionally, when merging or plotting geospatial data together, the datasets' CRSs must match.
+Finally, it is *always* important to know the geospatial data's **coordinate reference systems** (CRS). The CRS defines how the geospatial data is located and plotted. There are 2 CRS types: geographic (how the data is plotted on the 3D globe) and projected (how the data is plotted on a 2D map). It is important to use the correct CRS for your data and intended goal. Additionally, when merging or plotting geospatial data together, the datasets' coordinate reference systems must match.
 
 ```{python}
 #| code-fold: true
@@ -155,9 +155,10 @@ Unlike the geopanda vector data, the **raster** datatype is a `xarray`. Xarrays 
 
 3.  *Attributes:* The units and other describing factors (like sample ID)
 
-We can understand the Landsat's variables, dimension, and CRS with `.var`, `.coord`, `dims`, `.rio.crs` functions.
+We can understand the Landsat's variables, dimension, and CRS with the `.var`, `.coord`, `dims`, and `.rio.crs` functions.
 
 ```{python}
+#| code-fold: true
 # Preliminary Raster Landsat data exploration  
 print(f"THE COORDINATES ARE: {landsat.coords}")
 print(f"THE VARIABLES ARE: {landsat.var}")
@@ -199,7 +200,7 @@ print(f"Does the Cali EJI and the Landsat raster CRSs match? {landsat.rio.crs ==
 
 ```
 
-*PROBLEM!* The perimeter, Landsat, and EJI CRSs do NOT match! Thus, they must be transformed using `to_crs`.
+*PROBLEM!* The perimeter, Landsat, and EJI CRSs do NOT match! Thus, they must be transformed using `to_crs`. We will change all datasets to match Landsat's CRS. 
 
 ```{python}
 # Transform all data sets to match the Landsat's CRS   
@@ -236,7 +237,7 @@ To create the true color imagery, we will select the 'red', 'green', and 'blue' 
 (landsat[['red', 'green', 'blue']]
     .to_array() # Convert to a single DataArray 
     .fillna(0) # Convert nan values to 0 
-    .plot.imshow(robust = True)) # Plot and remove outliars 
+    .plot.imshow(robust = True)) # Plot and remove outliers 
 
 ```
 
@@ -271,11 +272,11 @@ fig, ax = plt.subplots()
 # No axises
 ax.axis('off')
 
-# RGB raster 
-(landsat[['swir22', 'nir08', 'red']]
+# Lasndat's false -color RGB raster 
+(landsat[['swir22', 'nir08', 'red']] # False color imagery 
     .to_array() # Convert to a single DataArray 
     .fillna(0) # Convert nan values to 0 
-    .plot.imshow(ax = ax, robust = True)) # Plot and remove outliars 
+    .plot.imshow(ax = ax, robust = True)) # Plot and remove outliers 
 
 # Fire borders 
 eaton.plot(ax = ax, color = 'none', edgecolor = 'darkred')
@@ -360,7 +361,7 @@ ax.set_title("All California Census Tracks (CT),\nHighlighting the Ones Intersec
 plt.show()
 ``` 
 
-The figure above shows the intersecting census tracks. To get better view of these 'blobs', we can use `.sjoin()` to select for all CTs that traverse the fires. 
+The figure above shows the intersecting census tracks. To get better view of these 'blobs', we can use `.sjoin()` to select for all CTs that traverse the fires and then plot. 
 
 ```{python}
 # JOIN EJI census tracks with border data 
@@ -395,7 +396,7 @@ plt.show()
 The `.clip()` function acts like a cookie cutter. We will use this function to 'cookie-cutter' out the exact fire perimeters from the census tracks. 
 
 ```{python}
-# CLIP EJI census tracks with border data 
+# Clip EJI census tracks with border data 
 eaton_clip = gpd.clip(cali, eaton)
 pal_clip = gpd.clip(cali, pal)
 ``` 
@@ -437,7 +438,7 @@ eji_variable = 'E_UNINSUR'
 vmin = min(pal_clip[eji_variable].min(), eaton_clip[eji_variable].min())
 vmax = max(pal_clip[eji_variable].max(), eaton_clip[eji_variable].max())
 
-# Plot census tracts within Palisades perimeter
+# Plot census tracts within Palisades perimeter ------
 pal_clip.plot(
     column= eji_variable,
     vmin=vmin, vmax=vmax,
@@ -447,7 +448,7 @@ pal_clip.plot(
 ax1.set_title('Palisade Fire Perimeter')
 ax1.axis('off')
 
-# Plot census tracts within Eaton perimeter
+# Plot census tracts within Eaton perimeter ------ 
 eaton_clip.plot(
     column=eji_variable,
     vmin=vmin, vmax=vmax,
@@ -456,6 +457,8 @@ eaton_clip.plot(
 )
 ax2.set_title('Eaton Fire Perimeter')
 ax2.axis('off')
+
+#------
 
 # Add overall title
 fig.suptitle('Population Uninsured - Fire Areas Comparison')
@@ -469,12 +472,15 @@ cbar.set_label('Precentage of People that are Uninsured (%)')
 plt.show()
 ``` 
 
-The Palisade Fire primarily affected the Pacific Palisades, a region located around the Pacific Ocean's water edge and widely recognized for its affluence and wealth. In contrast, the Eaton fire devestated the Altadena neighborhood, a community with a historically Black population (Ong et al., n.d.). Altadena faces financial and environmental pressures, including rising home prices and climate-related disasters, which have caused a decline in young Black homeowners in the region (Ong et al., n.d.). 
+The Palisade Fire primarily affected the Pacific Palisades, a region located around the Pacific Ocean's water edge and widely recognized for its affluence and wealth (City of Los Angeles, n.d.). In contrast, the Eaton fire devestated the Altadena neighborhood, a community with a historically Black population (Ong et al., n.d.). Altadena faces financial and environmental pressures, including rising home prices and climate-related disasters, which have caused a decline in young Black homeowners in the region (Ong et al., n.d.). 
 
 The figure above highlights the disparities between these communities' social vulnerability and fire impacts. While both areas exhibit relatively low percentages of uninsured residents, the Eaton fire area (located further from the waters edge with greater historical minorities percentages) shows a higher concentraion of households affected by the disaster without adequate insurance coverage. This discrepancy displays how vulnerabilities play into the communities ability to recover from catastrophic events. 
 
+**If interested, more code and content is accessible at https://github.com/meganhessel/eds220-hwk4.git**
 
 # References 
+
+City of Los Angeles. (n.d.). *Pacific Palisades.* TRACI Park. https://cd11.lacity.gov/neighborhoods/pacific-palisades
 
 County of Los Angeles. (January 21, 2025). *Palisades and Eaton Dissolved Fire Perimeters (2025)*. AcrGIS Online. Accessed Nov 28, 2025. https://egis-lacounty.hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c/about 
 
