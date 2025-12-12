@@ -73,7 +73,7 @@ knitr::include_graphics(here::here("Posts","hur_ian_flooding", "hurricane_intens
 
 ## Datasets
 
-1.  Hurricane Ian flooding data from ...
+1.  Hurricane Ian flooding data is from the [Dartmouth Flood Observatory](https://floodobservatory.colorado.edu/Events/2022HurricaneIan/2022HurricaneIan.html).
 
 2.  Hurricane Ian's path data is vector line geometry acquired from [ArcGIS online](https://www.arcgis.com/home/webmap/viewer.html?layers=20d971f4472e4037af0f260f6454e7ab).
 
@@ -342,7 +342,7 @@ tm_scalebar(position = c('right', 'top')) +
     tm_credits("Figure 4")
 
 
-# Map of FL low income % 
+# Map of FL low-income % 
 tm_shape(
    fl_sociodem, 
    bbox = sf::st_bbox(c(
@@ -454,9 +454,9 @@ phi <- 0.5
 p <- 1.5
 
 beta_0 <- 0.5 # Intercept 
-beta_1 <- 1.2 # Effect of low income percentages
+beta_1 <- 1.2 # Effect of low-income percentages
 beta_2 <- 1.8 # Effect of People of Color percentages
-beta_3 <- 0.1 # Interaction of low income and people of color percentages 
+beta_3 <- 0.1 # Interaction of low-income and people of color percentages 
 beta_4 <- -2.3 # Effect of distance of Hurricane's path 
 
 given_parameters <- c(beta_0, beta_1, beta_2, beta_4, beta_3)
@@ -658,7 +658,7 @@ Investigating community composition (People of Color and low-income populations)
 ```{r}
 #| code-fold: true
 
-# Geom_rasters plots of flood predictions via minority and low income % 
+# Geom_rasters plots of flood predictions via minority and low-income % 
 prediction_grid_dist_constant %>% 
   ggplot(aes(x = p_peopcolorpct, y = p_lowincpct, fill = flood_predictions)) + 
   geom_raster() + 
@@ -679,7 +679,7 @@ Selecting 3 representative low-income levels at the 10%, 50%, 90% percentiles.
 
 ```{r}
 #| code-fold: true 
-# Three low income levels at the 10%, 50%, 90% percentile 
+# Three low-income levels at the 10%, 50%, 90% percentile 
 selected_levels <- quantile(join_df$p_lowincpct, probs = c(0.1, 0.5, 0.9))
 
 selected_levels
@@ -703,7 +703,7 @@ plot_data <- plot_data %>%
                                labels = c("10%", "50%", "90%")))
 
 
-# Plot the reduced dataframe - % minorities & flood predictions at low income's 10th, 50th, and 90th precentile 
+# Plot the reduced dataframe - % minorities & flood predictions at low-income's 10th, 50th, and 90th precentile 
 ggplot(plot_data, 
        aes(x = p_peopcolorpct, 
            y = flood_predictions, 
@@ -772,7 +772,7 @@ prediction_grid %>%
 
 As previously discussed, the **percentages of People of Color** within a community exhibit a *positive*, significant relationship to flood exposure. Communities with high minority populations are predicted to experience greater flooding. This trend is illustrated in Figures 6, 7, and 9 where flooding estimates increase with rising percentages of minorities. This interaction is persistent regardless of whether the distance from the hurricane's path is held constant or varies.
 
-In contrast, the **low-income percentages** shows a *negative*, significant relationship to flood predictions. During Hurricane Ian, areas with high low-income percentages (poorer communities), are predicted to have less flooding, which is evident in Figures 6, 7, and 8. Notably, the 10% low income quartile (representing wealthier communities) experiences the greatest amount of flooding in Figure 7. The separation of prediction lines in Figure 7 highlights the significant effects of low-income percentages on flooding predictions. The negative relationship is opposite of typical expectations. This counterintuitive outcome is likely attributable to the Florida coastline bearing the full force of the storm. Coastal properties, which are typically higher-income and affluent communities, were directly exposed to Hurricane Ian as a Category 4 storm, resulting in greater damage and flooding in these wealthier communities.
+In contrast, the **low-income percentages** shows a *negative*, significant relationship to flood predictions. During Hurricane Ian, areas with high low-income percentages (poorer communities), are predicted to have less flooding, which is evident in Figures 6, 7, and 8. Notably, the 10% low-income quartile (representing wealthier communities) experiences the greatest amount of flooding in Figure 7. The separation of prediction lines in Figure 7 highlights the significant effects of low-income percentages on flooding predictions. The negative relationship is opposite of typical expectations. This counterintuitive outcome is likely attributable to the Florida coastline bearing the full force of the storm. Coastal properties, which are typically higher-income and affluent communities, were directly exposed to Hurricane Ian as a Category 4 storm, resulting in greater damage and flooding in these wealthier communities.
 
 Yet, the interaction between these socio-demographic variables (low-income and minority percentages) is not significant when determining flood exposure.
 
@@ -791,6 +791,8 @@ This analysis has several limitations. First, this study does not account for ot
 Bonat, W. H., & Kokonendji, C. C. (2017). Flexible Tweedie regression models for continuous data. *Journal of Statistical Computation and Simulation*, *87*(11), 2138-2152.
 
 Bucci, L., Alaka, L., Hagen, A., Delgado, S., & Beven, J. (2023). *National hurricane center tropical cyclone report*. Hurricane Ian (AL092022), 1-72.
+
+Dartmouth Flood Observatory. (n.d.). *2022 Hurricane Ian*. <https://floodobservatory.colorado.edu/Events/2022HurricaneIan/2022HurricaneIan.html>
 
 Ford, C. (2025). *Getting Started with Tweedie Models.* University of Virginia Library. <https://library.virginia.edu/data/articles/getting-started-tweedie-models-0>
 

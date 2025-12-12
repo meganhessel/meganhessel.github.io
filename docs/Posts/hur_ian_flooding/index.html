@@ -338,7 +338,7 @@ window.Quarto = {
 <section id="datasets" class="level2">
 <h2 class="anchored" data-anchor-id="datasets">Datasets</h2>
 <ol type="1">
-<li><p>Hurricane Ian flooding data from …</p></li>
+<li><p>Hurricane Ian flooding data is from the <a href="https://floodobservatory.colorado.edu/Events/2022HurricaneIan/2022HurricaneIan.html">Dartmouth Flood Observatory</a>.</p></li>
 <li><p>Hurricane Ian’s path data is vector line geometry acquired from <a href="https://www.arcgis.com/home/webmap/viewer.html?layers=20d971f4472e4037af0f260f6454e7ab">ArcGIS online</a>.</p></li>
 <li><p>Florida’s census track contains various attributes of each census track and is from the <a href="https://www.census.gov/programs-surveys/acs/guidance/estimates.html">U.S. Census Bureau’s American Community Survey Data</a>.</p></li>
 <li><p>Geometries of Florida’s counties accessed from <a href="https://catalog.data.gov/dataset/tiger-line-shapefile-2023-nation-u-s-county-and-equivalent-entities/resource/b1d924fa-6554-4653-b217-ef95785654cb">U.S. Census Bureau’s Data Catalog</a>.</p></li>
@@ -639,7 +639,7 @@ window.Quarto = {
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map of FL low income % </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map of FL low-income % </span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>   fl_sociodem, </span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">bbox =</span> sf<span class="sc">::</span><span class="fu">st_bbox</span>(<span class="fu">c</span>(</span>
@@ -805,9 +805,9 @@ window.Quarto = {
 <span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">1.5</span></span>
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>beta_0 <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Intercept </span></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>beta_1 <span class="ot">&lt;-</span> <span class="fl">1.2</span> <span class="co"># Effect of low income percentages</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>beta_1 <span class="ot">&lt;-</span> <span class="fl">1.2</span> <span class="co"># Effect of low-income percentages</span></span>
 <span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>beta_2 <span class="ot">&lt;-</span> <span class="fl">1.8</span> <span class="co"># Effect of People of Color percentages</span></span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>beta_3 <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="co"># Interaction of low income and people of color percentages </span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>beta_3 <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="co"># Interaction of low-income and people of color percentages </span></span>
 <span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>beta_4 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">2.3</span> <span class="co"># Effect of distance of Hurricane's path </span></span>
 <span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>given_parameters <span class="ot">&lt;-</span> <span class="fu">c</span>(beta_0, beta_1, beta_2, beta_4, beta_3)</span>
@@ -1111,7 +1111,7 @@ Link function: log </code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Geom_rasters plots of flood predictions via minority and low income % </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Geom_rasters plots of flood predictions via minority and low-income % </span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>prediction_grid_dist_constant <span class="sc">%&gt;%</span> </span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> p_peopcolorpct, <span class="at">y =</span> p_lowincpct, <span class="at">fill =</span> flood_predictions)) <span class="sc">+</span> </span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span> </span>
@@ -1139,7 +1139,7 @@ Link function: log </code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Three low income levels at the 10%, 50%, 90% percentile </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Three low-income levels at the 10%, 50%, 90% percentile </span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>selected_levels <span class="ot">&lt;-</span> <span class="fu">quantile</span>(join_df<span class="sc">$</span>p_lowincpct, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>))</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>selected_levels</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1165,7 +1165,7 @@ Link function: log </code></pre>
 <span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"10%"</span>, <span class="st">"50%"</span>, <span class="st">"90%"</span>)))</span>
 <span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the reduced dataframe - % minorities &amp; flood predictions at low income's 10th, 50th, and 90th precentile </span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the reduced dataframe - % minorities &amp; flood predictions at low-income's 10th, 50th, and 90th precentile </span></span>
 <span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, </span>
 <span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> p_peopcolorpct, </span>
 <span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> flood_predictions, </span>
@@ -1256,7 +1256,7 @@ Link function: log </code></pre>
 <section id="evaluating-coefficients-and-plots" class="level2">
 <h2 class="anchored" data-anchor-id="evaluating-coefficients-and-plots">Evaluating Coefficients and Plots</h2>
 <p>As previously discussed, the <strong>percentages of People of Color</strong> within a community exhibit a <em>positive</em>, significant relationship to flood exposure. Communities with high minority populations are predicted to experience greater flooding. This trend is illustrated in Figures 6, 7, and 9 where flooding estimates increase with rising percentages of minorities. This interaction is persistent regardless of whether the distance from the hurricane’s path is held constant or varies.</p>
-<p>In contrast, the <strong>low-income percentages</strong> shows a <em>negative</em>, significant relationship to flood predictions. During Hurricane Ian, areas with high low-income percentages (poorer communities), are predicted to have less flooding, which is evident in Figures 6, 7, and 8. Notably, the 10% low income quartile (representing wealthier communities) experiences the greatest amount of flooding in Figure 7. The separation of prediction lines in Figure 7 highlights the significant effects of low-income percentages on flooding predictions. The negative relationship is opposite of typical expectations. This counterintuitive outcome is likely attributable to the Florida coastline bearing the full force of the storm. Coastal properties, which are typically higher-income and affluent communities, were directly exposed to Hurricane Ian as a Category 4 storm, resulting in greater damage and flooding in these wealthier communities.</p>
+<p>In contrast, the <strong>low-income percentages</strong> shows a <em>negative</em>, significant relationship to flood predictions. During Hurricane Ian, areas with high low-income percentages (poorer communities), are predicted to have less flooding, which is evident in Figures 6, 7, and 8. Notably, the 10% low-income quartile (representing wealthier communities) experiences the greatest amount of flooding in Figure 7. The separation of prediction lines in Figure 7 highlights the significant effects of low-income percentages on flooding predictions. The negative relationship is opposite of typical expectations. This counterintuitive outcome is likely attributable to the Florida coastline bearing the full force of the storm. Coastal properties, which are typically higher-income and affluent communities, were directly exposed to Hurricane Ian as a Category 4 storm, resulting in greater damage and flooding in these wealthier communities.</p>
 <p>Yet, the interaction between these socio-demographic variables (low-income and minority percentages) is not significant when determining flood exposure.</p>
 <p><strong>Distance from the Hurricane Ian’s path</strong> has a strong <em>negative</em>, significant relationship. Regardless of the community composition, areas closer to the Hurricane’s trajectory experienced greater flooding (Figures 8 and 9). Once communities were approximately 200km from the storm’s path, predicted flooding decreased remarkably.</p>
 <p>The <strong>R-squared</strong> value of 0.214 means the model explains about 21.4% of the variability in flooding intensity. While 0.214 seems low, it is expected in environmental hazard modeling, where flooding is driven by numerous unaccounted factors, such as drainage patterns and land cover. Additionally, Tweedie models, dealing with zero-inflated, skewed, positive data, rarely produce high R-squared values. Thus, an R-squared around 0.2 is considered typical, still reflecting meaningful explanatory power as it is paired with several statistically significant predictors.</p>
@@ -1270,6 +1270,7 @@ Link function: log </code></pre>
 <h1>References</h1>
 <p>Bonat, W. H., &amp; Kokonendji, C. C. (2017). Flexible Tweedie regression models for continuous data. <em>Journal of Statistical Computation and Simulation</em>, <em>87</em>(11), 2138-2152.</p>
 <p>Bucci, L., Alaka, L., Hagen, A., Delgado, S., &amp; Beven, J. (2023). <em>National hurricane center tropical cyclone report</em>. Hurricane Ian (AL092022), 1-72.</p>
+<p>Dartmouth Flood Observatory. (n.d.). <em>2022 Hurricane Ian</em>. <a href="https://floodobservatory.colorado.edu/Events/2022HurricaneIan/2022HurricaneIan.html" class="uri">https://floodobservatory.colorado.edu/Events/2022HurricaneIan/2022HurricaneIan.html</a></p>
 <p>Ford, C. (2025). <em>Getting Started with Tweedie Models.</em> University of Virginia Library. <a href="https://library.virginia.edu/data/articles/getting-started-tweedie-models-0" class="uri">https://library.virginia.edu/data/articles/getting-started-tweedie-models-0</a></p>
 <p>Gilchrist, R., &amp; Drinkwater, D. (2000). The use of the Tweedie distribution in statistical modelling. In <em>COMPSTAT: Proceedings in computational statistics 14th symposium held in Utrecht, the Netherlands, 2000</em> (pp.&nbsp;313-318). Heidelberg: Physica-Verlag HD.</p>
 <p>Chakraborty, J., Collins, T.W., Grineski, SE. (2019). <em>Exploring the Environmental Justice Implications of Hurricane Harvey Flooding in Greater Houston, Texas.</em> Am J Public Health. Doi: 10.2105/AJPH.2018.304846.</p>
