@@ -476,7 +476,7 @@ The Palisade Fire primarily affected the Pacific Palisades, a region located aro
 
 The figure above highlights the disparities between these communities' social vulnerability and fire impacts. While both areas exhibit relatively low percentages of uninsured residents, the Eaton fire area (located further from the waters edge with greater historical minorities percentages) shows a higher concentraion of households affected by the disaster without adequate insurance coverage. This discrepancy displays how vulnerabilities play into the communities ability to recover from catastrophic events. 
 
-**If interested, more code and content is accessible at https://github.com/meganhessel/eds220-hwk4.git**
+**If interested, more code and content is accessible at [https://github.com/meganhessel/eds220-hwk4.git](https://github.com/meganhessel/eds220-hwk4.git)**
 
 # References 
 
