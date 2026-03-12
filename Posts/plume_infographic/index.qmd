@@ -92,7 +92,8 @@ You can check out the [full data here](https://github.com/meganhessel/EDS240info
 ### The Infographic
 
 ```{r fig.width=12, fig.height=17}
-#| code-fold: true
+#| echo: false
+#| eval: true
 infographic <- readJPEG(here::here("Posts","plume_infographic", "FPM4.4.jpg"))
 plot(as.raster(infographic))
 ```
@@ -339,7 +340,7 @@ Most of the color palettes are color-picked from [Carbon Mapper’s website](htt
 
 The carbon dioxide and methane colors are an orange-yellow and a purple which are Carbon Mapper’s main color theme and color-blind friendly. 
 
-```{r}
+```{r fig.width=8, fig.height=4}
 #| echo: false
 #| eval: true
 img <- png::readPNG(here::here("Posts","plume_infographic", "images", "orange_purple_colors.png"))
@@ -348,7 +349,7 @@ plot(as.raster(img))
 
 The sector color palette ranges from a dark blue to a dark red which are used to distinguish plume concentrations in Carbon Mapper’s data portal and color-blind friendly.
 
-```{r}
+```{r fig.width=10, fig.height=4}
 #| echo: false
 #| eval: true
 img <- png::readPNG(here::here("Posts","plume_infographic", "images", "sector_colors.png"))
@@ -357,7 +358,7 @@ plot(as.raster(img))
 
 The emissions per country stream graph color palette is color-picked from the emission plume image and infographic below. These images follow the purple and yellow theme from Carbon Mapper. While these colors are not color-blind friendly, I made sure to label each country and added an annotation to help explain the plots main points.
 
-```{r}
+```{r fig.width=10, fig.height=5}
 #| echo: false
 #| eval: true
 img <- png::readPNG(here::here("Posts","plume_infographic", "images", "country_colors.png"))
