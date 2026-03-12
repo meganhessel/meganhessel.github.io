@@ -1,0 +1,436 @@
+---
+title: "Global Carbon Dioxide and Methane Plume Emissions"
+description: "Trends of global plume emissions."
+author: 
+  - name: Megan Hessel  # Link to other people 
+    url: https//meganhessel.github.io/
+    affiliation: The Bren School of Environmental Science & Management
+    affiliation-url: https://bren.ucsb.edu/
+date: 2025-12-4
+categories: [MEDS, R, data-viz] #
+image: plume_main_image.png
+citation: #true (if without link)
+  url: https//meganhessel.github.io/Posts/analyzing_LA_fire_scars 
+#draft: true
+#draft-mode: linked # Hides Blog post on listing page - url still works tho
+#bibliography: references.bib
+---
+
+# Understanding Global [Carbon Dioxide]{style="color:#FFBF44;"} & [Methane]{style="color:#7F28D5;"} Plume Emissions
+
+```{r}
+#| echo: false
+#| output: false
+library(jpeg)
+library(png)
+library(tidyverse)
+library(sf)
+library(patchwork)
+library(ggstream)
+```
+
+```{r}
+#| echo: false
+#| output: false
+# Loading in the data 
+# Plumes by year
+plumes_2016 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2016_2017", "export_2016-01-01_2017-01-01.csv")) 
+plumes_2017 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2017_2018", "export_2017-01-01_2018-01-01.csv")) 
+plumes_2018 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2018_2019", "export_2018-01-01_2019-01-01.csv")) 
+plumes_2019 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2019_2020", "export_2019-01-01_2020-01-01.csv")) 
+plumes_2020 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2020_2021", "export_2020-01-01_2021-01-01.csv")) 
+plumes_2021 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2021_2022", "export_2021-01-01_2022-01-01.csv")) 
+plumes_2022 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2022_2023", "export_2022-01-01_2023-01-01.csv")) 
+plumes_2023 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2023_2024", "export_2023-01-01_2024-01-01.csv")) 
+plumes_2024 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2024_2025", "export_2024-01-01_2025-01-01.csv")) 
+plumes_2025 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2025_2025", "export_2025-01-01_2025-10-01.csv")) 
+
+# Combines the years into `plumes`
+plumes <- rbind(plumes_2016, plumes_2017, plumes_2018, plumes_2019, plumes_2020, plumes_2021, plumes_2022, plumes_2023, plumes_2024, plumes_2025)
+
+
+# Make plumes spatial
+plumes <- st_as_sf(plumes, coords = c('plume_longitude', 'plume_latitude'), crs = 'EPSG:4326')
+
+counties <- spData::world
+
+# JOIN Plume + Country data 
+plumes_country <- st_join(counties, plumes)
+```
+
+```{r fig.width=12, fig.height=8}
+#| echo: false
+#| eval: true
+img <- png::readPNG(here::here("Posts","plume_infographic", "images", "plume2.png"))
+plot(as.raster(img))
+```
+
+Greenhouse gas emissions are warming our planet and altering natural processes at alarming rates (Figure 1). Since the industrial revolution, greenhouse gas emissions have dramatically increased. Specifically, carbon dioxide (CO2) increased from 280 parts per million (ppm) to over 410 ppm while methane (CH4) has risen from 700 parts per billion (ppb) to around 1,900 ppb. These greenhouse gasses that now overwhelm our atmosphere absorb and re-emit infrared radiation (heat) in all directions.
+
+All to say, increase in greenhouse gasses (like carbon dioxide and methane), increase our global temperature - this is called **climate change**. Today, sea levels are rising, extreme weather events are becoming more common, and oceans are acidifying due to the rise in greenhouse gasses. Ecosystems, human health, and vital infrastructure are disrupted and even destroyed.
+
+```{r fig.width=8, fig.height=6., fig.cap="Figure 1"}
+#| echo: false
+#| eval: true
+
+img <- png::readPNG(here::here("Posts","plume_infographic", "images", "global-temperature-anomalies-by-month.png"))
+plot(as.raster(img)) 
+```
+
+**Emission plumes** are columns of pollutants, mostly greenhouse gasses, that are released into the atmosphere. As a kid, I would always call them "cloud machines" due to the visible cloud-like gas leaking from tall smoke stack. Little did I know, the "cloud machines" were adding to air pollution and climate change.
+
+To reduce greenhouse gas emissions, *Carbon Mapper* tracks and records global methane and carbon dioxide emission plume data. This data is made accessible to the public to promote transparency, education, and climate action. 
+
+The goal of this infographic is to further *Carbon Mapper’s* mission: use their public plume data to educate and promote local climate action, globally. Therefore, the infographic addresses these questions: 
+
+-   What are plumes made of and what are the gasses characteristics? 
+
+-   Who is disproportionately contributing to emission plumes? 
+
+You can check out the [full data here](https://github.com/meganhessel/EDS240infographic.git)!
+
+### The Infographic
+
+```{r fig.width=12, fig.height=17}
+#| code-fold: true
+infographic <- readJPEG(here::here("Posts","plume_infographic", "FPM4.4.jpg"))
+plot(as.raster(infographic))
+```
+
+## Plume Source Bar Plots
+
+Carbon dioxide is emitted through human activities, mostly through burning of fossil fuels for electricity and other industrial processes. CO2 is stored in trees and soils, known as being “sequestered” within these carbon dioxide sinks. Therefore, deforestation, urbanization, and land-use change removes CO2 from these natural sinks and increases atmospheric CO2 concentration. 
+
+Methane is commonly “leaked” from natural gas systems, such as livestock and solid waste. Livestock’s digestive processes produce and then off-gas CH4. As companies raise these animals in large quantities, CH4 emissions increase. Similarly to the digestive processes, as solid and water waste decomposes in large landfills, CH4 is off-gassed and released into the atmosphere. Industry is the most common methane source. Methane is used to produce, store, and transport oil and natural gas. Furthermore, coal mine methane (CMM) is realized from mines through ventilation systems, degasification/drainage systems, and post-mining activities (such as processes, storage, and transportation). CCM can be captured from the ventilation and drainage systems and used for energy production. 
+
+Understanding the emission sources can lead to creating effective emission reduction programs. By identifying key sources for each greenhouse gas, governments and organizations can tailor policies and strategies for specific emission challenges. Some solutions for emission reduction in each sector include: 
+
+| Plume Source | Solutions |
+|------------------------------------|------------------------------------|
+| Electricity generation’s carbon dioxide emissions  | Governments and organizations can set up carbon trading systems, a carbon tax, or increase funding on renewable energy sources.  |
+| Solid waste’s methane emissions  | Land-fill gas can be captured and used as a renewable energy source.  |
+| Livestock’s methane emissions  | Biogas recovery systems capture and utilize natural-by-produces from digestion for clean-burning energy fuel.  |
+| Oil and Gas’s methane emissions  | Existing programs to manage these specific emissions are performance standards that limit methane emissions from operations and increase fuel efficiency in transportation.  |
+
+When just using `ggplot`:
+
+```{r}
+#| code-fold: true 
+
+# Data Wrangling 
+plumeDF_sector_tot_emission <- plumes %>% 
+  group_by(ipcc_sector, gas) %>% 
+  summarise(total_emissions = sum(emission_auto, na.rm = TRUE), # Total Emissions 
+            .groups = "drop") %>%
+  st_drop_geometry() %>% 
+  filter(!ipcc_sector == "") # remove data points with no sector listed 
+
+
+sector_color_pal <- c("Coal Mining (1B1a)" = "#321F64",
+                      "Waste Water (6B)" = "#BBBBBB",
+                      "Oil & Gas (1B2)" = "#6C67DF",
+                      "Livestock (4B)" = "#FFB13E", 
+                      "Solid Waste (6A)" = "#ED5713",
+                      "Electricity Generation (1A1)" = "#20E6AC",
+                      "Other" = "#7B0301")
+
+
+# Methane Sector plot 
+plumeDF_CH4_sector_plot <- plumeDF_sector_tot_emission %>% 
+  filter(gas == "CH4") %>% 
+  ggplot() + 
+  geom_bar(aes(x = "", y = total_emissions, fill = ipcc_sector), # Pie chart
+           stat="identity", 
+           col = "black") + 
+  scale_fill_manual(values = sector_color_pal) +
+  theme_void() + 
+  labs(title = "Methane Plumes", 
+       fill = "Sector") + 
+  theme(plot.title = element_text(size = 13))
+
+
+
+# CO2 Sector plot 
+plumeDF_CO2_sector_plot <- plumeDF_sector_tot_emission %>% 
+  filter(gas == "CO2") %>% 
+  ggplot() + 
+  geom_bar(aes(x = "", y = total_emissions, fill = ipcc_sector), # Pie chart
+           stat="identity", 
+           col = "black") + 
+  scale_fill_manual(values = sector_color_pal) +
+  theme_void() + 
+  labs(title = "Carbon Dioxide Plumes", 
+       fill = "Sector") + 
+  theme(plot.title = element_text(size = 13), 
+        legend.position = "none")
+  
+# Plots together 
+plume_sector_plot <- (plumeDF_CO2_sector_plot | plumeDF_CH4_sector_plot) 
+plume_sector_plot
+
+```
+
+After polishing in Affinity:
+
+```{r fig.width=10, fig.height=10}
+#| code-fold: true
+img <- png::readPNG(here::here("Posts","plume_infographic", "plots", "sector_plot_ss.png"))
+plot(as.raster(img))
+```
+
+## Greenhouse Gas Background Plots
+
+Carbon dioxide has a much higher atmospheric concentration than methane as it is emitted through the burning of fossil fuels, deforestation, and industrial processes. Methane, on the other hand, is emitted through a larger variety of sources including solid waste, natural gas and petroleum systems, and livestocks. Since pre-industrial times, both greenhouse gas emissions have increased with human activities, just at different rates and concentrations. While CO2 concentration is extremely larger than CH4, methane has as 25-30 times higher global warming potential (gwp) which means 1 CH4 molecule absorbs the same infrared radiation (heat) as 25-30 CO2 molecules over 100 years. In a 20 year time period, methane traps 81-83 more heat than carbon dioxide. 
+
+This is important because both greenhouse gases have vastly different concentrations and global warming potentials which makes them both very important to climate change. Understanding both gasses characteristics and trends will help create effective climate action solutions. 
+
+\
+When using `ggplot`:
+
+```{r}
+#| code-fold: true 
+# gas colors 
+gas_pal <- c("CH4" = "#7F28D5", 
+             "CO2" = "#FFBF44")
+
+# Total emission plot 
+gas_total_emissions <- plumes %>% 
+  group_by(gas) %>% 
+  summarise(emission_auto = sum(emission_auto, na.rm = TRUE)) %>% 
+  st_drop_geometry() %>% 
+  ggplot() + 
+  geom_col(aes(x = gas, y = emission_auto, fill = gas), col = "black") + 
+  scale_fill_manual(values = gas_pal) +
+  theme_minimal() + 
+  labs(y = "Total Emission (kg/hr)") + 
+  theme(axis.title.x = element_blank(), 
+        legend.position = "none")
+
+
+
+# GWP Comparison Circle chart
+gwp <- data.frame(gas = c("CO2", "CH4"), 
+                  life_time = c(500, 12.4), # Chem life times 
+                  gwp = c(1,28)) # global warmining potential
+gas_gwp_plot <- ggplot() +
+  geom_point(data = gwp, 
+             mapping = aes(x = gas, y = 0, size = gwp, fill = gas), 
+             shape = 21, color = "black", alpha = 0.7) +
+  scale_size_area(max_size = 20) +  # Ensures area ~ value
+  coord_fixed(ratio = 5) +          # Keep circles round
+  theme_minimal() +
+  scale_fill_manual(values = gas_pal, guide = "none") + 
+  labs(
+    title = "Global Warming Potiential (gwp)",
+    size = "Value"
+  ) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(), 
+        axis.title.y = element_blank(), 
+        axis.title.x = element_blank(), 
+        legend.position = "none")
+
+gas_gwp_plot / gas_total_emissions
+
+```
+
+After polishing in Affinity:
+
+```{r fig.width=10, fig.height=10}
+#| echo: false
+#| eval: true
+img <- png::readPNG(here::here("Posts","plume_infographic", "plots", "emission_gwp_ss.png"))
+plot(as.raster(img))
+```
+
+## Emissions Per Country Steam Plot
+
+To understand the distribution of plume emissions on spatial and temporal scales, I created a stream plot. This plot type illustrated how carbon dioxide and methane emission rates rise and fall overtime in the top emitter countries. CO2 and CH4 are emitted at completely different rates. Having CO2 emission rates extend upwards and CH4 emission rates extend downwards allows for two different y-axis in order to compare the peaks and troughs of the greenhouse gas emission rates. 
+
+Carbon dioxide plume emissions seem to be denominated by Qatar in the early 2020s who then had a steep plume emission die off in 2024. Since then, Kuwait has taken the lead for CO2 emissions per million of people. Kuwait also emits a large amount of methane. Most importantly, Turkmenistan has consistently been the lead methane emitter. 
+
+The per-capita framing reveals that smaller, oil-and-gas-dependent nations contribute disproportionately to plume emissions relative to their population size.
+
+The plots in `ggplot`:
+
+```{r}
+#| code-fold: true
+
+# Data wrangling 
+plumes_per_country <-plumes_country %>% 
+  st_drop_geometry() %>% 
+  group_by(name_long, year = year(datetime), month = month(datetime), gas) %>%  # Find avg and sum for each month of each year 
+  summarise(total_emissions = sum(emission_auto, na.rm = TRUE),
+            avg_emissions = mean(emission_auto, na.rm = TRUE),
+            pop = mean(pop),
+            .groups = "drop") %>%
+  mutate(year_dec = year + (month - 1) / 12, #decimal year 
+         emission_total_capita = (total_emissions/pop), 
+         emission_per_million = (total_emissions/pop) * 1e6) # per 1 million people
+
+
+# Top 10 green house gas emitters 
+top_countries_CH4 <- plumes_per_country %>%
+  filter(gas == "CH4") %>%
+  group_by(name_long) %>%
+  summarise(total = sum(emission_per_million)) %>%
+  slice_max(total, n = 10) %>%
+  pull(name_long)
+
+
+top_countries_CO2 <- plumes_per_country %>%
+  filter(gas == "CO2") %>%
+  group_by(name_long) %>%
+  summarise(total = sum(emission_per_million)) %>%
+  slice_max(total, n = 10) %>%
+  pull(name_long)
+
+
+
+# Plot for CH4
+plumes_per_country %>% 
+  filter(gas == "CH4", 
+         year >= 2023, 
+         name_long %in% top_countries_CH4) %>% 
+  #mutate(emission_per_million = -emission_per_million) %>% 
+  ggplot(aes(x = year_dec, #  use decimal year 
+             y = emission_per_million, 
+             fill = name_long)) +
+  geom_stream(type = "ridge",  bw = 0.85) + 
+  geom_stream_label(aes(label = name_long), 
+                    type = "ridge", 
+                    size = 2.5) +
+  labs(fill = "Countries") +
+  theme_minimal() + 
+  theme(axis.title.y = element_blank(), 
+        axis.title.x = element_blank())
+
+
+# Plot for CO2
+plumes_per_country %>% 
+  filter(gas == "CO2", 
+         year >= 2023, 
+         name_long %in% top_countries_CO2) %>% 
+  ggplot(aes(x = year_dec, #  use decimal year 
+             y = emission_per_million, 
+             fill = name_long)) +
+  geom_stream(type = "ridge",  bw = 0.85) + 
+  geom_stream_label(aes(label = name_long), 
+                    type = "ridge", 
+                    size = 2.5) +
+  labs(fill = "Countries") +
+  theme_minimal() + 
+  theme(axis.title.y = element_blank(), 
+        axis.title.x = element_blank())
+```
+
+After polishing in Affinity:
+
+```{r fig.width=10, fig.height=8}
+#| echo: false
+#| eval: true
+img <- png::readPNG(here::here("Posts","plume_infographic", "plots", "country_ss.png"))
+plot(as.raster(img))
+```
+
+## Colors 
+
+Most of the color palettes are color-picked from [Carbon Mapper’s website](https://carbonmapper.org/) who supplied all data used for the infographic. 
+
+The carbon dioxide and methane colors are an orange-yellow and a purple which are Carbon Mapper’s main color theme and color-blind friendly. 
+
+```{r}
+#| echo: false
+#| eval: true
+img <- png::readPNG(here::here("Posts","plume_infographic", "images", "orange_purple_colors.png"))
+plot(as.raster(img))
+```
+
+The sector color palette ranges from a dark blue to a dark red which are used to distinguish plume concentrations in Carbon Mapper’s data portal and color-blind friendly.
+
+```{r}
+#| echo: false
+#| eval: true
+img <- png::readPNG(here::here("Posts","plume_infographic", "images", "sector_colors.png"))
+plot(as.raster(img))
+```
+
+The emissions per country stream graph color palette is color-picked from the emission plume image and infographic below. These images follow the purple and yellow theme from Carbon Mapper. While these colors are not color-blind friendly, I made sure to label each country and added an annotation to help explain the plots main points.
+
+```{r}
+#| echo: false
+#| eval: true
+img <- png::readPNG(here::here("Posts","plume_infographic", "images", "country_colors.png"))
+plot(as.raster(img))
+```
+
+Plumes are a heavy and dark topic. Therefore, the dark background colors were to portray the same gloomy feeling. 
+
+## General design, contextualizing the data, & centering my primary message
+
+To do...
+
+## For all the plot code
+
+```{r}
+#| code-fold: true 
+#| output: false
+
+# Load in libraries 
+library(jpeg)
+library(png)
+library(tidyverse)
+library(sf)
+library(patchwork)
+library(ggstream)
+
+# Loading in Carbon Mapper  data 
+# Plumes by year
+plumes_2016 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2016_2017", "export_2016-01-01_2017-01-01.csv")) 
+plumes_2017 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2017_2018", "export_2017-01-01_2018-01-01.csv")) 
+plumes_2018 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2018_2019", "export_2018-01-01_2019-01-01.csv")) 
+plumes_2019 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2019_2020", "export_2019-01-01_2020-01-01.csv")) 
+plumes_2020 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2020_2021", "export_2020-01-01_2021-01-01.csv")) 
+plumes_2021 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2021_2022", "export_2021-01-01_2022-01-01.csv")) 
+plumes_2022 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2022_2023", "export_2022-01-01_2023-01-01.csv")) 
+plumes_2023 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2023_2024", "export_2023-01-01_2024-01-01.csv")) 
+plumes_2024 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2024_2025", "export_2024-01-01_2025-01-01.csv")) 
+plumes_2025 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2025_2025", "export_2025-01-01_2025-10-01.csv")) 
+
+# Combines the years into `plumes`
+plumes <- rbind(plumes_2016, plumes_2017, plumes_2018, plumes_2019, plumes_2020, plumes_2021, plumes_2022, plumes_2023, plumes_2024, plumes_2025)
+
+# Make plumes spatial
+plumes <- st_as_sf(plumes, coords = c('plume_longitude', 'plume_latitude'), crs = 'EPSG:4326')
+
+# Add country data 
+counties <- spData::world
+
+# JOIN Plume + Country data 
+plumes_country <- st_join(counties, plumes)
+
+# Create color palettes 
+gas_pal <- c("CH4" = "#7F28D5", 
+             "CO2" = "#FFBF44")
+
+sector_color_pal <- c("Coal Mining (1B1a)" = "#321F64",
+                      "Waste Water (6B)" = "#BBBBBB",
+                      "Oil & Gas (1B2)" = "#6C67DF",
+                      "Livestock (4B)" = "#FFB13E", 
+                      "Solid Waste (6A)" = "#ED5713",
+                      "Electricity Generation (1A1)" = "#20E6AC",
+                      "Other" = "#7B0301")
+# blah blah blah blah 
+
+```
+
+
+# References
+
+<https://www.xylem.com/en-us/markets/agriculture/biogas-recovery/>
+
+<https://www.epa.gov/cmop/about-coal-mine-methane>
+
+<https://www.epa.gov/climateleadership/ghg-reduction-programs-strategies#Supply_Chain>
+
+<https://www.epa.gov/controlling-air-pollution-oil-and-natural-gas-operations/epas-final-rule-reduce-methane-and-other>
