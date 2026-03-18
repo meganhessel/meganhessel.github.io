@@ -1,6 +1,6 @@
 ---
 title: "Global Carbon Dioxide and Methane Plume Emissions"
-description: "Trends of global plume emissions."
+description: "A Deep Dive into Global CO2 and CH4 Emission Sources and Trends to Drive Climate Action."
 author: 
   - name: Megan Hessel  # Link to other people 
     url: https//meganhessel.github.io/
@@ -15,8 +15,6 @@ citation: #true (if without link)
 #draft-mode: linked # Hides Blog post on listing page - url still works tho
 #bibliography: references.bib
 ---
-
-# Understanding Global [Carbon Dioxide]{style="color:#FFBF44;"} & [Methane]{style="color:#7F28D5;"} Plume Emissions
 
 ```{r}
 #| echo: false
@@ -58,45 +56,50 @@ counties <- spData::world
 plumes_country <- st_join(counties, plumes)
 ```
 
-```{r fig.width=12, fig.height=8}
-#| echo: false
-#| eval: true
-img <- png::readPNG(here::here("Posts","plume_infographic", "images", "plume2.png"))
-plot(as.raster(img))
-```
+![](images/plume2.png){fig-align="center"}
+
+## Background
+
+**Understanding Global [Carbon Dioxide]{style="color:#FFBF44;"} & [Methane]{style="color:#7F28D5;"} Plume Emissions**
 
 Greenhouse gas emissions are warming our planet and altering natural processes at alarming rates (Figure 1). Since the industrial revolution, greenhouse gas emissions have dramatically increased. Specifically, carbon dioxide (CO2) increased from 280 parts per million (ppm) to over 410 ppm while methane (CH4) has risen from 700 parts per billion (ppb) to around 1,900 ppb. These greenhouse gasses that now overwhelm our atmosphere absorb and re-emit infrared radiation (heat) in all directions.
 
 All to say, increase in greenhouse gasses (like carbon dioxide and methane), increase our global temperature - this is called **climate change**. Today, sea levels are rising, extreme weather events are becoming more common, and oceans are acidifying due to the rise in greenhouse gasses. Ecosystems, human health, and vital infrastructure are disrupted and even destroyed.
 
-```{r fig.width=8, fig.height=6., fig.cap="Figure 1"}
-#| echo: false
-#| eval: true
-
-img <- png::readPNG(here::here("Posts","plume_infographic", "images", "global-temperature-anomalies-by-month.png"))
-plot(as.raster(img)) 
-```
-
 **Emission plumes** are columns of pollutants, mostly greenhouse gasses, that are released into the atmosphere. As a kid, I would always call them "cloud machines" due to the visible cloud-like gas leaking from tall smoke stack. Little did I know, the "cloud machines" were adding to air pollution and climate change.
 
-To reduce greenhouse gas emissions, *Carbon Mapper* tracks and records global methane and carbon dioxide emission plume data. This data is made accessible to the public to promote transparency, education, and climate action. 
+[![Figure 1.](images/global-temperature-anomalies-by-month.png){fig-alt="Bar plot showing global temperatures increasing from 1940 to 2025." fig-align="center" width="395"}](https://ourworldindata.org/grapher/global-temperature-anomalies-by-month)
 
-The goal of this infographic is to further *Carbon Mapper’s* mission: use their public plume data to educate and promote local climate action, globally. Therefore, the infographic addresses these questions: 
+## The data
+
+To reduce greenhouse gas emissions, *Carbon Mapper* uses remote sensing systems to detect, pinpoint, and quantify global plume emission data. They use ground, airborne, and satellite observational tools to find large methane and carbon dioxide emissions events. The plumes' source, location, gas type, and emission rate are recorded. The infograph will majority use the emission rate variable which is the mass of the pollutant released over a given period of time. This collection of data is made accessible to the public to promote transparency, education, and climate action.
+
+[![](images/data_system.png){fig-alt="Image of airborne/satellite observation tool scanning the ground for emission plumes and identifying the source." fig-align="left" width="240"}](https://carbonmapper.org/work)
+
+## Purpose
+
+The goal of this infographic is to further *Carbon Mapper’s* mission: use their public plume data to educate and "promote local climate action, globally." Therefore, the infographic addresses these questions: 
 
 -   What are plumes made of and what are the gasses characteristics? 
 
 -   Who is disproportionately contributing to emission plumes? 
 
+Answering these questions will increase understanding of carbon dioxide and methane emissions and help create tailored solutions to minimize global warming.
+
 You can check out the [full data here](https://github.com/meganhessel/EDS240infographic.git)!
 
-### The Infographic
+# The Infographic
 
-```{r fig.width=12, fig.height=17}
+To see the image better, right-click the image, and select “Open Image in New Tab” to open in a new tab.
+
+```{r fig.width=15, fig.height=10}
 #| echo: false
 #| eval: true
-infographic <- readJPEG(here::here("Posts","plume_infographic", "FPM4.4.jpg"))
+infographic <- readJPEG(here::here("Posts","plume_infographic", "infographic.jpg"))
 plot(as.raster(infographic))
 ```
+
+# **Visualizations**
 
 ## Plume Source Bar Plots
 
@@ -113,10 +116,9 @@ Understanding the emission sources can lead to creating effective emission reduc
 | Livestock’s methane emissions  | Biogas recovery systems capture and utilize natural-by-produces from digestion for clean-burning energy fuel.  |
 | Oil and Gas’s methane emissions  | Existing programs to manage these specific emissions are performance standards that limit methane emissions from operations and increase fuel efficiency in transportation.  |
 
-When just using `ggplot`:
-
 ```{r}
 #| code-fold: true 
+#| output: false
 
 # Data Wrangling 
 plumeDF_sector_tot_emission <- plumes %>% 
@@ -127,15 +129,6 @@ plumeDF_sector_tot_emission <- plumes %>%
   filter(!ipcc_sector == "") # remove data points with no sector listed 
 
 
-sector_color_pal <- c("Coal Mining (1B1a)" = "#321F64",
-                      "Waste Water (6B)" = "#BBBBBB",
-                      "Oil & Gas (1B2)" = "#6C67DF",
-                      "Livestock (4B)" = "#FFB13E", 
-                      "Solid Waste (6A)" = "#ED5713",
-                      "Electricity Generation (1A1)" = "#20E6AC",
-                      "Other" = "#7B0301")
-
-
 # Methane Sector plot 
 plumeDF_CH4_sector_plot <- plumeDF_sector_tot_emission %>% 
   filter(gas == "CH4") %>% 
@@ -143,7 +136,6 @@ plumeDF_CH4_sector_plot <- plumeDF_sector_tot_emission %>%
   geom_bar(aes(x = "", y = total_emissions, fill = ipcc_sector), # Pie chart
            stat="identity", 
            col = "black") + 
-  scale_fill_manual(values = sector_color_pal) +
   theme_void() + 
   labs(title = "Methane Plumes", 
        fill = "Sector") + 
@@ -158,7 +150,6 @@ plumeDF_CO2_sector_plot <- plumeDF_sector_tot_emission %>%
   geom_bar(aes(x = "", y = total_emissions, fill = ipcc_sector), # Pie chart
            stat="identity", 
            col = "black") + 
-  scale_fill_manual(values = sector_color_pal) +
   theme_void() + 
   labs(title = "Carbon Dioxide Plumes", 
        fill = "Sector") + 
@@ -167,29 +158,20 @@ plumeDF_CO2_sector_plot <- plumeDF_sector_tot_emission %>%
   
 # Plots together 
 plume_sector_plot <- (plumeDF_CO2_sector_plot | plumeDF_CH4_sector_plot) 
-plume_sector_plot
+
 
 ```
 
-After polishing in Affinity:
-
-```{r fig.width=10, fig.height=10}
-#| code-fold: true
-img <- png::readPNG(here::here("Posts","plume_infographic", "plots", "sector_plot_ss.png"))
-plot(as.raster(img))
-```
+![Carbon dioxide and methane emission sector composition.](plots/sector_plots.png){fig-alt="Proportional stacked bar plot of sector emissions for CH4 and CO2. CO2 emission are main from electricity generation, whereas CH4 emissions are from oil & gas, solid waste, and coal mining." width="497"}
 
 ## Greenhouse Gas Background Plots
 
-Carbon dioxide has a much higher atmospheric concentration than methane as it is emitted through the burning of fossil fuels, deforestation, and industrial processes. Methane, on the other hand, is emitted through a larger variety of sources including solid waste, natural gas and petroleum systems, and livestocks. Since pre-industrial times, both greenhouse gas emissions have increased with human activities, just at different rates and concentrations. While CO2 concentration is extremely larger than CH4, methane has as 25-30 times higher global warming potential (gwp) which means 1 CH4 molecule absorbs the same infrared radiation (heat) as 25-30 CO2 molecules over 100 years. In a 20 year time period, methane traps 81-83 more heat than carbon dioxide. 
-
-This is important because both greenhouse gases have vastly different concentrations and global warming potentials which makes them both very important to climate change. Understanding both gasses characteristics and trends will help create effective climate action solutions. 
-
-\
-When using `ggplot`:
+Carbon dioxide has a much higher atmospheric concentration than methane as it is emitted through the burning of fossil fuels, deforestation, and industrial processes. Methane, on the other hand, is emitted through a larger variety of sources including solid waste, natural gas and petroleum systems, and livestocks. Since pre-industrial times, both greenhouse gas emissions have increased with human activities, just at different rates and concentrations. While CO2 concentration is much greater than than CH4, methane has 25-30 times greater global warming potential (gwp). This means that one CH4 molecule absorbs the same infrared radiation (heat) as 25-30 CO2 molecules over 100 years. In a 20 year time period, methane traps 81-83 more heat than carbon dioxide.This is important because both greenhouse gases have vastly different concentrations and global warming potentials which makes them both very important to climate change. Understanding both gasses characteristics and trends will help create effective climate action solutions. 
 
 ```{r}
 #| code-fold: true 
+#| output: false
+
 # gas colors 
 gas_pal <- c("CH4" = "#7F28D5", 
              "CO2" = "#FFBF44")
@@ -235,16 +217,9 @@ gas_gwp_plot / gas_total_emissions
 
 ```
 
-After polishing in Affinity:
+![Carbon dioxide and methane abundance and global warming potentials.](plots/background_plots.png){fig-alt="Bar chart showing CO2 has over 1 billion total emissions, towering over methane abundance. On the other hand, Methane has 25-30 times higher global warming potential which is displayed in a circle area proportional chart."}
 
-```{r fig.width=10, fig.height=10}
-#| echo: false
-#| eval: true
-img <- png::readPNG(here::here("Posts","plume_infographic", "plots", "emission_gwp_ss.png"))
-plot(as.raster(img))
-```
-
-## Emissions Per Country Steam Plot
+## Emission Per Country St**r**eam Plot
 
 To understand the distribution of plume emissions on spatial and temporal scales, I created a stream plot. This plot type illustrated how carbon dioxide and methane emission rates rise and fall overtime in the top emitter countries. CO2 and CH4 are emitted at completely different rates. Having CO2 emission rates extend upwards and CH4 emission rates extend downwards allows for two different y-axis in order to compare the peaks and troughs of the greenhouse gas emission rates. 
 
@@ -252,10 +227,9 @@ Carbon dioxide plume emissions seem to be denominated by Qatar in the early 2020
 
 The per-capita framing reveals that smaller, oil-and-gas-dependent nations contribute disproportionately to plume emissions relative to their population size.
 
-The plots in `ggplot`:
-
 ```{r}
 #| code-fold: true
+#| output: false 
 
 # Data wrangling 
 plumes_per_country <-plumes_country %>% 
@@ -325,53 +299,63 @@ plumes_per_country %>%
         axis.title.x = element_blank())
 ```
 
-After polishing in Affinity:
+![Country emissions overtime per million of people.](plots/stream_plot.png){fig-alt="Stream plot illustrating Qatar and Kuwait emit disproportional CO2 concentrations, and Turkmenistan dominate CH4 emissions."}
 
-```{r fig.width=10, fig.height=8}
-#| echo: false
-#| eval: true
-img <- png::readPNG(here::here("Posts","plume_infographic", "plots", "country_ss.png"))
-plot(as.raster(img))
-```
+# **Design Elements**
 
-## Colors 
+::: panel-tabset
+## Graphic Form
 
-Most of the color palettes are color-picked from [Carbon Mapper’s website](https://carbonmapper.org/) who supplied all data used for the infographic. 
+**Graphic Form:** I used various plot types. Each graphic form was chosen to appeal to the "common person." The goal is to find the most minimalistic way to convey the plot's message. Therefore, I use commonly known and recognizable plot types such are bar, circle, and stream plots
 
-The carbon dioxide and methane colors are an orange-yellow and a purple which are Carbon Mapper’s main color theme and color-blind friendly. 
+The bar and circle plots compare the proportion of CO2 and CH4 abundance and global warming potential. The proportional stack bar chart illustrates the difference between the gasses' plume sources. Finally, the stream plot allows the ability to examine how countries' emissions changed overtime.
 
-```{r fig.width=8, fig.height=4}
-#| echo: false
-#| eval: true
-img <- png::readPNG(here::here("Posts","plume_infographic", "images", "orange_purple_colors.png"))
-plot(as.raster(img))
-```
+## Text
 
-The sector color palette ranges from a dark blue to a dark red which are used to distinguish plume concentrations in Carbon Mapper’s data portal and color-blind friendly.
+**Text:** All of my text was edited or added in Affinity. Affinity offers flexibility with captions, lables, texts, and titles. These elements can be easily changed overtime as I continually alter the infographic.
 
-```{r fig.width=10, fig.height=4}
-#| echo: false
-#| eval: true
-img <- png::readPNG(here::here("Posts","plume_infographic", "images", "sector_colors.png"))
-plot(as.raster(img))
-```
+For the topography, I wanted a clean, industrial-like font as the titles and a more simple, yet professional font for the sub-text. With numbers in the axises and text boxes, the fonts being mono-spaced (which is where all numbers and letters have the same width) was important. Therefore, I decided on Krungthep font for titles and kefa font for any sub-text.
 
-The emissions per country stream graph color palette is color-picked from the emission plume image and infographic below. These images follow the purple and yellow theme from Carbon Mapper. While these colors are not color-blind friendly, I made sure to label each country and added an annotation to help explain the plots main points.
+## Themes
 
-```{r fig.width=10, fig.height=5}
-#| echo: false
-#| eval: true
-img <- png::readPNG(here::here("Posts","plume_infographic", "images", "country_colors.png"))
-plot(as.raster(img))
-```
+**Themes:** Plot themes were kept simple by including only essential information. I removed axis titles and grid lines when necessary.
 
-Plumes are a heavy and dark topic. Therefore, the dark background colors were to portray the same gloomy feeling. 
+## Colors
 
-## General design, contextualizing the data, & centering my primary message
+**Colors:** The color choices are picked from [Carbon Mapper’s website](https://carbonmapper.org/) who supplied all data used for the infographic. The carbon dioxide and methane colors are an orange-yellow and a purple which are Carbon Mapper’s main color theme and color-blind friendly. The orange-yellow represents CO2 emission characteristics while the purple represents CH4 emission characteristic for each plot and text feature.
 
-To do...
+Additionally, plumes are a heavy and dark topic. Therefore, the dark background color is to portray the same gloomy feeling. 
 
-## For all the plot code
+![](images/orange_purple_colors.png){fig-alt="Color swatches: yellow-orange and purple" width="201" height="79"}
+
+![](images/carbon_mapper_icon.png){fig-alt="Carbon Mapper's logo" width="217"}
+
+## General Design
+
+**General Design:** The inforgraphic is divided into 3 parts: gas sources, gas characteristics, and country emissions overtime. As people typically read left to right, the gas sources and characteristics are on the left side to build the "story." After absorbing the introductory information, such as abundance, gwp, and industry polluters, the viewer’s eye naturally flows to the right, where they engage with the more complex stream plot.
+
+The color scheme is designed to support the overall layout. All orange-yellow plot elements and text relate to CO2 information, while purple plot elements and text represent CH4 information. This consistent use of color makes it easier to compare all three sections of the infographic.
+
+## Message
+
+**Message:**
+
+Most climate conversations focus on total emissions, which typically target the Unites States, China, and India. But total emissions only tell part of the story. This inforgraphic dives deeper into per-capita and per-source emission trends to uncover where actionable climate solutions are possible.
+
+In the stream plot, we learn Turkmenistan emits more methane per capita than any other country in the dataset. Turkmenistan oil and gas infrastructure was developed during the Soviet era in the 1900s (International Methane Emissions Observatory, 2025). The country's vital pipelines are deteriorating and leaking large amounts of methane into the atmosphere (International Methane Emissions Observatory, 2025). With international investment and cooperation to help modernize its infrastructure, Turkmenistan represents one of the highest-leverage opportunities to reduce global CH4 emissions.
+
+The Arab Gulf States include Saudi Arabia, United Arab Emirates (UAE), Qatar, Kuwait, Bahrain, and Oman. Many of these countries have the highest CO2 emissions per capita because of their heavy fossil fuel dependency and high energy consumption. Transitioning these energy systems toward sustainable alternatives, supported by governance reform, could yield significant emission reductions.
+
+The goal is NOT to point figures. It's to inspire targeted, cooperative action. Climate solutions are not a "one-size-fits-all." Therefore, knowing where emissions concentrate helps us direct efforts where they matter most.
+
+## Accessibility
+
+**Accessibility:** The yellow-orange and purple palette is color blind friendly, ensuing contrats remain distinguishable. The countries in stream plot required more colors, making full colorblind compliance difficult. Nevertheless, every trend is labeled and explained in the accompanying text so the data remains accessible to all readers. Furthermore, all images and figures have alt text ensuring accessibility for visually impaired users.
+
+## DEI
+
+**Diversity, Equity, and Inclusion (DEI):** Accessibility and equity were central considerations in this infographic. Color choices and text elements were made with colorblind accessibility in mind. Alt text was added to ensure a broad audience could understand the material. Beyond visual accessibility, the framing of this infographic was intentional. Climate narratives often center large, wealthy nations while overlooking the historical and economic context of smaller ones. Looking at emissions per-capita allows for understanding of countries like Turkmenistan who inherited deteriorating Soviet-era infrastructure and the Gulf states whose systems were built on fossil fuels before climate consequences were understood. This goal of the infographic is to NOT point fingers. It recognizes that equitable climate solutions require understanding each country's unique constraints and opportunities. This study acknowledges that the countries highlighted are not historical drivers of climate changes; they are the current countries needing solutions.
+:::
 
 ```{r}
 #| code-fold: true 
@@ -425,7 +409,6 @@ sector_color_pal <- c("Coal Mining (1B1a)" = "#321F64",
 
 ```
 
-
 # References
 
 <https://www.xylem.com/en-us/markets/agriculture/biogas-recovery/>
@@ -435,3 +418,7 @@ sector_color_pal <- c("Coal Mining (1B1a)" = "#321F64",
 <https://www.epa.gov/climateleadership/ghg-reduction-programs-strategies#Supply_Chain>
 
 <https://www.epa.gov/controlling-air-pollution-oil-and-natural-gas-operations/epas-final-rule-reduce-methane-and-other>
+
+<https://unece.org/sites/default/files/2025-12/1.%20Current%20state%20of%20emissions%20in%20Turkmenistan.pdf>
+
+Methane Imagery and Data © Carbon Mapper, https://data.carbonmapper.org
