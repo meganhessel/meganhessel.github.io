@@ -1,12 +1,12 @@
 ---
 title: "Global Carbon Dioxide and Methane Plume Emissions"
-description: "A Deep Dive into Global CO2 and CH4 Emission Sources and Trends to Drive Climate Action."
+description: "A deep dive into global CO2 and CH4 emission sources and trends to drive climate Action."
 author: 
   - name: Megan Hessel  # Link to other people 
     url: https//meganhessel.github.io/
     affiliation: The Bren School of Environmental Science & Management
     affiliation-url: https://bren.ucsb.edu/
-date: 2026-03-12
+date: 2026-03-19
 categories: [MEDS, R, data-viz] #
 image: plume_main_image.png
 citation: #true (if without link)
@@ -62,25 +62,27 @@ plumes_country <- st_join(counties, plumes)
 
 **Understanding Global [Carbon Dioxide]{style="color:#FFBF44;"} & [Methane]{style="color:#7F28D5;"} Plume Emissions**
 
-Greenhouse gas emissions are warming our planet and altering natural processes at alarming rates (Figure 1). Since the industrial revolution, greenhouse gas emissions have dramatically increased. Specifically, carbon dioxide (CO2) increased from 280 parts per million (ppm) to over 410 ppm while methane (CH4) has risen from 700 parts per billion (ppb) to around 1,900 ppb. These greenhouse gasses that now overwhelm our atmosphere absorb and re-emit infrared radiation (heat) in all directions.
+Greenhouse gas emissions are warming our planet and altering natural processes at alarming rates illustrated in Figure 1 (Manabe, 2019). Since the industrial revolution, greenhouse gas emissions have dramatically increased (Lindsey, 2025; Casper, 2010). Specifically, carbon dioxide (CO2) increased from 280 parts per million (ppm) to over 410 ppm while methane (CH4) has risen from 700 parts per billion (ppb) to around 1,900 ppb (Lindsey, 2025; The Center for Biological Diversity, n.d.). These greenhouse gasses that now overwhelm our atmosphere absorb and re-emit infrared radiation (heat) in all directions, trapping more heat and causing global temperatures to rise (Manabe, 2019).
 
-All to say, increase in greenhouse gasses (like carbon dioxide and methane), increase our global temperature - this is called **climate change**. Today, sea levels are rising, extreme weather events are becoming more common, and oceans are acidifying due to the rise in greenhouse gasses. Ecosystems, human health, and vital infrastructure are disrupted and even destroyed.
+All to say, increase in greenhouse gasses (like carbon dioxide and methane), increase our global temperature - this is called **climate change** (Manabe, 2019). Today, sea levels are rising, extreme weather events are becoming more common, and oceans are acidifying due to the upsurge in greenhouse gasses (Casper, 2010). Ecosystems, human health, and vital infrastructure are disrupted and even destroyed.
 
-**Emission plumes** are columns of pollutants, mostly greenhouse gasses, that are released into the atmosphere. As a kid, I would always call them "cloud machines" due to the visible cloud-like gas leaking from tall smoke stack. Little did I know, the "cloud machines" were adding to air pollution and climate change.
+**Emission plumes** are columns of pollutants, mostly greenhouse gasses, that are released into the atmosphere. As a kid, I would always call them "cloud machines" because of the visible, cloud-like gas leaking from the tall smoke stack. Little did I know, the "cloud machines" were adding to air pollution and climate change.
 
-[![Figure 1.](images/global-temperature-anomalies-by-month.png){fig-alt="Bar plot showing global temperatures increasing from 1940 to 2025." fig-align="center" width="395"}](https://ourworldindata.org/grapher/global-temperature-anomalies-by-month)
+[![Figure 1. Changes of global temperatures from 1940 to 2025.](images/global-temperature-anomalies-by-month.png){fig-alt="Bar plot showing global temperatures increasing from 1940 to 2025." fig-align="center" width="395"}](https://ourworldindata.org/grapher/global-temperature-anomalies-by-month)
 
 ## The data
 
-To reduce greenhouse gas emissions, *Carbon Mapper* uses remote sensing systems to detect, pinpoint, and quantify global plume emission data. They use ground, airborne, and satellite observational tools to find large methane and carbon dioxide emissions events. The plumes' source, location, gas type, and emission rate are recorded. The infograph will majority use the emission rate variable which is the mass of the pollutant released over a given period of time. This collection of data is made accessible to the public to promote transparency, education, and climate action.
+To reduce greenhouse gas emissions, *Carbon Mapper* uses remote sensing systems to track and record global plume emission data. They use ground, airborne, and satellite observational tools to find large methane and carbon dioxide emissions events, which is illustrated in Figure 2. The plumes' source, location, gas type, and emission rate are recorded. This study will majority use the emission rate variable which is the mass of the pollutant released over a given period of time. This collection of data is made accessible to the public to promote transparency, education, and climate action.
 
-[![](images/data_system.png){fig-alt="Image of airborne/satellite observation tool scanning the ground for emission plumes and identifying the source." fig-align="left" width="240"}](https://carbonmapper.org/work)
+[![Figure 2. Image from Carbon Mapper to explain their data collection process.](images/data_system.png){fig-alt="Image of airborne/satellite observation tool scanning the ground for emission plumes and identifying the source." fig-align="left" width="240"}](https://carbonmapper.org/work)
 
 ## Purpose
 
-The goal of this infographic is to further *Carbon Mapper’s* mission: use their public plume data to educate and "promote local climate action, globally." Therefore, the infographic addresses these questions: 
+The goal of this infographic is to further *Carbon Mapper’s* mission: use their public plume data to educate and "promote local climate action, globally" (Carbon Mapper). By understanding emission plumes, we can create tailored, actionable climate solutions. Solving climate change requires targeted strategies, not a "one-size-fits-all approach." Global emissions is a complicated topic because of its interdisciplinary approach, requiring political, agricultural, and social dimensions. This infographic is the tip of the iceberg, but its futhers education and starts the conversation.
 
--   What are plumes made of and what are the gasses characteristics? 
+The infographic addresses these questions: 
+
+-   What are plumes made of, and what are the gasses characteristics? 
 
 -   Who is disproportionately contributing to emission plumes? 
 
@@ -92,9 +94,11 @@ You can check out the [full data here](https://github.com/meganhessel/EDS240info
 
 To see the image better, right-click the image, and select “Open Image in New Tab” to open in a new tab.
 
-```{r fig.width=15, fig.height=10}
+```{r}
 #| echo: false
 #| eval: true
+#| out-width: "100%"
+#| fig.asp: 1
 infographic <- readJPEG(here::here("Posts","plume_infographic", "infographic.jpg"))
 plot(as.raster(infographic))
 ```
@@ -105,16 +109,18 @@ plot(as.raster(infographic))
 
 Carbon dioxide is emitted through human activities, mostly through burning of fossil fuels for electricity and other industrial processes. CO2 is stored in trees and soils, known as being “sequestered” within these carbon dioxide sinks. Therefore, deforestation, urbanization, and land-use change removes CO2 from these natural sinks and increases atmospheric CO2 concentration. 
 
-Methane is commonly “leaked” from natural gas systems, such as livestock and solid waste. Livestock’s digestive processes produce and then off-gas CH4. As companies raise these animals in large quantities, CH4 emissions increase. Similarly to the digestive processes, as solid and water waste decomposes in large landfills, CH4 is off-gassed and released into the atmosphere. Industry is the most common methane source. Methane is used to produce, store, and transport oil and natural gas. Furthermore, coal mine methane (CMM) is realized from mines through ventilation systems, degasification/drainage systems, and post-mining activities (such as processes, storage, and transportation). CCM can be captured from the ventilation and drainage systems and used for energy production. 
+Methane is commonly “leaked” from natural gas systems, such as livestock and solid waste. Livestock’s digestive processes produce and then off-gas CH4. As companies raise these animals in large quantities, CH4 emissions increase. Similarly to the digestive processes, as solid and water waste decomposes in large landfills, CH4 is off-gassed and released into the atmosphere. Industry is the most common methane source. Methane is used to produce, store, and transport oil and natural gas. Furthermore, coal mine methane (CMM) is released from mines through ventilation systems, degasification/drainage systems, and post-mining activities (such as processes, storage, and transportation) (EPA, 2026a). CCM can be captured from the ventilation and drainage systems and used for energy production (EPA, 2026a). 
 
 Understanding the emission sources can lead to creating effective emission reduction programs. By identifying key sources for each greenhouse gas, governments and organizations can tailor policies and strategies for specific emission challenges. Some solutions for emission reduction in each sector include: 
 
 | Plume Source | Solutions |
 |------------------------------------|------------------------------------|
-| Electricity generation’s carbon dioxide emissions  | Governments and organizations can set up carbon trading systems, a carbon tax, or increase funding on renewable energy sources.  |
-| Solid waste’s methane emissions  | Land-fill gas can be captured and used as a renewable energy source.  |
-| Livestock’s methane emissions  | Biogas recovery systems capture and utilize natural-by-produces from digestion for clean-burning energy fuel.  |
-| Oil and Gas’s methane emissions  | Existing programs to manage these specific emissions are performance standards that limit methane emissions from operations and increase fuel efficiency in transportation.  |
+| Electricity generation’s carbon dioxide emissions  | Governments and organizations can set up carbon trading systems, a carbon tax, or increase funding on renewable energy sources (EPA, 2026c). |
+| Solid waste’s methane emissions  | Land-fill gas can be captured and used as a renewable energy source (EPA, 2026c).  |
+| Livestock’s methane emissions  | Biogas recovery systems capture and utilize natural-by-produces from digestion for clean-burning energy fuel (Xylem, 2026; EPA, 2026c). |
+| Oil and Gas’s methane emissions  | Creating performance standards that limit methane emissions from operations and increase fuel efficiency in transportation (EPA, 2026b; EPA, 2026c).  |
+
+The **plot design** is to resemble a smoke stack. The colors are consistent with the yellow-orange CO2 and purple CH4 colors that are used throughout the infographic. I choose the proportional bar chart to fill the smoke stacks with the sector compositions for easy comparison.
 
 ```{r}
 #| code-fold: true 
@@ -166,7 +172,9 @@ plume_sector_plot <- (plumeDF_CO2_sector_plot | plumeDF_CH4_sector_plot)
 
 ## Greenhouse Gas Background Plots
 
-Carbon dioxide has a much higher atmospheric concentration than methane as it is emitted through the burning of fossil fuels, deforestation, and industrial processes. Methane, on the other hand, is emitted through a larger variety of sources including solid waste, natural gas and petroleum systems, and livestocks. Since pre-industrial times, both greenhouse gas emissions have increased with human activities, just at different rates and concentrations. While CO2 concentration is much greater than than CH4, methane has 25-30 times greater global warming potential (gwp). This means that one CH4 molecule absorbs the same infrared radiation (heat) as 25-30 CO2 molecules over 100 years. In a 20 year time period, methane traps 81-83 more heat than carbon dioxide.This is important because both greenhouse gases have vastly different concentrations and global warming potentials which makes them both very important to climate change. Understanding both gasses characteristics and trends will help create effective climate action solutions. 
+Carbon dioxide has a much higher atmospheric concentration than methane as it is emitted through the burning of fossil fuels, deforestation, and industrial processes. Methane, on the other hand, is emitted through a larger variety of sources including solid waste, natural gas and petroleum systems, and livestock. Since pre-industrial times, both greenhouse gas emissions have increased with human activities, just at different rates and concentrations. While CO2 concentration is much greater than than CH4, methane has 27-30 times greater global warming potential (gwp) (Kathairos, 2023; EPA, 2025). This means that one CH4 molecule absorbs the same infrared radiation (heat) as 25-30 CO2 molecules over 100 years (Kathairos, 2023; EPA, 2025). In a 20 year time period, methane traps 81-83 more heat than carbon dioxide (EPA, 2025). This is important because both greenhouse gases have vastly different concentrations and global warming potentials which makes them both very important to climate change. Understanding both gasses characteristics and trends will help create effective climate action solutions. 
+
+For **plot design**, I went with a simple bar chart for the atmospheric concentrations and a proportional area circle chart for the global warming potential. Both basic/traditional plots illustrate the differences in carbon dioxide and methane in a clean and straightforward way.
 
 ```{r}
 #| code-fold: true 
@@ -217,15 +225,17 @@ gas_gwp_plot / gas_total_emissions
 
 ```
 
-![Carbon dioxide and methane abundance and global warming potentials.](plots/background_plots.png){fig-alt="Bar chart showing CO2 has over 1 billion total emissions, towering over methane abundance. On the other hand, Methane has 25-30 times higher global warming potential which is displayed in a circle area proportional chart."}
+![Carbon dioxide and methane abundance and global warming potentials.](plots/background_plot.png){fig-alt="Bar plot illustrating carbon dioxide emission rates are far beyond methane's abundance, reaching over 1 billion kg/hr. The proportional area circle plot displays methane having a 28 times larger global warming potential than CO2."}
 
 ## Emission Per Country St**r**eam Plot
 
-To understand the distribution of plume emissions on spatial and temporal scales, I created a stream plot. This plot type illustrated how carbon dioxide and methane emission rates rise and fall overtime in the top emitter countries. CO2 and CH4 are emitted at completely different rates. Having CO2 emission rates extend upwards and CH4 emission rates extend downwards allows for two different y-axis in order to compare the peaks and troughs of the greenhouse gas emission rates. 
+To understand the distribution of plume emissions on spatial and temporal scales, I created a stream plot. This plot type illustrates how carbon dioxide and methane emission rates rise and fall overtime in the top emitter countries. CO2 and CH4 are emitted at completely different rates. Having CO2 emission rates extend upwards and CH4 emission rates extend downwards allows for two different y-axis in order to compare the peaks and troughs of the greenhouse gas emission rates. 
 
-Carbon dioxide plume emissions seem to be denominated by Qatar in the early 2020s who then had a steep plume emission die off in 2024. Since then, Kuwait has taken the lead for CO2 emissions per million of people. Kuwait also emits a large amount of methane. Most importantly, Turkmenistan has consistently been the lead methane emitter. 
+The Arab Gulf States, including Qatar, Kuwait, Saudi Arabia, Omen, United Arab Emirates (UAE), and Bahrain, have the highest CO2 emissions per capita. These are small, oil and gas dependent nations. Fossil fuel combustion is where they get the majority of their energy and economic revenue (Ali & Abdalla, 2025). Some of these countries have recently taken strides to create climate action plans (Pasquali, 2025; Ali & Abdalla, 2025). Transitioning these energy systems toward sustainable alternatives, supported by governance reform, is important to yielding significant emission reductions and helping reduce climate change.
 
-The per-capita framing reveals that smaller, oil-and-gas-dependent nations contribute disproportionately to plume emissions relative to their population size.
+Furthermore, Turkmenistan has consistently been the lead methane emitter because of their deteriorating oil and gas infrastructure (IMOE & UN Environment Programme, 2025; He et al, 2024). Modernization is necessary to minimize the large CH4 emissions per capita from Turkmenistan (IMOE & UN Environment Programme, 2025).
+
+The per-capita stream plot reveals which countries carry the heaviest emission burden relative to their population size, and where targeted climate action could have the greatest impact.
 
 ```{r}
 #| code-fold: true
@@ -263,7 +273,7 @@ top_countries_CO2 <- plumes_per_country %>%
 
 
 # Plot for CH4
-plumes_per_country %>% 
+CH4_per_country <- plumes_per_country %>% 
   filter(gas == "CH4", 
          year >= 2023, 
          name_long %in% top_countries_CH4) %>% 
@@ -282,7 +292,7 @@ plumes_per_country %>%
 
 
 # Plot for CO2
-plumes_per_country %>% 
+CO2_per_country <- plumes_per_country %>% 
   filter(gas == "CO2", 
          year >= 2023, 
          name_long %in% top_countries_CO2) %>% 
@@ -332,25 +342,23 @@ Additionally, plumes are a heavy and dark topic. Therefore, the dark background 
 
 ## General Design
 
-**General Design:** The inforgraphic is divided into 3 parts: gas sources, gas characteristics, and country emissions overtime. As people typically read left to right, the gas sources and characteristics are on the left side to build the "story." After absorbing the introductory information, such as abundance, gwp, and industry polluters, the viewer’s eye naturally flows to the right, where they engage with the more complex stream plot.
+**General Design:** The inforgraphic is divided into 3 parts: gas characteristics, gas sources, and country emissions overtime. As people typically read left to right, the gas characteristics are on the top left to build the story. After absorbing the introductory information, such as abundance and gwp, the story naturally flows to the plume sources and stream plots where the viewer examines the sectors and countries emission trends.
 
 The color scheme is designed to support the overall layout. All orange-yellow plot elements and text relate to CO2 information, while purple plot elements and text represent CH4 information. This consistent use of color makes it easier to compare all three sections of the infographic.
 
 ## Message
 
-**Message:**
+**Message:** Most climate conversations focus on total emissions, which typically target the Unites States, China, and India. But total emissions only tell part of the story. This inforgraphic dives deeper into per-capita and per-source emission trends to uncover where actionable climate solutions are possible.
 
-Most climate conversations focus on total emissions, which typically target the Unites States, China, and India. But total emissions only tell part of the story. This inforgraphic dives deeper into per-capita and per-source emission trends to uncover where actionable climate solutions are possible.
+In the stream plot, we learn Turkmenistan emits more methane per capita than any other country in the dataset. Turkmenistan oil and gas infrastructure was developed during the Soviet era in the 1900s (IMOE & UN Environment Programme, 2025; He et al, 2024). The country's vital pipelines are deteriorating and leaking large amounts of methane into the atmosphereIMOE & UN Environment Programme, 2025). With international investment and cooperation to help modernize its infrastructure, Turkmenistan represents one of the highest-leverage opportunities to reduce global CH4 emissions. Turkmenistan currently does have a plan to become 100% renewable energy by 2050 (Satymov, Bogdanov, & Breyer, 2021).
 
-In the stream plot, we learn Turkmenistan emits more methane per capita than any other country in the dataset. Turkmenistan oil and gas infrastructure was developed during the Soviet era in the 1900s (International Methane Emissions Observatory, 2025). The country's vital pipelines are deteriorating and leaking large amounts of methane into the atmosphere (International Methane Emissions Observatory, 2025). With international investment and cooperation to help modernize its infrastructure, Turkmenistan represents one of the highest-leverage opportunities to reduce global CH4 emissions.
-
-The Arab Gulf States include Saudi Arabia, United Arab Emirates (UAE), Qatar, Kuwait, Bahrain, and Oman. Many of these countries have the highest CO2 emissions per capita because of their heavy fossil fuel dependency and high energy consumption. Transitioning these energy systems toward sustainable alternatives, supported by governance reform, could yield significant emission reductions.
+The Arab Gulf States include Saudi Arabia, United Arab Emirates (UAE), Qatar, Kuwait, Bahrain, and Oman. Many of these countries have the highest CO2 emissions per capita because of their heavy fossil fuel dependency and high energy consumption (Ali & Abdalla, 2025). Transitioning these energy systems toward sustainable alternatives, supported by governance reform, could yield significant emission reductions.
 
 The goal is NOT to point figures. It's to inspire targeted, cooperative action. Climate solutions are not a "one-size-fits-all." Therefore, knowing where emissions concentrate helps us direct efforts where they matter most.
 
 ## Accessibility
 
-**Accessibility:** The yellow-orange and purple palette is color blind friendly, ensuing contrats remain distinguishable. The countries in stream plot required more colors, making full colorblind compliance difficult. Nevertheless, every trend is labeled and explained in the accompanying text so the data remains accessible to all readers. Furthermore, all images and figures have alt text ensuring accessibility for visually impaired users.
+**Accessibility:** The orange-yellow and purple palette is color blind friendly, ensuring contrasts remain distinguishable. The numerous countries in the stream plot required more colors, making full colorblind compliance difficult. Nevertheless, every trend is labeled or explained in the accompanying text so the data remains accessible to all readers. Furthermore, all images and figures have alt text ensuring accessibility for visually impaired users.
 
 ## DEI
 
@@ -369,6 +377,7 @@ library(sf)
 library(patchwork)
 library(ggstream)
 
+#............................load Data...........................
 # Loading in Carbon Mapper  data 
 # Plumes by year
 plumes_2016 <- read.csv(here::here("Posts", "plume_infographic","data", "plume_yearly", "export_2016_2017", "export_2016-01-01_2017-01-01.csv")) 
@@ -398,27 +407,269 @@ plumes_country <- st_join(counties, plumes)
 gas_pal <- c("CH4" = "#7F28D5", 
              "CO2" = "#FFBF44")
 
-sector_color_pal <- c("Coal Mining (1B1a)" = "#321F64",
-                      "Waste Water (6B)" = "#BBBBBB",
-                      "Oil & Gas (1B2)" = "#6C67DF",
-                      "Livestock (4B)" = "#FFB13E", 
-                      "Solid Waste (6A)" = "#ED5713",
-                      "Electricity Generation (1A1)" = "#20E6AC",
-                      "Other" = "#7B0301")
-# blah blah blah blah 
+#...............................................................................
+#                                                                              .
+#  Sector Plot                                                                 .
+#                                                                              .
+#...............................................................................
+
+#......................... Wrangle ..........................
+# Find total emissions for each sector for each gas 
+plumeDF_sector_tot_emission <- plumes %>% 
+  group_by(ipcc_sector, gas) %>% 
+  summarise(total_emissions = sum(emission_auto, na.rm = TRUE), # Total Emissions 
+            .groups = "drop") %>%
+  st_drop_geometry() %>% 
+  filter(!ipcc_sector == "") # remove data points with no sector listed 
+
+
+
+# Turn sectors into factors 
+# plumeDF_sector_tot_emission$ipcc_sector <- factor(plumeDF_sector_tot_emission$ipcc_sector,
+#                                                      levels = sector_order)
+
+# ------------ CH4 plot ------------
+
+# Methane Sector plot 
+plumeDF_CH4_sector_plot <- plumeDF_sector_tot_emission %>% 
+  filter(gas == "CH4") %>% 
+  ggplot() + 
+  #geom_treemap(aes(area = total_emissions, fill = ipcc_sector)) + # tree map 
+  geom_bar(aes(x = "", y = total_emissions, fill = ipcc_sector), 
+           stat="identity", 
+           width = 0.7, 
+           color = "black") + 
+  #coord_polar("y", start=0) + # This makes it a pie plot 
+  #scale_fill_manual(values = sector_color_pal) +
+  theme_void() + 
+  labs(title = "Methane Plumes", 
+       fill = "Sector") + 
+  theme(plot.title = element_text(size = 13))
+
+
+# ------------ CO2 plot ------------
+
+# CO2 Sector plot 
+plumeDF_CO2_sector_plot <- plumeDF_sector_tot_emission %>% 
+  filter(gas == "CO2") %>% 
+  ggplot() + 
+  #geom_treemap(aes(area = total_emissions, fill = ipcc_sector)) + # tree map 
+  geom_bar(aes(x = "", y = total_emissions, fill = ipcc_sector), # Pie chart
+           stat="identity", 
+           width = 0.7, 
+           color = "black") + 
+  #coord_polar("y", start=0) + 
+  #scale_fill_manual(values = sector_color_pal) +
+  theme_void() + 
+  labs(title = "Carbon Dioxide Plumes", 
+       fill = "Sector") + 
+  theme(plot.title = element_text(size = 13), 
+        legend.position = "none")
+  
+# Plots together 
+plume_sector_plot <- (plumeDF_CO2_sector_plot | plumeDF_CH4_sector_plot) +
+  plot_annotation(title = "Sector Composition", 
+                  subtitle = "The oil and natural gas sector emits the most methane,\nwhereas Electricity Generation emits the most carbon dioxide.", 
+                  caption = "Data Source: Carbon Mapper",
+                  theme = theme(plot.title = element_text(size = 17, face = "bold"), 
+                                plot.subtitle = element_text(size = 12, color = "gray60"),
+                                plot.caption = element_text(face = "italic")))
+
+# ggsave(filename = here::here("final_figs", "sector.pdf"), 
+#        plot = plume_sector_plot, 
+#        height = 7,
+#        width = 9
+#        )
+
+
+#...............................................................................
+#                                                                              .
+#  Background CH4 and CO2 abundance and gwp plots                                                
+#                                                                              .
+#...............................................................................
+
+#Bar plot of CO2 and CH4 emission concentrations  
+gas_total_emissions <- plumes %>% 
+  group_by(gas) %>% 
+  summarise(emission_auto = sum(emission_auto, na.rm = TRUE)) %>% 
+  st_drop_geometry() %>% 
+  ggplot() + 
+  geom_col(aes(x = gas, y = emission_auto, fill = gas)) + 
+  scale_fill_manual(values = gas_pal) +
+  theme_minimal() + 
+  labs(y = "Total Emission (kg/hr)")
+
+
+# ggsave(filename = here::here("final_figs", "gas_total_emissions.pdf"), 
+#        plot = gas_total_emissions, 
+#        width = 5, 
+#        height = 5)
+
+
+# Create dataframe for gwp 
+gwp <- data.frame(gas = c("CO2", "CH4"), 
+                  life_time = c(500, 12.4), # Chem life times 
+                  gwp = c(1,28)) # global warmining potential 
+
+# Circle Area plots of gwp 
+gas_gwp_plot <- ggplot() +
+  geom_point(data = gwp, 
+             mapping = aes(x = gas, y = 0, size = gwp, fill = gas), 
+             shape = 21, color = "black", alpha = 0.7) +
+  scale_size_area(max_size = 20) +  # Ensures area ~ value
+  coord_fixed(ratio = 5) +          # Keep circles round
+  theme_minimal() +
+  scale_fill_manual(values = gas_pal, guide = "none") + 
+  labs(
+    title = "Global Warming Potiential (gwp)",
+    size = "Value"
+  ) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(), 
+        axis.title.y = element_blank(), 
+        axis.title.x = element_blank(), 
+        legend.position = "bottom")
+
+# ggsave(filename = here::here("figs", "gas_gwp_plot.pdf"), 
+#        plot = gas_gwp_plot, 
+#        width = 7, 
+#        height = 5)
+
+
+#gas_gwp_plot / gas_total_emissions # put plots together 
+
+
+#...............................................................................
+#                                                                              .
+#  Stream Plot                                                                 .
+#                                                                              .
+#...............................................................................
+
+#......................Wrangle data ..........................
+
+# Find each country's emissions per capita & per million people OVERTIME 
+plumes_per_country_overtime <-plumes_country %>% 
+  st_drop_geometry() %>% 
+  group_by(name_long, year = year(datetime), month = month(datetime), gas) %>%  # Find avg and sum for each month of each year 
+  summarise(total_emissions = sum(emission_auto, na.rm = TRUE),
+            avg_emissions = mean(emission_auto, na.rm = TRUE),
+            pop = mean(pop),
+            .groups = "drop") %>%
+  mutate(year_dec = year + (month - 1) / 12, #decimal year 
+         emission_total_capita = (total_emissions/pop), 
+         emission_per_million = (total_emissions/pop) * 1e6) # per 1 million people
+
+# Find each country's emissions per capita & per million people in general
+plumes_per_country <-plumes_country %>% 
+  st_drop_geometry() %>% 
+  group_by(name_long, gas) %>%  # Find total emissions per country 
+  summarise(total_emissions = sum(emission_auto, na.rm = TRUE),
+            avg_emissions = mean(emission_auto, na.rm = TRUE),
+            pop = mean(pop),
+            .groups = "drop") %>%
+  mutate(emission_total_capita = (total_emissions/pop), 
+         emission_per_million = (total_emissions/pop) * 1e6)
+
+#.....................Find top 10 emitters ........................\
+
+top_countries_CH4 <- plumes_per_country %>%
+  filter(gas == "CH4") %>%
+  group_by(name_long) %>%
+  summarise(total = sum(emission_per_million)) %>%
+  slice_max(total, n = 10) %>%
+  pull(name_long)
+
+
+top_countries_CO2 <- plumes_per_country %>%
+  filter(gas == "CO2") %>%
+  group_by(name_long) %>%
+  summarise(total = sum(emission_per_million)) %>%
+  slice_max(total, n = 10) %>%
+  pull(name_long)
+
+#.....................Find top 10 emitters ........................\
+
+
+# ------------ CH4 plot ------------
+
+# For CH4
+plumes_CO2_per_country <- plumes_per_country_overtime %>% 
+  filter(gas == "CH4", 
+         year >= 2023, 
+         name_long %in% top_countries_CH4) %>%  # plot just the top 10 CH4 emitters 
+  ggplot(aes(x = year_dec, #  use decimal year 
+             y = emission_per_million, 
+             fill = name_long)) +
+  geom_stream(type = "ridge",  bw = 0.85) + 
+  geom_stream_label(aes(label = name_long), 
+                    type = "ridge", 
+                    size = 2.5) +
+  theme_minimal() + 
+  theme(axis.title.y = element_blank(), 
+        axis.title.x = element_blank())
+
+
+# ------------ CO2 plot ------------
+
+# For CO2
+plumes_CH4_per_country <- plumes_per_country_overtime %>% 
+  filter(gas == "CO2", 
+         year >= 2023, 
+         name_long %in% top_countries_CO2) %>% # plot just the top 10 CO2 emitters 
+  ggplot(aes(x = year_dec, #  use decimal year 
+             y = emission_per_million, 
+             fill = name_long)) +
+  geom_stream(type = "ridge",  bw = 0.85) + 
+  geom_stream_label(aes(label = name_long), 
+                    type = "ridge", 
+                    size = 2.5) +
+  theme_minimal() + 
+  theme(axis.title.y = element_blank(), 
+        axis.title.x = element_blank())
+
+# ggsave(filename = here::here("final_figs", "plumes_CO2_per_country.pdf"), 
+#        plot = plumes_CO2_per_country, 
+#        width = 6, 
+#        height = 4)
+# 
+# 
+# ggsave(filename = here::here("final_figs", "plumes_CH4_per_country.pdf"), 
+#        plot = plumes_CH4_per_country, 
+#        width = 6, 
+#        height = 4)
 
 ```
 
 # References
 
-<https://www.xylem.com/en-us/markets/agriculture/biogas-recovery/>
+Ali, A. H., & Abdalla, M. (2025). Energy transitions era: geopolitical characteristics and connotations in the Arab Gulf States. *Sustainable Futures*, *10*, 100808.
 
-<https://www.epa.gov/cmop/about-coal-mine-methane>
+Casper, J. K. (2010). Greenhouse gases: worldwide impacts. Infobase Publishing.
 
-<https://www.epa.gov/climateleadership/ghg-reduction-programs-strategies#Supply_Chain>
+The Center for Biological Diversity. (n.d.) METHANE. The Center for Biological Diversity. <https://www.biologicaldiversity.org/programs/climate_law_institute/global_warming_what_how_why/methane/index.html>
 
-<https://www.epa.gov/controlling-air-pollution-oil-and-natural-gas-operations/epas-final-rule-reduce-methane-and-other>
+He, T. L., Boyd, R. J., Varon, D. J., & Turner, A. J. (2024). Increased methane emissions from oil and gas following the Soviet Union’s collapse. *Proceedings of the National Academy of Sciences*, *121*(12), e2314600121.
 
-<https://unece.org/sites/default/files/2025-12/1.%20Current%20state%20of%20emissions%20in%20Turkmenistan.pdf>
+International Methane Emissions Observatory (IMOE) & UN Environment Programme. (2025). CURRENT STATE OF METHANE EMISSIONS IN TURKMENISTAN. <https://unece.org/sites/default/files/2025-12/1.%20Current%20state%20of%20emissions%20in%20Turkmenistan.pdf>
+
+Kathairos. (2023). Methane Compared to CO₂: Why Methane Is a More Powerful Greenhouse Gas?. Kathairos Solutions Inc.<https://www.kathairos.com/news/co2-vs-ch4>
+
+Lindsey, R. (2025). Climate change: atmospheric carbon dioxide. National Oceanic and Atmospheric Administration (NOAA). <https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide>
+
+Manabe, S. (2019). Role of greenhouse gas in climate change. Tellus A: Dynamic Meteorology and Oceanography, 71(1), 1620078.
 
 Methane Imagery and Data © Carbon Mapper, https://data.carbonmapper.org
+
+Pasquali, V. (2025). Net zero and the GCC: How the Gulf is faring on climate change. Arabian Gulf Business Insight (AGBI). <https://www.agbi.com/analysis/sustainability/2025/11/net-zero-and-the-gcc-how-the-gulf-is-faring-on-climate-change/>
+
+Satymov, R., Bogdanov, D., & Breyer, C. (2021). The value of fast transitioning to a fully sustainable energy system: The case of Turkmenistan. IEEE Access, 9, 13590-13611.
+
+United States Environmental Protection Agency (EPA). (2026a). About Coal Mine Methane. United States Environmental Protection Agency. <https://www.epa.gov/cmop/about-coal-mine-methane>
+
+United States Environmental Protection Agency (EPA). (2026b). EPA's Final Rule to Reduce Methane and Other Harmful Pollution from Oil and Natural Gas Operations and Related Actions. United States Environmental Protection Agency. <https://www.epa.gov/controlling-air-pollution-oil-and-natural-gas-operations/epas-final-rule-reduce-methane-and-other>
+
+United States Environmental Protection Agency (EPA). (2026c). GHG Reduction Programs & Strategies. United States Environmental Protection Agency. <https://www.epa.gov/climateleadership/ghg-reduction-programs-strategies#Supply_Chain>
+
+United States Environmental Protection Agency (EPA). (2025). Understanding Global Warming Potentials. <https://www.epa.gov/ghgemissions/understanding-global-warming-potentials>
+
+Xylem. (2026). Biogas Recovery: Biogas Solutions for Methane Reduction and Resource Recovery. Xylem. <https://www.xylem.com/en-us/markets/agriculture/biogas-recovery/>
