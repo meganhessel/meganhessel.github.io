@@ -1,12 +1,12 @@
 ---
-title: "Global Carbon Dioxide and Methane Plume Emissions"
-description: "A deep dive into global CO2 and CH4 emission sources and trends to drive climate Action."
+title: "Global Carbon Dioxide & Methane Plume Emissions Infographic"
+description: "A deep dive into global CO2 and CH4 emission sources and trends to drive climate action."
 author: 
   - name: Megan Hessel  # Link to other people 
     url: https//meganhessel.github.io/
     affiliation: The Bren School of Environmental Science & Management
     affiliation-url: https://bren.ucsb.edu/
-date: 2026-03-19
+date: 2026-03-18
 categories: [MEDS, R, data-viz] #
 image: plume_main_image.png
 citation: #true (if without link)
@@ -94,16 +94,9 @@ You can check out the [full data here](https://github.com/meganhessel/EDS240info
 
 To see the image better, right-click the image, and select “Open Image in New Tab” to open in a new tab.
 
-```{r}
-#| echo: false
-#| eval: true
-#| out-width: "100%"
-#| fig.asp: 1
-infographic <- readJPEG(here::here("Posts","plume_infographic", "infographic.jpg"))
-plot(as.raster(infographic))
-```
+![Inforgraphic of carbon dioxide and methane.](infographic.jpg){fig-alt="Inforgraphic of carbon dioxide and methane." width="741"}
 
-# **Visualizations**
+# Visualizations
 
 ## Plume Source Bar Plots
 
@@ -311,7 +304,7 @@ CO2_per_country <- plumes_per_country %>%
 
 ![Country emissions overtime per million of people.](plots/stream_plot.png){fig-alt="Stream plot illustrating Qatar and Kuwait emit disproportional CO2 concentrations, and Turkmenistan dominate CH4 emissions."}
 
-# **Design Elements**
+# Design Elements
 
 ::: panel-tabset
 ## Graphic Form
