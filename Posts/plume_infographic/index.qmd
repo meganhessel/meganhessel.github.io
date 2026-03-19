@@ -343,11 +343,11 @@ The color scheme is designed to support the overall layout. All orange-yellow pl
 
 **Message:** Most climate conversations focus on total emissions, which typically target the Unites States, China, and India. But total emissions only tell part of the story. This inforgraphic dives deeper into per-capita and per-source emission trends to uncover where actionable climate solutions are possible.
 
-In the stream plot, we learn Turkmenistan emits more methane per capita than any other country in the dataset. Turkmenistan oil and gas infrastructure was developed during the Soviet era in the 1900s (IMOE & UN Environment Programme, 2025; He et al, 2024). The country's vital pipelines are deteriorating and leaking large amounts of methane into the atmosphereIMOE & UN Environment Programme, 2025). With international investment and cooperation to help modernize its infrastructure, Turkmenistan represents one of the highest-leverage opportunities to reduce global CH4 emissions. Turkmenistan currently does have a plan to become 100% renewable energy by 2050 (Satymov, Bogdanov, & Breyer, 2021).
+In the stream plot, we learn Turkmenistan emits more methane per capita than any other country in the dataset. Turkmenistan oil and gas infrastructure was developed during the Soviet era in the 1900s (IMOE & UN Environment Programme, 2025; He et al, 2024). The country's vital pipelines are deteriorating and leaking large amounts of methane into the atmosphere (IMOE & UN Environment Programme, 2025). With international investment and cooperation to help modernize its infrastructure, Turkmenistan represents one of the highest-leverage opportunities to reduce global CH4 emissions. Turkmenistan currently does have a plan to become 100% renewable energy by 2050 (Satymov, Bogdanov, & Breyer, 2021).
 
 The Arab Gulf States include Saudi Arabia, United Arab Emirates (UAE), Qatar, Kuwait, Bahrain, and Oman. Many of these countries have the highest CO2 emissions per capita because of their heavy fossil fuel dependency and high energy consumption (Ali & Abdalla, 2025). Transitioning these energy systems toward sustainable alternatives, supported by governance reform, could yield significant emission reductions.
 
-The goal is NOT to point figures. It's to inspire targeted, cooperative action. Climate solutions are not a "one-size-fits-all." Therefore, knowing where emissions concentrate helps us direct efforts where they matter most.
+The goal is *not* to point figures. It's to inspire targeted, cooperative action. Climate solutions are not a "one-size-fits-all." Therefore, knowing where emissions concentrate helps us direct efforts where they matter most.
 
 ## Accessibility
 
