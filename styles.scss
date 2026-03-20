@@ -31,13 +31,19 @@ h1 {
   font-weight: 600;
 }
 
-h2, h3, h4, h5, h6 {
+h2 {
   font-family: $zalando;
   font-weight: 600;
   color: $dgreen;
   font-size: 25px;
 }
 
+h3, h4, h5, h6 {
+  font-family: $zalando;
+  font-weight: 600;
+  color: $dgreen;
+  font-size: 18px;
+}
 
 .navbar-brand img {
   max-height: 48px;
