@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a0390b7c44b8ffa580550590241f0518.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-453eb7f2285195ca843c19052dc79f4e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -266,7 +266,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="inital-steps" class="level2">
 <h2 class="anchored" data-anchor-id="inital-steps">Inital Steps</h2>
 <p>First, we must load all necessary libraries!</p>
-<div id="ce79e336" class="cell" data-execution_count="1">
+<div id="02c150d9" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Used to import data easier</span></span>
@@ -289,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The important libraries are the <code>geopandas</code> and <code>xarrary</code>. The <code>geopandas</code> package is useful when dealing with vector data which consists of point, lines, and polygons. Thus, we will use <code>geopandas</code> for the fire perimeters and EJI dataframes as they are polygons. Whereas, the <code>xarrary</code> package is useful when working with raster data, such as the Landsat data.</p>
 <p>Secondly, we must load in the borders, Environmental Justice Index (EJI), and Landsat data by using the <code>geopandas</code>, <code>xarrary</code>, and <code>os</code> packages.</p>
-<div id="38ef9cf7" class="cell" data-execution_count="2">
+<div id="c75dcc61" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing fire border data </span></span>
@@ -307,7 +307,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>landsat <span class="op">=</span> xr.open_dataset(os.path.join(<span class="st">'data'</span>, <span class="st">'landsat8-2025-02-23-palisades-eaton.nc'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="9ec1f9ef" class="cell" data-execution_count="3">
+<div id="3c70a5ac" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Image of Fires </span></span>
@@ -335,7 +335,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Once the data is loaded, we need to examine each dataset.</p>
 <p>The function <code>.info</code> provides information of the dataframes’ column names and data types. With this function, we notice there are 5 columns in the fire border dataset, with the final column being the vector geometry. We can examine the geometry of each fire with <code>.plot</code>.</p>
 <p>Finally, it is <em>always</em> important to know the geospatial data’s <strong>coordinate reference systems</strong> (CRS). The CRS defines how the geospatial data is located and plotted. There are 2 CRS types: geographic (how the data is plotted on the 3D globe) and projected (how the data is plotted on a 2D map). It is important to use the correct CRS for your data and intended goal. Additionally, when merging or plotting geospatial data together, the datasets’ coordinate reference systems must match.</p>
-<div id="8fc8cef2" class="cell" data-execution_count="4">
+<div id="5abf15cc" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Border data exploration </span></span>
@@ -396,7 +396,7 @@ The CRS for the palisades fire perimeter is EPSG:3857, and is the CRS projected?
 </div>
 </div>
 </div>
-<div id="358d099a" class="cell" data-execution_count="5">
+<div id="441799b1" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># EJI exploration </span></span>
@@ -433,7 +433,7 @@ The CRS for the Califoria's EJI data is PROJCS["USA_Contiguous_Albers_Equal_Area
 <li><p><em>Attributes:</em> The units and other describing factors (like sample ID)</p></li>
 </ol>
 <p>We can understand the Landsat’s variables, dimension, and CRS with the <code>.var</code>, <code>.coord</code>, <code>dims</code>, and <code>.rio.crs</code> functions.</p>
-<div id="e36a79b1" class="cell" data-execution_count="6">
+<div id="ad19d620" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preliminary Raster Landsat data exploration  </span></span>
@@ -472,7 +472,7 @@ THE CRS IS: None</code></pre>
 <h3 class="anchored" data-anchor-id="a-restoring-geospatial-information">a) Restoring Geospatial Information</h3>
 <p><em>PROBLEM!</em> Notice, the Landsat’s CRS reads ‘None’!</p>
 <p>This is because the raster’s CRS is located in another attribute called ‘crs_wkt’. Therefore, we must retrieve the CRS by using <code>.spatial_ref</code> (which refers to the Spatial Reference System). Then, we will use <code>.write_crs</code> to recover the spatial properties of the dataset.</p>
-<div id="513c8109" class="cell" data-execution_count="7">
+<div id="1bd2e9c9" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the CRS within the 'crs_wkt' attribute </span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>landsat_crs <span class="op">=</span> landsat.spatial_ref.crs_wkt</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -489,7 +489,7 @@ THE CRS IS: None</code></pre>
 <section id="b-coordindate-refereces-systems" class="level3">
 <h3 class="anchored" data-anchor-id="b-coordindate-refereces-systems">b) Coordindate Refereces Systems</h3>
 <p>As stated before, when plotting or merging geospatial dataframes, it is imparative they have the same CRS. Therefore, we need to check if all datasets’ coordinate reference systems match. If they are not the same, they need to be transformed.</p>
-<div id="16d98c15" class="cell" data-execution_count="8">
+<div id="cf28a7cd" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check is CRSs match  </span></span>
@@ -506,13 +506,13 @@ Does the Cali EJI and the Landsat raster CRSs match? False</code></pre>
 </div>
 </div>
 <p><em>PROBLEM!</em> The perimeter, Landsat, and EJI CRSs do NOT match! Thus, they must be transformed using <code>to_crs</code>. We will change all datasets to match Landsat’s CRS.</p>
-<div id="bc0c151a" class="cell" data-execution_count="9">
+<div id="4204c445" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform all data sets to match the Landsat's CRS   </span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>eaton.to_crs(landsat.rio.crs, inplace <span class="op">=</span> <span class="va">True</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>pal.to_crs(landsat.rio.crs, inplace <span class="op">=</span> <span class="va">True</span>)</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>cali.to_crs(landsat.rio.crs, inplace <span class="op">=</span> <span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="3c9bb7a5" class="cell" data-execution_count="10">
+<div id="426e8eae" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check to see if CRS are fixed   </span></span>
@@ -534,7 +534,7 @@ Does the Cali EJI and the Landsat raster CRSs match? True</code></pre>
 <p>True color imagery will be used to visualize the Los Angeles landscape!</p>
 <p>When mapping, there are 3 color channels: red, green, blue (RGB). If the red, green, and blue Landsat wavelengths are assigned to their proper channels, this is <strong>TRUE COLOR IMAGERY</strong>. True color imagery, in simple terms, is when the red wavelength is assigned to red channel, green wavelength is assigned to the green channel, and blue wavelength is assigned to the blue channel.</p>
 <p>To create the true color imagery, we will select the ‘red’, ‘green’, and ‘blue’ bands (in that order) into the Landsat’s [red-channel, green-channel, and blue-channel]. Then, we convert the dataset (with multiple bands) into a single DataArray with <code>to_array()</code>. There are a couple spots with ‘NA’ values and extreme measurements (from cloud cover and/or shadows). The NAs and outlier values will cause the visualizion to fail, not showing the intended image. Filling the NA values with 0s, using <code>.fillna(0)</code>, ensures the RGB image will plot cleanly. The function <code>.plot.imshow()</code> is xarray’s plotting function. The addition of <code>robust = True</code> eliminates extreme outliers, and thus scales the color range to be more representative of the data.</p>
-<div id="8969b1f9" class="cell" data-execution_count="11">
+<div id="c00e89f3" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Landsat data with the red, green, blue wavelengths</span></span>
@@ -556,7 +556,7 @@ Does the Cali EJI and the Landsat raster CRSs match? True</code></pre>
 <h2 class="anchored" data-anchor-id="false-color-imagery">False Color Imagery</h2>
 <p>Conversely, <strong>FALSE COLOR IMAGERY</strong> is when the RGB channels are NOT assigned to the red, green, blue wavelengths. False color imagery uses the unique reflectance and absorbance properties of different wavelengths to enhance or isolate specific features that may be difficult to see in true color imagery.</p>
 <p>For instance, to examine the fire scars, we will assign the short-wave infrared wavelengths (‘swir22’) to the red channel, near-infrared wavelengths (‘nir08’) to the green channel, and red wavelength to the blue channel. Near infrared (NIR) wavelengths reflects healthy vegetation. Lower NIR measurements can show unhealthy plant-life conditions, such as drought, stress, or deforestation. Assigning the NIR to the green channel emphasizes the vegetation health. Hence, super green areas in this figure represent healthy plant-life. Short wave infrared (SWIR) wavelengths reflects fire and recently burned areas. By assigning SWIR to the red channel, the fire markings are highlighted with a red color, especially in contrast to the NIR (green channel). Thus, false color imagery is used to emphasizes the burn damages from the fires in comparison to the neighboring healthy vegetation.</p>
-<div id="ad3a9a19" class="cell" data-execution_count="12">
+<div id="d4cfffaf" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting Landsat data with the short-wave infrared (swir22), near-infrared, and red wavelengths </span></span>
@@ -577,7 +577,7 @@ Does the Cali EJI and the Landsat raster CRSs match? True</code></pre>
 <section id="all-together" class="level3">
 <h3 class="anchored" data-anchor-id="all-together">All together!</h3>
 <p>To finalize the plot, we will outline the fire scars with the perimeter dataframes. Additionally, adding legends, text, a title, and a scalebar are important factors in creating a professional map.</p>
-<div id="d3350850" class="cell" data-execution_count="13">
+<div id="41083d7f" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty plot </span></span>
@@ -646,7 +646,7 @@ Does the Cali EJI and the Landsat raster CRSs match? True</code></pre>
 <section id="prelimary-exploration" class="level3">
 <h3 class="anchored" data-anchor-id="prelimary-exploration">Prelimary Exploration</h3>
 <p>To examine California’s census tracks (especially the ones that intersect with the fire perimeters), we will create a map! In order to do this, we will select and filter for all GEOIDs that cut across the Eaton and Paslisade Fires, and highlight these when plotting California’s EJI data.</p>
-<div id="cdb26c70" class="cell" data-execution_count="14">
+<div id="3a85010c" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select GEOID within the fires perimeters </span></span>
@@ -688,12 +688,12 @@ Does the Cali EJI and the Landsat raster CRSs match? True</code></pre>
 </div>
 </div>
 <p>The figure above shows the intersecting census tracks. To get better view of these ‘blobs’, we can use <code>.sjoin()</code> to select for all CTs that traverse the fires and then plot.</p>
-<div id="be10a7a2" class="cell" data-execution_count="15">
+<div id="4a4917b5" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># JOIN EJI census tracks with border data </span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>eaton_join <span class="op">=</span> gpd.sjoin(cali, eaton)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>pal_join <span class="op">=</span> gpd.sjoin(cali, pal)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="33724548" class="cell" data-execution_count="16">
+<div id="02c67368" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot joined df </span></span>
@@ -726,12 +726,12 @@ Does the Cali EJI and the Landsat raster CRSs match? True</code></pre>
 <section id="clip-census-tracks-with-fire-perimeters" class="level3">
 <h3 class="anchored" data-anchor-id="clip-census-tracks-with-fire-perimeters">Clip Census Tracks with Fire Perimeters</h3>
 <p>The <code>.clip()</code> function acts like a cookie cutter. We will use this function to ‘cookie-cutter’ out the exact fire perimeters from the census tracks.</p>
-<div id="93553c3c" class="cell" data-execution_count="17">
+<div id="b50441ee" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clip EJI census tracks with border data </span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>eaton_clip <span class="op">=</span> gpd.clip(cali, eaton)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>pal_clip <span class="op">=</span> gpd.clip(cali, pal)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="63db6a59" class="cell" data-execution_count="18">
+<div id="5cd4b235" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot clipped dfs </span></span>
@@ -763,7 +763,7 @@ Does the Cali EJI and the Landsat raster CRSs match? True</code></pre>
 <section id="plotting-the-uninsured-variable" class="level3">
 <h3 class="anchored" data-anchor-id="plotting-the-uninsured-variable">Plotting the Uninsured Variable</h3>
 <p>To study the affected community, we will use the clipped dataframes and display the census tracks’ ‘E_UNINSUR’ measurements.</p>
-<div id="ca0ee09a" class="cell" data-execution_count="19">
+<div id="91c30d40" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
