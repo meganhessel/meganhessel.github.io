@@ -751,7 +751,7 @@ As we can see from the balance sheet results above, there is a strong balance be
 
 ## Final Plot
 
-![Lepissier and Mildenberger's final plot.](images/figure_4.png)
+![Lepissier and Mildenberger's final plot.](figure_4.png)
 
 We replicated the difference in pre-treatment CO2 emissions, and displayed the un-weighted and weighted means in reference to Figure 2 in Lépissier & Mildenberger. This figure shows that our synthetic control model closely matches the pre-treatment balance found in the original paper. In both cases, the weighted difference in means is indistinguishable from 0, showing a strong pre-treatment balance with the treated units.
 
