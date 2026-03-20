@@ -44,7 +44,7 @@ All work on this project can be found on our [GitHub Repository](https://github.
 
 This analysis aims to reproduce the results of Lépissier and Mildenberger's (2021) study, *Unilateral Climate Policies Can Substantially Reduce National Carbon Pollution*. The authors employed a synthetic control method (SCM) to estimate the causal effect of the UK’s 2001 Climate Change Programme (CCP) on the country’s carbon emissions. Their main finding demonstrates that CCP reduced the UK's carbon emissions. CO2 emissions per capita were 9.8% lower in 2005 relative to what they would have been if the CCP had not been passed, demonstrating that unilateral climate policies can still reduce carbon emissions even in the absence of a binding global climate agreement.
 
-### The Fundamental Problem & the Synthetic Control Method (SCM) Fix
+## The Fundamental Problem & the Synthetic Control Method (SCM) Fix
 
 The 2001 UK CCP is a complex reform that included a carbon tax on large-scale energy users, industry-negotiated exemptions from the tax for meeting reduction targets, and a voluntary emissions trading scheme. It was one of the first comprehensive climate reform packages passed globally, in advance of action by most other Organisation for Economic Co-operation and Development (OECD) countries.
 
@@ -52,7 +52,7 @@ We are interested in understanding what the UK's carbon emissions might have loo
 
 The synthetic UK is the combination of weighted averages of counties that did not receive the policy intervention. To create the best-fit synthetic UK, donor country emissions are weighted to match UK pre-treatment emissions trends. Countries are given higher weights if they more closely match observed pre-treatment trends in the UK.
 
-### Assessing Treatment Effect
+## Assessing Treatment Effect
 
 The gap between the synthetic and real UK after policy intervention is observed as the treatment effect.
 
@@ -60,7 +60,7 @@ Before the 2001 policy: Real UK $\approx$ Synthetic UK.
 
 After the 2001 policy: The gap between the real UK and synthetic UK = *Treatment effect.*
 
-### Research Questions
+## Research Questions
 
 **Did United Kingdom's 2001 Climate Change Programme (CCP) reduce per capita CO₂ emissions?**
 
@@ -513,7 +513,7 @@ Across all three donor pools, the UK's pre-treatment gap hovers near zero, indic
 
 Following treatment in 2001, the UK shows no meaningful divergence from its pre-treatment trend or the placebo distributions, suggesting the intervention had no detectable effect on power sector CO2 per capita. Overall, the UK Climate Change Programme does not appear to have had a statistically significant effect relative to the counter factual across any of the three donor pools. These results are different from the Lépissier and Mildenberger study (2021) where they found the UK's causal effect of the CCP to be at the edge of the placebo/null distributions. Their study's placebo test found the treatment effect is unlikely due to change alone.
 
-#### Comparing Donor Weights
+### Comparing Donor Weights
 
 The authors of the original study report their top donor countries as 19% Poland, 19% Libya, 18% Bahamas, 16% Belgium, 6% Trinidad and Tobago, 5% Uruguay, 4% Luxembourg, and 1% Brunei. They used weighted averages of the donor pool countries and an algorithm to best match the pre-treatment UK and synthetic UK trends. Additionally, based on our gap comparison, our best fit donor pool is the widest OECD, HIC, and UMC pool. Comparing the output from this donor pool's synthetic control, our results are very similar with all the same countries contained, and Libya and Poland representing our top 2 donor countries. This means that our SCM donor pool will all the critera (OECD, HIC, and UMC countries) and the study's donor pool are closely equivalent and the synthetic UK in both cases act similar which can be observed in the table and plot below.
 
@@ -698,7 +698,7 @@ scm_data_OECD_HIC_UMC %>%
 
 Based on which set of countries we incorporate into our MSPE model, per the different datasets, we see different treatment-effect gaps. Utilizing the dataset with the most countries, which includes OECD, HIC, and UMC designated countries, we see that the model produces the described result.
 
-#### Balance Table
+### Balance Table
 
 Lastly, we shall look at the Balance Table. Ideally, a properly optimized synthetic control model will have balance, meaning equal or near-equal values across the different predictors between the real United Kingdom and the synthetic version. We use a balance table to compare pre-treatment predictor values the synthetic unit, the real unit, and the donor pool. In this senario, the balance table compares pre-treatment predictor values for the real United Kingdom, the synthetic United Kingdom, and the donor pool average.
 
@@ -749,7 +749,7 @@ balance_OECD_HIC_UMC %>%
 
 As we can see from the balance sheet results above, there is a strong balance between all three columns across the different predictors. In particular, we see extremely close results between the UK and its synthetic version. This indicates that the synthetic control closely mirrors the real UK across all of the pre-treatment predictors.
 
-### Final Plot
+## Final Plot
 
 ![Lepissier and Mildenberger's final plot.](images/figure_4.png)
 
