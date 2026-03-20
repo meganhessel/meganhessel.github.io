@@ -3,20 +3,20 @@ title: "Using a Synthetic Control Method to Replicate a Study of Unilateral Clim
 description: "This analysis applies the Synthetic Control Method to construct a counterfactual UK and evaluate whether the 2001 Climate Change Programme reduced emissions."
 author: 
   - name: Megan Hessel  # Link to other people 
-    url: https//meganhessel.github.io/
+    url: https://meganhessel.github.io/
     affiliation: The Bren School of Environmental Science & Management
     affiliation-url: https://bren.ucsb.edu/
   - name: Nathalie Bonnet  # Link to other people 
-    url: https//natbonnet.github.io/
+    url: https://natbonnet.github.io/
     affiliation: The Bren School of Environmental Science & Management
     affiliation-url: https://bren.ucsb.edu/
   - name: Stephan Kadonoff  # Link to other people 
-    url: https//srkads1998.github.io/
+    url: https://srkads1998.github.io/
     affiliation: The Bren School of Environmental Science & Management
     affiliation-url: https://bren.ucsb.edu/
 date: March 20 2026
 categories: [MEDS, R, Stat] #
-image: plume_main_image.png
+image: greenhouse-emissions1.png
 citation: #true (if without link)
   url: https//meganhessel.github.io/Posts/analyzing_LA_fire_scars 
 #draft: true
