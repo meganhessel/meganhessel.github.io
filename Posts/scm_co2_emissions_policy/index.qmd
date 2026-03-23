@@ -16,7 +16,7 @@ author:
     affiliation-url: https://bren.ucsb.edu/
 date: March 20 2026
 categories: [MEDS, R, Stat] #
-image: greenhouse-emissions1.png
+image: climate_policy_image.png
 citation: #true (if without link)
   url: https//meganhessel.github.io/Posts/analyzing_LA_fire_scars 
 #draft: true

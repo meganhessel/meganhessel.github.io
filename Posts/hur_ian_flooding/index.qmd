@@ -1,6 +1,6 @@
 ---
-title: "Hurricane Ian Flooding in Florida"
-description: "Investigating sociodemiographic influences on flooding intensity during Hurricane Ian."
+title: "Sociodemographic Disparities in Flood Exposure: A Tweedie Regression Analysis of Hurricane Ian"
+description: "Investigating the multidimensional sociodemiographic influences on flooding intensity during Hurricane Ian in Florida."
 author: 
   - name: Megan Hessel  # Link to other people 
     url: https//meganhessel.github.io/

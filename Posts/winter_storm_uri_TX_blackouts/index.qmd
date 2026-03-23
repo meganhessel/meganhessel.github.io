@@ -1,6 +1,6 @@
 ---
-title: "Winter Storm Uri: Houston, TX Blackouts"
-description: "Exploring Winter Storm Uri's impacts on the Houston, TX power grid."
+title: "When the Lights Went Out: Mapping Houston's Power Grid Collapse During Winter Storm Uri"
+description: "A geospatial analysis of blackout patterns and what the data reveals about infrastructure vulnerability."
 author: 
   - name: Megan Hessel  # Link to other people 
     url: https//meganhessel.github.io/

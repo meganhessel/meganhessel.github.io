@@ -1,5 +1,5 @@
 ---
-title: "Analyzing Eaton and Palisades Fire Scars"
+title: "Remote Sensing Tutorial: Analyzing Eaton and Palisades Fire Scars"
 description: "Examining the fire scars from the 2025 Eaton and Palisade Fires and evaluating the social vulnerability of the affected population."
 author: 
   - name: Megan Hessel  # Link to other people 
