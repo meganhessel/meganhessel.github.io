@@ -56,19 +56,25 @@ counties <- spData::world
 plumes_country <- st_join(counties, plumes)
 ```
 
-![](images/plume2.png){fig-align="center"}
+![](images/plume2.png)
 
 ## Background
 
 **Understanding Global [Carbon Dioxide]{style="color:#FFBF44;"} & [Methane]{style="color:#7F28D5;"} Plume Emissions**
 
-Greenhouse gas emissions are warming our planet and altering natural processes at alarming rates illustrated in Figure 1 (Manabe, 2019). Since the industrial revolution, greenhouse gas emissions have dramatically increased (Lindsey, 2025; Casper, 2010). Specifically, carbon dioxide (CO2) increased from 280 parts per million (ppm) to over 410 ppm while methane (CH4) has risen from 700 parts per billion (ppb) to around 1,900 ppb (Lindsey, 2025; The Center for Biological Diversity, n.d.). These greenhouse gasses that now overwhelm our atmosphere absorb and re-emit infrared radiation (heat) in all directions, trapping more heat and causing global temperatures to rise (Manabe, 2019).
+Since the industrial revolution, greenhouse gas concentrations in Earth's atmosphere have risen dramatically, fundamentally altering global climate systems (Lindsey, 2025; Casper, 2010). Carbon dioxide (CO₂) has increased from 280 parts per million (ppm) to over 410 ppm, while methane (CH₄) has risen from 700 parts per billion (ppb) to approximately 1,900 ppb (Lindsey, 2025; The Center for Biological Diversity, n.d.). These gases absorb and re-emit infrared radiation, trapping heat within the atmosphere (process known as the **greenhouse effect**), driving sustained increases in global temperatures (Manabe, 2019), as illustrated in Figure 1.
 
-All to say, increase in greenhouse gasses (like carbon dioxide and methane), increase our global temperature - this is called **climate change** (Manabe, 2019). Today, sea levels are rising, extreme weather events are becoming more common, and oceans are acidifying due to the upsurge in greenhouse gasses (Casper, 2010). Ecosystems, human health, and vital infrastructure are disrupted and even destroyed.
+The consequences of this **global warming** are far reaching, including rising sea levels, increased frequency of extreme weather events, and ocean acidification (Casper, 2010). Ecosystems, human health, and critical infrastructure face mounting disruption as these changes accelerate.
 
-**Emission plumes** are columns of pollutants, mostly greenhouse gasses, that are released into the atmosphere. As a kid, I would always call them "cloud machines" because of the visible, cloud-like gas leaking from the tall smoke stack. Little did I know, the "cloud machines" were adding to air pollution and climate change.
+**Emission plumes**, columns of greenhouse gases and other pollutants released into the atmosphere from point sources such as industrial facilities and fossil fuel operations, are a primary driver of these concentration increases. Monitoring and quantifying these plumes is essential for understanding emission sources, informing regulatory policy, and ultimately reducing their contribution to climate change.
 
-[![Figure 1. Changes of global temperatures from 1940 to 2025.](images/global-temperature-anomalies-by-month.png){fig-alt="Bar plot showing global temperatures increasing from 1940 to 2025." fig-align="center" width="395"}](https://ourworldindata.org/grapher/global-temperature-anomalies-by-month)
+![Bar plot showing global temperatures increasing from 1940 to 2025.](images/global-temperature-anomalies-by-month.png){fig-align="center" width="331"}
+
+**My Experience**
+
+Vacation for my family is water sking at Lake Fayette in Texas, which is a 2,000-4,000 acre power plant cooling lake. The Fayette Power Project burns low-sulfur coal to provide power to Austin and surrounding areas. As a kid, I would always call the smoke stacks "cloud machines" because of the visible, cloud-like gas being pumped from the top. Little did I know, the "cloud machines" were adding to air pollution and climate change. Now, as an environmental data scientist, I want to provide education and knowledge back to my communities.
+
+![Recreational water skiing on Lake Fayette with the Fayette Power Plant in the background.](images/sking_photo_crop.JPG){width="508"}
 
 ## The data
 
@@ -94,7 +100,7 @@ You can check out the [full data here](https://github.com/meganhessel/EDS240info
 
 To see the image better, right-click the image, and select “Open Image in New Tab” to open in a new tab.
 
-![Inforgraphic of carbon dioxide and methane.](infographic.jpg){fig-alt="Inforgraphic of carbon dioxide and methane." width="741"}
+![Infographic of carbon dioxide and methane.](inforgraphic_3.png)
 
 # Visualizations
 
@@ -161,7 +167,7 @@ plume_sector_plot <- (plumeDF_CO2_sector_plot | plumeDF_CH4_sector_plot)
 
 ```
 
-![Carbon dioxide and methane emission sector composition.](plots/sector_plots.png){fig-alt="Proportional stacked bar plot of sector emissions for CH4 and CO2. CO2 emission are main from electricity generation, whereas CH4 emissions are from oil & gas, solid waste, and coal mining." width="497"}
+![Proportional stacked bar plot of sector emissions for CH4 and CO2 in the shape of smoke stacks. CO2 emission are main from electricity generation, whereas CH4 emissions are from oil & gas, solid waste, and coal mining.](plots/sector_2.png){width="491"}
 
 ## Greenhouse Gas Background Plots
 
@@ -218,9 +224,9 @@ gas_gwp_plot / gas_total_emissions
 
 ```
 
-![Carbon dioxide and methane abundance and global warming potentials.](plots/background_plot.png){fig-alt="Bar plot illustrating carbon dioxide emission rates are far beyond methane's abundance, reaching over 1 billion kg/hr. The proportional area circle plot displays methane having a 28 times larger global warming potential than CO2."}
+![IMAGE: Bar plot illustrating carbon dioxide emission rates are far beyond methane's abundance, reaching over 1 billion kg/hr. The proportional area circle plot displays methane having about a 28 times larger global warming potential than CO2.](plots/background_2.png){width="417"}
 
-## Emission Per Country St**r**eam Plot
+## Emission Per Country Stream Plot
 
 To understand the distribution of plume emissions on spatial and temporal scales, I created a stream plot. This plot type illustrates how carbon dioxide and methane emission rates rise and fall overtime in the top emitter countries. CO2 and CH4 are emitted at completely different rates. Having CO2 emission rates extend upwards and CH4 emission rates extend downwards allows for two different y-axis in order to compare the peaks and troughs of the greenhouse gas emission rates. 
 
@@ -302,7 +308,7 @@ CO2_per_country <- plumes_per_country %>%
         axis.title.x = element_blank())
 ```
 
-![Country emissions overtime per million of people.](plots/stream_plot.png){fig-alt="Stream plot illustrating Qatar and Kuwait emit disproportional CO2 concentrations, and Turkmenistan dominate CH4 emissions."}
+![Stream plot illustrating Qatar and Kuwait emit disproportional CO2 concentrations, and Turkmenistan dominate CH4 emissions.](plots/stream_2.png){width="493"}
 
 # Design Elements
 
@@ -325,7 +331,7 @@ For the topography, I wanted a clean, industrial-like font as the titles and a m
 
 ## Colors
 
-**Colors:** The color choices are picked from [Carbon Mapper’s website](https://carbonmapper.org/) who supplied all data used for the infographic. The carbon dioxide and methane colors are an orange-yellow and a purple which are Carbon Mapper’s main color theme and color-blind friendly. The orange-yellow represents CO2 emission characteristics while the purple represents CH4 emission characteristic for each plot and text feature.
+**Colors:** The color choices are picked from [Carbon Mapper’s website](https://carbonmapper.org/) who supplied all data used for the infographic. The carbon dioxide and methane colors are an orange-yellow and a purple which are Carbon Mapper’s main color theme and color-blind friendly. The orange-yellow represents CO2 emission characteristics while the purple represents CH4 emission characteristic for each plot and text feature. For the sector plot, the green shades represent countries in the top ten emitters for **both** CO2 and CH4.
 
 Additionally, plumes are a heavy and dark topic. Therefore, the dark background color is to portray the same gloomy feeling. 
 

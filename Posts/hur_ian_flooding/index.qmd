@@ -7,7 +7,7 @@ author:
     affiliation: The Bren School of Environmental Science & Management
     affiliation-url: https://bren.ucsb.edu/
 date: 2025-12-4
-categories: [MEDS, R, stats] #
+categories: [MEDS, R, Stats] #
 image: hurricane-ian.jpg
 citation: #true (if without link)
   url: https//meganhessel.github.io/Posts/hur_ian_flooding 

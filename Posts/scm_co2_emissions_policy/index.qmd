@@ -15,7 +15,7 @@ author:
     affiliation: The Bren School of Environmental Science & Management
     affiliation-url: https://bren.ucsb.edu/
 date: March 20 2026
-categories: [MEDS, R, Stat] #
+categories: [MEDS, R, Stats] #
 image: climate_policy_image.png
 citation: #true (if without link)
   url: https//meganhessel.github.io/Posts/analyzing_LA_fire_scars 
