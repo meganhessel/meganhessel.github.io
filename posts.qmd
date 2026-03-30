@@ -2,7 +2,7 @@
 title: "Blog"
 listing: 
   contents: Posts # Will show stuff from this folder
-  type: grid # `default` or `table`
+  type: default # `default` or `table` or grid
   sort: "date desc" # sort stuff by desending by date 
   categories: true
 ---
