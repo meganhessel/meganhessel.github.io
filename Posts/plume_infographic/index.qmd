@@ -62,13 +62,13 @@ plumes_country <- st_join(counties, plumes)
 
 **Understanding Global [Carbon Dioxide]{style="color:#FFBF44;"} & [Methane]{style="color:#7F28D5;"} Plume Emissions**
 
-Since the industrial revolution, greenhouse gas concentrations in Earth's atmosphere have risen dramatically, fundamentally altering global climate systems (Lindsey, 2025; Casper, 2010). Carbon dioxide (CO₂) has increased from 280 parts per million (ppm) to over 410 ppm, while methane (CH₄) has risen from 700 parts per billion (ppb) to approximately 1,900 ppb (Lindsey, 2025; The Center for Biological Diversity, n.d.). These gases absorb and re-emit infrared radiation, trapping heat within the atmosphere (process known as the **greenhouse effect**), driving sustained increases in global temperatures (Manabe, 2019), as illustrated in Figure 1.
+Since the industrial revolution, greenhouse gas concentrations in Earth's atmosphere have risen dramatically, fundamentally altering global climate systems (Lindsey, 2025; Casper, 2010). Carbon dioxide (CO₂) has increased from 280 parts per million (ppm) to over 410 ppm, while methane (CH₄) has risen from 700 parts per billion (ppb) to approximately 1,900 ppb (Lindsey, 2025; The Center for Biological Diversity, n.d.). These gasses absorb and re-emit infrared radiation, trapping heat within the atmosphere (process known as the **greenhouse effect**), driving sustained increases in global temperatures (Manabe, 2019), as illustrated in Figure 1.
 
 The consequences of this **global warming** are far reaching, including rising sea levels, increased frequency of extreme weather events, and ocean acidification (Casper, 2010). Ecosystems, human health, and critical infrastructure face mounting disruption as these changes accelerate.
 
 **Emission plumes**, columns of greenhouse gases and other pollutants released into the atmosphere from point sources such as industrial facilities and fossil fuel operations, are a primary driver of these concentration increases. Monitoring and quantifying these plumes is essential for understanding emission sources, informing regulatory policy, and ultimately reducing their contribution to climate change.
 
-![Bar plot showing global temperatures increasing from 1940 to 2025.](images/global-temperature-anomalies-by-month.png){fig-align="center" width="331"}
+![Figure 1. Bar plot showing global temperatures increasing from 1940 to 2025.](images/global-temperature-anomalies-by-month.png){fig-align="center" width="331"}
 
 **My Experience**
 
